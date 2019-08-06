@@ -1,0 +1,27 @@
+button {
+  display: inline-block;
+  border-radius: 4px;
+  border: none;
+  height: 32px;
+  padding: 0 16px;
+  position: relative;
+  transition: background-color .08s;
+  cursor: pointer;
+
+  &.primary {
+    background-color: #2f52e0;
+    color: #fff;
+    fill: hsla(0,0%,100%,.7);
+  }
+
+  &.secondary {
+    background-color: #e7ecf1;
+    color: #222;
+    fill: rgba(34,34,34,.55);
+  }
+
+  &.text {
+    text-decoration: underline;
+    padding: 0;
+  }
+}

@@ -1,0 +1,37 @@
+.previewPane {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 504px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0;
+
+  .header {
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    flex: none;
+    padding: 0 24px;
+    align-items: center;
+    border-bottom: 1px solid #eaebed;
+
+    h3 {
+      font: normal normal 900 18px/24px -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .closeIcon {
+      cursor: pointer;
+      margin-left: auto;
+      fill: rgba(34,34,34,.4);
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .body {
+    padding: 24px;
+  }
+}
