@@ -38,13 +38,15 @@ html, body {
 }
 
 .container {
-  width: 1000px;
+  width: 1200px;
   margin: 0 auto;
 }
 
 .group-box {
   background: #fff;
   border-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   box-sizing: border-box;
   margin-bottom: 15px;
 
@@ -61,8 +63,8 @@ html, body {
     }
   }
 
-  .group-body {
-    padding: 24px;
+  .group-body .emptyGroup{
+    padding: 0 24px;
   }
 
   .group-footer {
@@ -71,18 +73,94 @@ html, body {
 
 }
 
+
+
+.code-toolbar {
+  flex: 2;
+
+  pre {
+    margin: 0!important;
+    width: 100%;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
 button, input, optgroup, select, textarea {
   display: block;
   font-size: 100%;
   line-height: 1.15;
+  -webkit-appearance:none;
 }
 
-input, select, textarea {
+input:not([type="checkbox"]), select, textarea {
   margin: 0 0 5px 0;
-  padding: 10px;
+  padding: 8px;
   border-radius: 4px;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #adb2b9;
   width: 350px;
+  position: relative;
+}
+
+label {
+  align-items: center;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+input[type=checkbox] {
+  border-radius: 2px;
+  border: 1px solid #adb2b9;
+  width: 16px;
+  height: 16px;
+  margin: 0 5px 0 0;
+
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .08s ease-in;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 5px 0;
+  select {
+    display: inline-block;
+    margin: 0;
+  }
+  &::after {
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    content: '';
+    height: 0;
+    width: 0;
+    transform: rotate(45deg);
+    border-bottom: 3px solid #adb2b9;
+    border-right: 3px solid #adb2b9;
+    border-top: 3px solid transparent;
+    border-left: 3px solid transparent;
+  }
+}
+
+input[type=checkbox]:checked {
+  border-color: #2f52e0;
+  background: #2f52e0;
+
+  &::after {
+    content: '\2713';
+    color: #fff;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
 }
 
 .input-label {

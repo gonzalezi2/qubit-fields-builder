@@ -1,5 +1,6 @@
+/* eslint-disable indent */
 import { h, Component } from 'preact';
-import Code from 'preact-prism';
+import Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.css';
 
 import Header from './header';
@@ -8,96 +9,126 @@ import Button from './button';
 import InputGroup from './input-group';
 
 export default class App extends Component {
+  state = {
+    // eslint-disable-next-line indent
+    showPreview: false,
+    groups: 0,
+    fields: 0
+  };
+  groups = {};
+  json = {
+    groups: [],
+    fields: []
+  }
 
-	state = {
-    showPreview: false,    
-    message: "",
-	  fields: {
-	    fields: [
-	      {
-	        key: 'title',
-	        type: 'String',
-	        label: 'Title',
-	        groupId: 'options',
-	        footnote: 'Works best when kept to less than 150 characters',
-	        required: true,
-	        description: 'Change the title of your banner'
-	      },
-	      {
-	        key: 'image',
-	        type: 'Image',
-	        label: 'Image',
-	        groupId: 'options',
-	        required: true,
-	        description: 'The banner image'
-	      },
-	      {
-	        key: 'link',
-	        type: 'URL',
-	        label: 'Link',
-	        groupId: 'options',
-	        required: true,
-	        description: 'Where your banner links to'
-	      },
-	      {
-	        key: 'behaviour',
-	        type: 'Boolean',
-	        label: 'Open in new page',
-	        groupId: 'options',
-	        required: true,
-	        description: 'If true, will open the link in a new page'
-	      },
-	      {
-	        key: 'number',
-	        type: 'Number',
-	        label: 'Times',
-	        groupId: 'options',
-	        required: true,
-	        description: 'The number of times you want to show the banner'
-	      }
-	    ],
-	    groups: [
-	      {
-	        id: 'options',
-	        title: 'Experience options',
-	        subtitle: 'Local settings for your experience'
-	      }
-	    ]
+	togglePreviewPane = () => this.setState(state => ({ showPreview: !state.showPreview }));
+  
+  getRandomId = () => Math.random().toString(36).substr(2, 9);
+
+  createNewGroup = () => ({
+    _id: this.getRandomId(),
+    id: '',
+    title: '',
+    subtitle: '',
+    fields: {}
+  });
+
+  createNewField = (groupId, groupKey) => ({
+    _id: this.getRandomId(),
+    _groupId: groupId,
+    key: '',
+    type: 'String',
+    label: '',
+    groupId: groupKey,
+    footnote: '',
+    required: false,
+    description: ''
+  });
+
+	addInput = (groupId, groupKey) => {
+      const newField = this.createNewField(groupId, groupKey);
+      // state.fields.groups[groupId].fields = newGroup;
+      this.groups[groupId].fields[newField._id] = newField;
+      // return state.fields.fields.push(newField);
+      
+    this.setState(state => state.fields = state.fields + 1 );
+	}
+  
+  addGroup = () => {
+    console.info('updating group...');
+    const newGroup = this.createNewGroup();
+    this.groups[newGroup._id] = newGroup;
+
+    this.setState(state => state.groups = state.groups + 1 );
+  }
+
+
+  updateLocalStorage = () => {
+    localStorage.setItem('store', JSON.stringify({ groups: this.groups, groupCount: this.state.groups, fieldsCount: this.state.fields }));
+  }
+
+  createJSONCode = () => {
+    // eslint-disable-next-line guard-for-in
+    let groupsArr= [];
+    let fieldsArr = [];
+    for (const prop in this.groups) {
+      if (this.groups.hasOwnProperty(prop)) {
+        // eslint-disable-next-line no-unused-vars
+        const { _id, fields, ...groupProps } = this.groups[prop];
+        for (const prop in fields) {
+          if (fields.hasOwnProperty(prop)) {
+            // eslint-disable-next-line no-unused-vars
+            const { _id, _groupId, ...fieldProps } = fields[prop];
+            fieldsArr.push(fieldProps);
+          }
+        }
+        groupsArr.push(groupProps);
+      }
+    }
+    this.json.groups = groupsArr;
+    this.json.fields = fieldsArr;
+  }
+
+  updateGroup = (group) => {
+
+      // Loop through the updated group's fields to check for a change in the group id
+      Object.keys(group.fields).map((fieldId) => {
+
+        // Check the group's fields to see if the groupId has changed and change the fields groupId to match
+        if (group.fields[fieldId]._groupId ===  group._id && group.id !== group.fields[fieldId].groupId) {
+          group.fields[fieldId].groupId = group.id;
+        }
+      });
+      this.groups[group._id] = group;
+      this.updateLocalStorage();
+      this.updateCodePreview();
+  }
+
+  updateCodePreview() {
+    this.createJSONCode();
+    document.querySelector('#code-block').innerHTML = JSON.stringify(this.json, undefined, 2);
+    setTimeout(() => Prism.highlightAll(), 0);
+  }
+
+  componentWillMount() {
+    console.info(this.json);
+    const localStorageGroup = JSON.parse(localStorage.getItem('store'));
+    if (localStorageGroup && localStorageGroup.groupCount >= 1) {
+      this.groups = localStorageGroup.groups;
+      this.setState({ groups: localStorageGroup.groupCount, fields: localStorageGroup.fieldsCount });
     }
   }
 
-	togglePreviewPane = () => {
-	  this.setState(state => ({ showPreview: !state.showPreview }));
-	}
-
-	addInput = () => {
-	  this.setState(state => {
-	    state.fields.fields.push({
-	      key: 'title',
-	      type: 'String',
-	      label: 'Title',
-	      groupId: 'options',
-	      footnote: 'Works best when kept to less than 150 characters',
-	      required: true,
-	      description: 'Change the title of your banner',
-	      time: new Date()
-	    });
-	  });
-  }
-  
-  addGroup = () => {
-    this.setState(state => {
-      state.fields.groups.push({
-        id: 'options',
-        title: 'Experience options',
-        subtitle: 'Local settings for your experience'
-      });
-    });
+  componentDidMount() {
+    // You can call the Prism.js API here
+    // Use setTimeout to push onto callback queue so it runs after the DOM is updated
+    this.updateCodePreview();
   }
 
-  callbackFunction = (childData) => {
-    this.setState({ message: childData });
-    console.log(this.state.message);
+  componentWillUpdate() {
+    // document.querySelector('#code-block').innerHTML = '';
+    // console.info(this.state.fields);
+    this.updateCodePreview();
   }
 
   render() {
@@ -119,23 +150,25 @@ export default class App extends Component {
             </div>
             <div className="group-body">
               {
-                this.state.fields.groups.map(group => (
+                this.state.groups < 1 &&  <div className="emptyGroup"><h3>-</h3></div>
+              }
+              {
+                this.state.groups >= 1 && Object.keys(this.groups).map(groupId => (
                   <InputGroup
-                    group={group}
-                    state={this.state}
+                    group={this.groups[groupId]}
                     clickHandler={this.addInput}
-                    parentCallback={this.callbackFunction}
+                    saveGroup={this.updateGroup}
                   />)
                 )
               }
             </div>
-            <div className="group-footer">
-              <Button text="Add Group" buttonClass="secondary" clickHandler={this.addGroup} />
-            </div>
 	        </div>
-	        <Code code={JSON.stringify(this.state.fields, undefined, 2)} language="javascript" />
+          <Button text="Add Group" buttonClass="secondary" clickHandler={this.addGroup} />
+          <pre className="line-numbers">
+            <code id="code-block" className="language-js" />
+          </pre>
 	      </div>
-	      {this.state.showPreview ? <PreviewPane options={this.state} handleClose={this.togglePreviewPane} /> : null}
+	      {this.state.showPreview ? <PreviewPane options={this.fields} handleClose={this.togglePreviewPane} /> : null}
 	    </div>
 	  );
   }

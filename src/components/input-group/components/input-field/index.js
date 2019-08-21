@@ -1,23 +1,44 @@
 import { h, Component } from 'preact';
-// import { Link } from 'preact-router/match';
+import linkState from 'linkstate';
+import Button from '../../../button';
 import style from './style';
 
 export default class InputField extends Component {
-  state = {
-    type: 'String'
-  };
+  constructor(props) {
+    super(props);
 
-  types = [
-    'String', 'StringArray', 'Image', 'URL', 'Number', 'Boolean', 'TimeRange', 'Duration'
-  ];
+    this.state = { ...this.props.field };
+    this.types = [
+      'String', 'StringArray', 'Image', 'URL', 'Number', 'Boolean', 'TimeRange', 'Duration'
+    ];
+  }
 
-  render() {
+  componentDidUpdate() {
+    this.props.saveField(this.state._id, this.state);
+  }
+
+
+  render({ field, saveField }) {
     return (
       <div class={style.inputField}>
-        <span>Input Title</span>
-        <input type="text" />
-        <div className="footnote">This is the footnote that should not show</div>
-        <p class={style.inputDescription}>Description text</p>
+        <input type="text" name="key" value={this.state.key} placeholder="Key" onChange={linkState(this, 'key')} />
+        <input type="text" name="description" value={this.state.description} placeholder="Description" onChange={linkState(this, 'description')} />
+        <input type="text" name="label" value={this.state.label} placeholder="Label" onChange={linkState(this, 'label')} />
+        <input type="text" name="footnote" value={this.state.footnote} placeholder="Footnote" onChange={linkState(this, 'footnote')} />
+        <label>
+          <input type="checkbox" name="required" value={this.state.required} checked={this.state.required} onChange={linkState(this, 'required')} /> Required
+        </label>
+        <div className="select-wrapper">
+          <select name="type"  value={this.state.type} onChange={linkState(this, 'type')}>
+            <option value="">Please select a field type</option>
+            {
+              this.types.map(type => (
+                <option value={type}>{type}</option>
+              ))
+            }
+          </select>
+        </div>
+        {/* <Button text="Save Input" buttonClass="secondary" clickHandler={saveField.bind(this, field._id, this.state)} /> */}
       </div>
     );
   }

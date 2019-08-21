@@ -5,5 +5,16 @@
         ["preact-cli/babel", { "modules": "commonjs" }]
       ]
     }
-  }
+  },
+  "plugins": [
+    ["transform-class-properties"],
+    ["transform-object-rest-spread"],
+    ["transform-react-jsx", { "pragma": "h" }],
+    ["prismjs", {
+      "languages": ["javascript", "css", "html"],
+      "plugins": ["line-numbers", "show-language"],
+      "theme": "okaidia",
+      "css": true
+    }]
+  ]
 }

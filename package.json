@@ -15,16 +15,26 @@
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor",
-    "rules":
-      {
-        "indent": ["error", 2],
-        "react/jsx-indent-props": ["enabled", 2]
-      }
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "react/jsx-indent-props": [
+        "enabled",
+        2
+      ]
+    }
   },
   "eslintIgnore": [
     "docs/*"
   ],
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-plugin-prismjs": "^1.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "eslint": "^4.9.0",
@@ -37,11 +47,11 @@
     "preact-render-spy": "^1.2.1"
   },
   "dependencies": {
-    "preact": "^8.2.6",
-    "preact-compat": "^3.17.0",
-    "preact-prism": "^0.1.2",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.5.7",
+    "linkstate": "^1.1.1",
+    "preact": "^10.0.0-rc.1",
+    "preact-render-to-string": "^5.0.6",
+    "preact-router": "^3.0.1",
+    "prismjs": "^1.17.1",
     "sass-loader": "^7.1.0"
   },
   "jest": {
