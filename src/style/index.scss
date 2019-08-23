@@ -19,6 +19,10 @@ html, body {
 	height: 100%;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .header {
   background: #fff;
   height: 110px;
@@ -168,4 +172,13 @@ input[type=checkbox]:checked {
   margin-bottom: 5px;
   font-weight: 600;
   color: #666;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+button .icon {
+  margin-right: 8px;
 }

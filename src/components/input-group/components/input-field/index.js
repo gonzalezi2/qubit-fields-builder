@@ -4,6 +4,10 @@ import Button from '../../../button';
 import style from './style';
 
 export default class InputField extends Component {
+  deleteField = () => {
+    this.props.deleteField(this.props.field._groupId, this.props.field._id);
+  }
+
   constructor(props) {
     super(props);
 
@@ -38,7 +42,8 @@ export default class InputField extends Component {
             }
           </select>
         </div>
-        {/* <Button text="Save Input" buttonClass="secondary" clickHandler={saveField.bind(this, field._id, this.state)} /> */}
+
+        <Button text="Delete Input" buttonClass="text" clickHandler={this.deleteField} />
       </div>
     );
   }

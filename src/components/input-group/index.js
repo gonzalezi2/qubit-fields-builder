@@ -13,36 +13,30 @@ export default class InputGroup extends Component {
 
   saveField = (fieldID, field) => {
     this.setState(state => {
-      // state.fields[fieldID];
       Object.assign(state.fields[fieldID], field);
     });
     this.sendData();
+  }
+
+  addInput =() => {
+    this.props.addInput(this.state._id, this.state.id);
   }
 
   constructor(props) {
     super(props);
     this.state = { ...this.props.group };
   }
-  componentDidMount() {
-    console.info('we made it this far') ;
-  }
   componentDidUpdate() {
     this.sendData();
   }
 
-  componentDidCatch(error) {
-    console.info(error);
-  }
-
-  render({ group, clickHandler }) {
+  render({ group }) {
 	  return (
       <div class={style.inputGroup}>
         <h4>Group</h4>
         <input name="id" type="text" value={this.state.id} onChange={linkState(this, 'id')} placeholder="Group Id" />
         <input name="title" type="text" value={this.state.title} onChange={linkState(this, 'title')} placeholder="Group Title" />
         <input name="subtitle" type="text" value={this.state.subtitle} onChange={linkState(this, 'subtitle')} placeholder="Group Subtitle" />
-
-        {/* <Button clickHandler={this.sendData} text="Save Group" buttonClass="secondary" /> */}
 
         <h4>Input Fields</h4>
 
@@ -51,11 +45,11 @@ export default class InputGroup extends Component {
         }
         {
           Object.keys(group.fields).length >= 1 && Object.keys(group.fields).map(fieldId => (
-            <InputField field={group.fields[fieldId]} saveField={this.saveField} clickHandler={this.addInput} />
+            <InputField key={fieldId} field={group.fields[fieldId]} saveField={this.saveField} clickHandler={this.addInput} deleteField={this.props.deleteField} />
           ))
         }
 
-        <Button text="Add Input" buttonClass="text" clickHandler={clickHandler.bind(this, this.state._id, this.state.id)} />
+        <Button text="Add Input" buttonClass="text" clickHandler={this.addInput} />
       </div>
     );
   }

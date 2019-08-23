@@ -21,7 +21,10 @@ export default class App extends Component {
     fields: []
   }
 
-	togglePreviewPane = () => this.setState(state => ({ showPreview: !state.showPreview }));
+	togglePreviewPane = () => {
+    this.setState(state => ({ showPreview: !state.showPreview }));
+    document.body.classList.toggle('no-scroll');
+  }
   
   getRandomId = () => Math.random().toString(36).substr(2, 9);
 
@@ -51,11 +54,16 @@ export default class App extends Component {
       this.groups[groupId].fields[newField._id] = newField;
       // return state.fields.fields.push(newField);
       
-    this.setState(state => state.fields = state.fields + 1 );
-	}
+    this.setState(state => state.fields++ );
+  }
+  
+  deleteField = (groupId, fieldId) => {
+      delete this.groups[groupId].fields[fieldId];
+    this.setState(state => state.fields--);
+    this.updateGroup(this.groups[groupId]);
+  }
   
   addGroup = () => {
-    console.info('updating group...');
     const newGroup = this.createNewGroup();
     this.groups[newGroup._id] = newGroup;
 
@@ -92,13 +100,15 @@ export default class App extends Component {
   updateGroup = (group) => {
 
       // Loop through the updated group's fields to check for a change in the group id
-      Object.keys(group.fields).map((fieldId) => {
-
-        // Check the group's fields to see if the groupId has changed and change the fields groupId to match
-        if (group.fields[fieldId]._groupId ===  group._id && group.id !== group.fields[fieldId].groupId) {
-          group.fields[fieldId].groupId = group.id;
-        }
-      });
+      const fieldKeys = Object.keys(group.fields);
+      if (fieldKeys.length >= 1) {
+          fieldKeys.map((fieldId) => {
+            // Check the group's fields to see if the groupId has changed and change the fields groupId to match
+            if (group.fields[fieldId]._groupId ===  group._id && group.id !== group.fields[fieldId].groupId) {
+              group.fields[fieldId].groupId = group.id;
+            }
+          });
+      }
       this.groups[group._id] = group;
       this.updateLocalStorage();
       this.updateCodePreview();
@@ -156,19 +166,20 @@ export default class App extends Component {
                 this.state.groups >= 1 && Object.keys(this.groups).map(groupId => (
                   <InputGroup
                     group={this.groups[groupId]}
-                    clickHandler={this.addInput}
+                    addInput={this.addInput}
+                    deleteField={this.deleteField}
                     saveGroup={this.updateGroup}
                   />)
                 )
               }
             </div>
 	        </div>
-          <Button text="Add Group" buttonClass="secondary" clickHandler={this.addGroup} />
+          <Button text="Add Group" buttonClass="primary-large" clickHandler={this.addGroup} />
           <pre className="line-numbers">
             <code id="code-block" className="language-js" />
           </pre>
 	      </div>
-	      {this.state.showPreview ? <PreviewPane options={this.fields} handleClose={this.togglePreviewPane} /> : null}
+	      {this.state.showPreview ? <PreviewPane groups={this.groups} handleClose={this.togglePreviewPane} /> : null}
 	    </div>
 	  );
   }
