@@ -26,6 +26,11 @@ button {
     background: transparent;
   }
 
+  &.text-danger {
+    @extend .text;
+    color: red;
+  }
+
   &.primary-large {
     @extend .primary;
     height: 40px;

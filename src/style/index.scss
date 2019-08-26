@@ -1,3 +1,9 @@
+$small: 640px;
+$medium: 768px;
+$large: 1200px;
+$x-large: 1600px;
+$massive: 1900px;
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -26,8 +32,8 @@ html, body {
 .header {
   background: #fff;
   height: 110px;
-  padding: 0 24px;
-  margin-bottom: 24px;
+  padding: 0 15px;
+  margin-bottom: 15px;
   align-items: center;
   display: flex;
   .container {
@@ -42,15 +48,25 @@ html, body {
 }
 
 .container {
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
+
+  @media screen and (min-width: $large) {
+    width: $large;
+  }
+
+  @media screen and (min-width: $x-large) {
+    width: $x-large;
+  }
+
+  @media screen and (min-width: $massive) {
+    width: $massive;
+  }
 }
 
 .group-box {
   background: #fff;
   border-radius: 8px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
   box-sizing: border-box;
   margin-bottom: 15px;
 
@@ -68,11 +84,7 @@ html, body {
   }
 
   .group-body .emptyGroup{
-    padding: 0 24px;
-  }
-
-  .group-footer {
-    padding: 15px 24px;
+    padding: 0 15px;
   }
 
 }
