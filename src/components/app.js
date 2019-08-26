@@ -58,7 +58,7 @@ export default class App extends Component {
   }
   
   deleteField = (groupId, fieldId) => {
-      delete this.groups[groupId].fields[fieldId];
+    delete this.groups[groupId].fields[fieldId];
     this.setState(state => state.fields--);
     this.updateGroup(this.groups[groupId]);
   }
@@ -114,6 +114,11 @@ export default class App extends Component {
       this.updateCodePreview();
   }
 
+  deleteGroup = (groupId) => {
+    delete this.groups[groupId];
+    this.setState(state => state.groups--);
+  }
+
   updateCodePreview() {
     this.createJSONCode();
     document.querySelector('#code-block').innerHTML = JSON.stringify(this.json, undefined, 2);
@@ -132,6 +137,9 @@ export default class App extends Component {
   componentDidMount() {
     // You can call the Prism.js API here
     // Use setTimeout to push onto callback queue so it runs after the DOM is updated
+    if (Object.keys(this.groups) === 0) {
+      this.addGroup();
+    }
     this.updateCodePreview();
   }
 
@@ -166,6 +174,7 @@ export default class App extends Component {
                 this.state.groups >= 1 && Object.keys(this.groups).map(groupId => (
                   <InputGroup
                     group={this.groups[groupId]}
+                    deleteGroup={this.deleteGroup}
                     addInput={this.addInput}
                     deleteField={this.deleteField}
                     saveGroup={this.updateGroup}

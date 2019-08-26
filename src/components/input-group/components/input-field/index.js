@@ -43,7 +43,7 @@ export default class InputField extends Component {
           </select>
         </div>
 
-        <Button text="Delete Input" buttonClass="text" clickHandler={this.deleteField} />
+        <Button text="Delete Input" buttonClass="text-danger" clickHandler={this.deleteField} />
       </div>
     );
   }
