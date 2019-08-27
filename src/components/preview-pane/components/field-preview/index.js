@@ -14,7 +14,9 @@ export default class FieldPreview extends Component {
       Image: this.renderImage.bind(this),
       Number: this.renderInput.bind(this),
       URL: this.renderInput.bind(this),
-      Other: ['StringArray', 'TimeRange', 'Duration']
+      StringArray: this.renderInput.bind(this),
+      TimeRange: this.renderInput.bind(this),
+      Duration: this.renderInput.bind(this)
     };
 
     this.inputs = {
