@@ -139,6 +139,10 @@ export default class App extends Component {
     const localStorageGroup = JSON.parse(localStorage.getItem('store'));
     if (localStorageGroup && localStorageGroup.groupCount >= 1) {
       this.groups = localStorageGroup.groups;
+      this.setState({
+        groups: localStorageGroup.groupCount,
+        fields: localStorageGroup.fieldsCount
+      });
     }
   }
 

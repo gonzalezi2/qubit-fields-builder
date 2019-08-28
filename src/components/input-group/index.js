@@ -21,6 +21,7 @@ export default class InputGroup extends Component {
 
   addField =() => {
     this.props.addField(this.state._id, this.state.id);
+    this.forceUpdate();
   }
 
   deleteGroup = () => {
@@ -31,6 +32,11 @@ export default class InputGroup extends Component {
     super(props);
     this.state = { ...this.props.group };
   }
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state !== nextState;
+  }
+
   componentDidUpdate() {
     this.sendData();
   }

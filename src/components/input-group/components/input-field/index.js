@@ -6,6 +6,7 @@ import style from './style';
 export default class InputField extends Component {
   deleteField = () => {
     this.props.deleteField(this.props.field._groupId, this.props.field._id);
+    this.forceUpdate();
   }
 
   constructor(props) {
@@ -17,10 +18,15 @@ export default class InputField extends Component {
     ];
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state !== nextState;
+  }
+
+  // TODO: Prevent the update from triggering the saveField method on the props object
+  // upon component deletion
   componentDidUpdate() {
     this.props.saveField(this.state._id, this.state);
   }
-
 
   render({ field, saveField }) {
     return (
