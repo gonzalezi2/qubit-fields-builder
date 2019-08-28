@@ -12,9 +12,12 @@ export default class InputGroup extends Component {
   }
 
   saveField = (fieldID, field) => {
-    console.info(fieldID, field);
     this.setState(state => {
-      Object.assign(state.fields[fieldID], field);
+      // Checks to see if the field exists before trying to apply a change
+      // Prevents an error from occurring when deleting a field
+      if (this.state.fields[fieldID]) {
+        Object.assign(state.fields[fieldID], field);
+      }
     });
     this.sendData();
   }
