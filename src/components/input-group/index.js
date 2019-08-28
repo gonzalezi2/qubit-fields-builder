@@ -12,14 +12,15 @@ export default class InputGroup extends Component {
   }
 
   saveField = (fieldID, field) => {
+    console.info(fieldID, field);
     this.setState(state => {
       Object.assign(state.fields[fieldID], field);
     });
     this.sendData();
   }
 
-  addInput =() => {
-    this.props.addInput(this.state._id, this.state.id);
+  addField =() => {
+    this.props.addField(this.state._id, this.state.id);
   }
 
   deleteGroup = () => {
@@ -44,7 +45,7 @@ export default class InputGroup extends Component {
           <input name="subtitle" type="text" value={this.state.subtitle} onChange={linkState(this, 'subtitle')} placeholder="Group Subtitle" />
           <div class={style.footer}>
             <Button text="Delete Group" buttonClass="text-danger" clickHandler={this.deleteGroup} />
-            <Button text="Add Input" buttonClass="text" clickHandler={this.addInput} />
+            <Button text="Add Input" buttonClass="text" clickHandler={this.addField} />
           </div>
         </div>
         <div class={style.field}>
@@ -55,7 +56,7 @@ export default class InputGroup extends Component {
             }
             {
               Object.keys(group.fields).length >= 1 && Object.keys(group.fields).map(fieldId => (
-                <InputField key={fieldId} field={group.fields[fieldId]} saveField={this.saveField} clickHandler={this.addInput} deleteField={this.props.deleteField} />
+                <InputField key={fieldId} field={group.fields[fieldId]} saveField={this.saveField} clickHandler={this.addField} deleteField={this.props.deleteField} />
               ))
             }
           </div>

@@ -28,53 +28,6 @@ export default class App extends Component {
   
   getRandomId = () => Math.random().toString(36).substr(2, 9);
 
-  createNewGroup = () => ({
-    _id: this.getRandomId(),
-    id: '',
-    title: '',
-    subtitle: '',
-    fields: {}
-  });
-
-  createNewField = (groupId, groupKey) => ({
-    _id: this.getRandomId(),
-    _groupId: groupId,
-    key: '',
-    type: 'String',
-    label: '',
-    groupId: groupKey,
-    footnote: '',
-    required: false,
-    description: ''
-  });
-
-	addInput = (groupId, groupKey) => {
-      const newField = this.createNewField(groupId, groupKey);
-      // state.fields.groups[groupId].fields = newGroup;
-      this.groups[groupId].fields[newField._id] = newField;
-      // return state.fields.fields.push(newField);
-      
-    this.setState(state => state.fields++ );
-  }
-  
-  deleteField = (groupId, fieldId) => {
-    delete this.groups[groupId].fields[fieldId];
-    this.setState(state => state.fields--);
-    this.updateGroup(this.groups[groupId]);
-  }
-  
-  addGroup = () => {
-    const newGroup = this.createNewGroup();
-    this.groups[newGroup._id] = newGroup;
-
-    this.setState(state => state.groups = state.groups + 1 );
-  }
-
-
-  updateLocalStorage = () => {
-    localStorage.setItem('store', JSON.stringify({ groups: this.groups, groupCount: this.state.groups, fieldsCount: this.state.fields }));
-  }
-
   createJSONCode = () => {
     // eslint-disable-next-line guard-for-in
     let groupsArr= [];
@@ -97,55 +50,103 @@ export default class App extends Component {
     this.json.fields = fieldsArr;
   }
 
-  updateGroup = (group) => {
-
-      // Loop through the updated group's fields to check for a change in the group id
-      const fieldKeys = Object.keys(group.fields);
-      if (fieldKeys.length >= 1) {
-          fieldKeys.map((fieldId) => {
-            // Check the group's fields to see if the groupId has changed and change the fields groupId to match
-            if (group.fields[fieldId]._groupId ===  group._id && group.id !== group.fields[fieldId].groupId) {
-              group.fields[fieldId].groupId = group.id;
-            }
-          });
-      }
-      this.groups[group._id] = group;
-      this.updateLocalStorage();
-      this.updateCodePreview();
+  updateLocalStorage = () => {
+    localStorage.setItem('store', JSON.stringify({
+      groups: this.groups,
+      groupCount: this.state.groups,
+      fieldsCount: this.state.fields
+    }));
   }
-
-  deleteGroup = (groupId) => {
-    delete this.groups[groupId];
-    this.setState(state => state.groups--);
-  }
-
+  
   updateCodePreview() {
     this.createJSONCode();
     document.querySelector('#code-block').innerHTML = JSON.stringify(this.json, undefined, 2);
     setTimeout(() => Prism.highlightAll(), 0);
   }
 
+  update = () => {
+    console.info('...updating');
+    this.updateLocalStorage();
+    this.updateCodePreview();
+  }
+
+  createNewGroup = () => ({
+    _id: this.getRandomId(),
+    id: '',
+    title: '',
+    subtitle: '',
+    fields: {}
+  });
+
+  createNewField = (groupId, groupKey) => ({
+    _id: this.getRandomId(),
+    _groupId: groupId,
+    key: '',
+    type: 'String',
+    label: '',
+    groupId: groupKey,
+    footnote: '',
+    required: false,
+    description: ''
+  });
+
+	addField = (groupId, groupKey) => {
+      const newField = this.createNewField(groupId, groupKey);
+      // state.fields.groups[groupId].fields = newGroup;
+      this.groups[groupId].fields[newField._id] = newField;
+      // return state.fields.fields.push(newField);
+      
+    this.setState(state => state.fields++, this.update );
+  }
+  
+  deleteField = (groupId, fieldId) => {
+    delete this.groups[groupId].fields[fieldId];
+    this.setState(state => state.fields--);
+    this.updateGroup(this.groups[groupId]);
+  }
+  
+  addGroup = () => {
+    const newGroup = this.createNewGroup();
+    this.groups[newGroup._id] = newGroup;
+    this.setState(state => state.groups++, this.update);
+  }
+
+  updateGroup = (group) => {
+    // Loop through the updated group's fields to check for a change in the group id
+    const fieldKeys = Object.keys(group.fields);
+    if (fieldKeys.length >= 1) {
+        fieldKeys.map((fieldId) => {
+          // Check the group's fields to see if the groupId has changed and change the fields groupId to match
+          if (group.fields[fieldId]._groupId ===  group._id && group.id !== group.fields[fieldId].groupId) {
+            group.fields[fieldId].groupId = group.id;
+          }
+        });
+    }
+    this.groups[group._id] = group;
+    this.update();
+  }
+
+  deleteGroup = (groupId) => {
+    const fieldsToDelete = Object.keys(this.groups[groupId].fields).length;
+    delete this.groups[groupId];
+    this.setState({
+      groups: this.state.groups--,
+      fields: this.state.fields - fieldsToDelete
+    }, this.update);
+  }
+
   componentWillMount() {
     const localStorageGroup = JSON.parse(localStorage.getItem('store'));
     if (localStorageGroup && localStorageGroup.groupCount >= 1) {
       this.groups = localStorageGroup.groups;
-      this.setState({ groups: localStorageGroup.groupCount, fields: localStorageGroup.fieldsCount });
     }
   }
 
   componentDidMount() {
-    // You can call the Prism.js API here
-    // Use setTimeout to push onto callback queue so it runs after the DOM is updated
-    if (Object.keys(this.groups) === 0) {
+    if (Object.keys(this.groups).length === 0) {
       this.addGroup();
     }
-    this.updateCodePreview();
-  }
-
-  componentWillUpdate() {
-    // document.querySelector('#code-block').innerHTML = '';
-    // console.info(this.state.fields);
-    this.updateCodePreview();
+    this.update();
   }
 
   render() {
@@ -167,14 +168,14 @@ export default class App extends Component {
             </div>
             <div className="group-body">
               {
-                this.state.groups < 1 &&  <div className="emptyGroup"><h3>-</h3></div>
+                Object.keys(this.groups).length < 1 &&  <div className="emptyGroup"><h3>-</h3></div>
               }
               {
-                this.state.groups >= 1 && Object.keys(this.groups).map(groupId => (
+                Object.keys(this.groups).length >= 1 && Object.keys(this.groups).map(groupId => (
                   <InputGroup
                     group={this.groups[groupId]}
                     deleteGroup={this.deleteGroup}
-                    addInput={this.addInput}
+                    addField={this.addField}
                     deleteField={this.deleteField}
                     saveGroup={this.updateGroup}
                   />)
