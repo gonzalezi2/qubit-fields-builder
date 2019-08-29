@@ -22,7 +22,7 @@ export default class App extends Component {
   }
 
 	togglePreviewPane = () => {
-    this.setState(state => ({ showPreview: !state.showPreview }));
+    this.setState({ showPreview: !this.state.showPreview });
     document.body.classList.toggle('no-scroll');
   }
   
@@ -65,7 +65,6 @@ export default class App extends Component {
   }
 
   update = () => {
-    console.info('...updating');
     this.updateLocalStorage();
     this.updateCodePreview();
   }
@@ -96,19 +95,19 @@ export default class App extends Component {
       this.groups[groupId].fields[newField._id] = newField;
       // return state.fields.fields.push(newField);
       
-    this.setState(state => state.fields++, this.update );
+    this.setState({ fields: this.state.fields + 1 }, this.update );
   }
   
   deleteField = (groupId, fieldId) => {
     delete this.groups[groupId].fields[fieldId];
-    this.setState(state => state.fields--);
+    this.setState({ fields: this.state.fields - 1 });
     this.updateGroup(this.groups[groupId]);
   }
   
   addGroup = () => {
     const newGroup = this.createNewGroup();
     this.groups[newGroup._id] = newGroup;
-    this.setState(state => state.groups++, this.update);
+    this.setState({ groups: this.state.groups + 1 }, this.update);
   }
 
   updateGroup = (group) => {
@@ -129,9 +128,13 @@ export default class App extends Component {
   deleteGroup = (groupId) => {
     const fieldsToDelete = Object.keys(this.groups[groupId].fields).length;
     delete this.groups[groupId];
+
+    const newGroupCount = this.state.groups - 1;
+    const newFieldsCount = this.state.fields - fieldsToDelete;
+
     this.setState({
-      groups: this.state.groups--,
-      fields: this.state.fields - fieldsToDelete
+      groups: newGroupCount,
+      fields: newFieldsCount
     }, this.update);
   }
 
@@ -177,6 +180,7 @@ export default class App extends Component {
               {
                 Object.keys(this.groups).length >= 1 && Object.keys(this.groups).map(groupId => (
                   <InputGroup
+                    key={groupId}
                     group={this.groups[groupId]}
                     deleteGroup={this.deleteGroup}
                     addField={this.addField}
