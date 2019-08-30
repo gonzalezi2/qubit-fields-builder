@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import linkState from 'linkstate';
 import Button from '../../../button';
 import style from './style';
 
@@ -15,7 +14,7 @@ export default class FieldPreview extends Component {
       Number: this.renderInput.bind(this),
       URL: this.renderInput.bind(this),
       StringArray: this.renderInput.bind(this),
-      TimeRange: this.renderInput.bind(this),
+      TimeRange: this.renderTimeRange.bind(this),
       Duration: this.renderInput.bind(this)
     };
 
@@ -29,7 +28,7 @@ export default class FieldPreview extends Component {
   renderTooltip(text) {
     return (
       <span class={style.tooltipContainer}>
-        <svg data-icon-name="InfoIcon" class={style.tooltipIcon} viewBox="0 0 16 16" style="transform: rotate(0deg);">
+        <svg data-icon-name="InfoIcon" class={style.icon} viewBox="0 0 16 16" style="transform: rotate(0deg);">
           <path d="M8,0 C3.6,0 0,3.6 0,8 C0,12.4 3.6,16 8,16 C12.4,16 16,12.4 16,8 C16,3.6 12.4,0 8,0 Z M8,14 C4.7,14 2,11.3 2,8 C2,4.7 4.7,2 8,2 C11.3,2 14,4.7 14,8 C14,11.3 11.3,14 8,14 Z M7,7 L7,12 L9,12 L9,7 L7,7 Z M8,6 C8.55228475,6 9,5.55228475 9,5 C9,4.44771525 8.55228475,4 8,4 C7.44771525,4 7,4.44771525 7,5 C7,5.55228475 7.44771525,6 8,6 Z" />
         </svg>
         <div class={style.tooltip}>
@@ -60,6 +59,54 @@ export default class FieldPreview extends Component {
           {field.description && this.renderTooltip(field.description) }
         </div>
         <input type={this.inputs[field.type]} class={style.textInput} />
+        { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
+      </div>
+    );
+  }
+
+  renderTimeRange(field) {
+    return (
+      <div class={style.field}>
+        <div class={style.fieldLabel}>
+          <span class={style.label}>{field.label}</span>
+          {field.description && this.renderTooltip(field.description) }
+        </div>
+        {/* <input type={this.inputs[field.type]} class={style.textInput} /> */}
+        <div class={style.timeRangeInputs}>
+          <div class={style.textInputDiv}>
+            <span class={style.timeRange}>
+              <svg data-icon-name="ClockIcon" class={style.icon} viewBox="0 0 16 16" style="transform: rotate(0deg);">
+                <path d="M8,0 C3.6,0 0,3.6 0,8 C0,12.4 3.6,16 8,16 C12.4,16 16,12.4 16,8 C16,3.6 12.4,0 8,0 Z M8,14 C4.7,14 2,11.3 2,8 C2,4.7 4.7,2 8,2 C11.3,2 14,4.7 14,8 C14,11.3 11.3,14 8,14 Z M9,4 L7,4 L7,9 L12,9 L12,7 L9,7 L9,4 Z" />
+              </svg>
+              <span class={style.digitInput}>
+                --
+              </span>
+              <span class={style.digitInput}>
+                --
+              </span>
+              <span class={style.digitInput}>
+                --
+              </span>
+            </span>
+          </div>
+          <span class={style.divider}>–</span>
+          <div class={style.textInputDiv}>
+            <span class={style.timeRange}>
+              <svg data-icon-name="ClockIcon" class={style.icon} style="transform: rotate(0deg);">
+                <path d="M8,0 C3.6,0 0,3.6 0,8 C0,12.4 3.6,16 8,16 C12.4,16 16,12.4 16,8 C16,3.6 12.4,0 8,0 Z M8,14 C4.7,14 2,11.3 2,8 C2,4.7 4.7,2 8,2 C11.3,2 14,4.7 14,8 C14,11.3 11.3,14 8,14 Z M9,4 L7,4 L7,9 L12,9 L12,7 L9,7 L9,4 Z" />
+              </svg>
+              <span class={style.digitInput}>
+                --
+              </span>
+              <span class={style.digitInput}>
+                --
+              </span>
+              <span class={style.digitInput}>
+                --
+              </span>
+            </span>
+          </div>
+        </div>
         { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
       </div>
     );
