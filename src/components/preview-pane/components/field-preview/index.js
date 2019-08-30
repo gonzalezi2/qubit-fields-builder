@@ -15,7 +15,7 @@ export default class FieldPreview extends Component {
       URL: this.renderInput.bind(this),
       StringArray: this.renderInput.bind(this),
       TimeRange: this.renderTimeRange.bind(this),
-      Duration: this.renderInput.bind(this)
+      Duration: this.renderDuration.bind(this)
     };
 
     this.inputs = {
@@ -105,6 +105,31 @@ export default class FieldPreview extends Component {
                 --
               </span>
             </span>
+          </div>
+        </div>
+        { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
+      </div>
+    );
+  }
+
+  renderDuration(field) {
+    return (
+      <div class={style.field}>
+        <div class={style.fieldLabel}>
+          <span class={style.label}>{field.label}</span>
+          {field.description && this.renderTooltip(field.description) }
+        </div>
+        <div className={style.durationInputs}>
+          <input type="number" class={style.textInput} />
+          <span class={style.divider} />
+          <div class={style.selectWrapper}>
+            <select>
+              <option value="0">Seconds</option>
+              <option value="1">Minutes</option>
+              <option value="2" selected>Hours</option>
+              <option value="3">Days</option>
+            </select>
+            <svg data-icon-name="PointerDownIcon" class={style.dropdownIcon} viewBox="0 0 16 16" style="transform: rotate(0deg);"><polygon fill-rule="evenodd" points="3 6 8 11 13 6" /></svg>
           </div>
         </div>
         { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
