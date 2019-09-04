@@ -60,8 +60,11 @@ export default class App extends Component {
   
   updateCodePreview() {
     this.createJSONCode();
-    document.querySelector('#code-block').innerHTML = JSON.stringify(this.json, undefined, 2);
-    setTimeout(() => Prism.highlightAll(), 0);
+    const codeBlock = document.querySelector('#code-block');
+    if (codeBlock) {
+      codeBlock.innerHTML = JSON.stringify(this.json, undefined, 2);
+      setTimeout(() => Prism.highlightAll(), 0);
+    }
   }
 
   update = () => {
