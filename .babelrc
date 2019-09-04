@@ -2,13 +2,15 @@
   "env": {
     "test": {
       "presets": [
-        ["preact-cli/babel", { "modules": "commonjs" }]
+        ["preact-cli/babel", { "modules": "commonjs" }],
+        ["@babel/react"], 
+        ["@babel/env"]
       ]
     }
   },
   "plugins": [
-    ["transform-class-properties"],
-    ["transform-object-rest-spread"],
-    ["transform-react-jsx", { "pragma": "h" }]
+    ["@babel/plugin-transform-react-jsx", { "pragma":"h" }],
+    ["@babel/plugin-proposal-object-rest-spread"],
+    ["@babel/plugin-proposal-class-properties"]
   ]
 }

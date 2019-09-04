@@ -31,19 +31,25 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "babel-plugin-prismjs": "^1.1.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-preact": "^2.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-preact-pure": "^2.0.2",
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^21.2.1",
+    "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
     "node-sass": "^4.12.0",
     "per-env": "^1.0.2",
-    "preact-cli": "^2.1.0",
+    "preact-cli": "^3.0.0-rc.1",
     "preact-render-spy": "^1.2.1"
   },
   "dependencies": {
@@ -58,6 +64,9 @@
     "verbose": true,
     "setupFiles": [
       "<rootDir>/tests/__mocks__/browserMocks.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>setupTests.js"
     ],
     "testRegex": "(/(__tests__|tests)/.*|(\\.|/)(test|spec))\\.jsx?$",
     "testPathIgnorePatterns": [
@@ -76,7 +85,7 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "identity-obj-proxy",
       "^./style$": "identity-obj-proxy",
-      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+      "^preact$": "<rootDir>/node_modules/preact/dist/preact.umd.js",
       "^react$": "preact-compat",
       "^react-dom$": "preact-compat",
       "^create-react-class$": "preact-compat/lib/create-react-class",
