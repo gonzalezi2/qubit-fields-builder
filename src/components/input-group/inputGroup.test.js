@@ -69,8 +69,6 @@ describe('Input Group', () => {
 		expect(component.state('title')).toBe('this is the title value');
 		expect(component.state('subtitle')).toBe('this is the subtitle value');
 
-		console.info(component.state());
-
 		expect(saveGroup).toBeCalledWith(component.state());
 	});
 
