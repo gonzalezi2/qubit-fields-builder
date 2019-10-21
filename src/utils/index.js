@@ -1,5 +1,6 @@
 /**
  * Returns a random 9 character alphanumeric string
+ * @return {string}
  */
 function getRandomId() {
   return Math.random()
@@ -8,7 +9,9 @@ function getRandomId() {
 }
 
 /**
- * Creates a new group object
+ * Returns a new group object
+ * @function
+ * @return {object}
  */
 export function createNewGroup() {
   return {
@@ -21,7 +24,11 @@ export function createNewGroup() {
 }
 
 /**
- * Creates a new field object
+ * Returns a new input field object
+ * @function
+ * @param {string} - A random 9 character alphanumeric string id of the parent group
+ * @param {string} - A string of the parent groupId from user input
+ * @return {object} field - The new field object
  */
 export function createNewField(groupId, groupKey) {
   return {
@@ -37,6 +44,13 @@ export function createNewField(groupId, groupKey) {
   };
 }
 
+/**
+ * Separates fields from groups and returns an object with both,
+ * removing any unnecessary properties not useful to the fields.json file
+ * @function
+ * @param {object} groups - The current groups object from memory
+ * @return {object} - An object with groups and fields properties
+ */
 export function createJSONCode(groups) {
   let groupsArr = [];
   let fieldsArr = [];
@@ -60,6 +74,12 @@ export function createJSONCode(groups) {
   };
 }
 
+/**
+ * Updates the groupId of all fields in the group object with an updated id
+ * @function
+ * @param {object} group - The group with the updated id
+ * @return {object} - An updated group object with the updated fields property
+ */
 export function updateGroupId(group) {
   const fieldKeys = Object.keys(group.fields);
   if (fieldKeys.length >= 1) {
@@ -76,6 +96,13 @@ export function updateGroupId(group) {
   return group;
 }
 
+/**
+ * Updates the groups object stored in LocalStorage with the newest changes
+ * Also updates the groups and fields counts
+ * @function
+ * @param {object} groups - The new updated groups object to store
+ * @param {object} state - The updated state with new groups and fields counts to store
+ */
 export function updateLocalStorage(groups, state) {
   localStorage.setItem(
     'store',
