@@ -158,12 +158,12 @@ export default class App extends Component {
             <code id="code-block" className="language-js" />
           </pre>
         </div>
-        {this.state.showPreview ? (
+        {this.state.showPreview && (
           <PreviewPane
             groups={this.groups}
             handleClose={this.togglePreviewPane}
           />
-        ) : null}
+        )}
       </div>
     );
   }
