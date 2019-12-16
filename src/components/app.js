@@ -41,7 +41,21 @@ export default class App extends Component {
       2
     );
     setTimeout(() => Prism.highlightAll(), 0);
-  }
+  };
+
+  resetForm = () => {
+    this.groups = {};
+    this.json = {
+      groups: [],
+      fields: []
+    };
+    this.setState({
+      // eslint-disable-next-line indent
+      showPreview: false,
+      groups: 0,
+      fields: 0
+    }, this.update);
+  };
 
   update = () => {
     updateLocalStorage(this.groups, this.state);
@@ -116,11 +130,18 @@ export default class App extends Component {
         <div className="header">
           <div className="container">
             <h1>New Fields File</h1>
-            <Button
-              text="Preview"
-              buttonClass="primary"
-              clickHandler={this.togglePreviewPane}
-            />
+            <div className="button-nav">
+              <Button
+                text="Reset Form"
+                buttonClass="text-danger"
+                clickHandler={this.resetForm}
+              />
+              <Button
+                text="Preview"
+                buttonClass="primary"
+                clickHandler={this.togglePreviewPane}
+              />
+            </div>
           </div>
         </div>
 

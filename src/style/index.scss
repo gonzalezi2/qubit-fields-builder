@@ -84,12 +84,18 @@ html, body {
   }
 
   .group-body .emptyGroup{
-    padding: 0 15px;
+    padding: 15px;
   }
 
 }
 
+.button-nav {
+  display: flex;
 
+  button {
+    margin-left: 5px;
+  }
+}
 
 .code-toolbar {
   flex: 2;

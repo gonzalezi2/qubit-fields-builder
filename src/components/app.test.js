@@ -23,7 +23,7 @@ describe('Main App', () => {
     });
   
     it('should toggle the showPreview state and render a previewPane', () => {
-      const button = component.find('button').at(0);
+      const button = component.find('button').at(1);
       expect(component.containsMatchingElement(<PreviewPane />)).toBe(false);
       button.simulate('click');
       expect(component.state().showPreview).toEqual(true);
@@ -394,6 +394,38 @@ describe('Main App', () => {
       expect(component.instance().state.groups).toEqual(1);
       expect(component.instance().state.fields).toEqual(1);
       expect(component.instance().groups).toEqual(updatedGroups);
+      const outputHTML = document.querySelector("#code-block").innerHTML;
+      expect(outputHTML).toEqual(
+        JSON.stringify(
+          expectedJson,
+          undefined,
+          2
+        )
+      );
+    });
+
+
+    // resetForm
+    it('should reset the form to an original state', () => {
+      const expectedJson = {
+        "groups": [],
+        "fields": []
+      }
+      const initialLocalStorageObject = {"groups":{"t9unovrta":{"_id":"t9unovrta","id":"messages","title":"Feature/QUB-44 check session status","subtitle":"gbgb","fields":{"zcekiqn56":{"_id":"zcekiqn56","_groupId":"t9unovrta","key":"tenDollars","type":"String","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":false,"description":"checks for $10 coupon"},"xck0uaa7y":{"_id":"xck0uaa7y","_groupId":"t9unovrta","key":"tenDollars","type":"Boolean","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 10","required":false,"description":"checks for $10 coupon"},"iv9cgsk6h":{"_id":"iv9cgsk6h","_groupId":"t9unovrta","key":"fiveDollars","type":"Image","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":true,"description":"checks for $10 coupon"}}},"yr2jgzh27":{"_id":"yr2jgzh27","id":"","title":"","subtitle":"","fields":{"fzwijope0":{"_id":"fzwijope0","_groupId":"yr2jgzh27","key":"","type":"String","label":"","groupId":"","footnote":"","required":false,"description":""}}}},"groupCount":2,"fieldsCount":4}
+      const expectedLSObject = {"groups":{},"groupCount":0,"fieldsCount":0}
+
+      expect(component.instance().state.groups).toEqual(2);
+      expect(component.instance().state.fields).toEqual(4);
+      expect(JSON.parse(localStorage.getItem('store'))).toEqual(initialLocalStorageObject);
+
+      component.instance().resetForm();
+      
+      expect(component.instance().state.groups).toEqual(0);
+      expect(component.instance().state.fields).toEqual(0);
+      expect(JSON.parse(localStorage.getItem('store'))).toEqual(expectedLSObject);
+
+      expect(component.instance().groups).toEqual({});
+
       const outputHTML = document.querySelector("#code-block").innerHTML;
       expect(outputHTML).toEqual(
         JSON.stringify(
