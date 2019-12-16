@@ -54,7 +54,10 @@ export default class App extends Component {
       showPreview: false,
       groups: 0,
       fields: 0
-    }, this.update);
+    }, () => {
+      this.update();
+      this.addGroup();
+    });
   };
 
   update = () => {
@@ -100,8 +103,12 @@ export default class App extends Component {
       {
         groups: newGroupCount,
         fields: newFieldsCount
-      },
-      this.update
+      }, () => {
+        this.update();
+        if(this.state.groups < 1) {
+          this.addGroup();
+        }
+      }
     );
   };
 

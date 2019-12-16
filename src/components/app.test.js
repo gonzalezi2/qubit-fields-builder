@@ -368,6 +368,15 @@ describe('Main App', () => {
           }
         }
       };
+      const emptyGroup = {
+        yr2jgzh27:{
+          _id:"yr2jgzh27",
+          id:"",
+          title:"",
+          subtitle:"",
+          fields: {}
+        }
+      }
       const expectedJson = {
         "groups": [
           {
@@ -388,6 +397,16 @@ describe('Main App', () => {
           }
         ]
       }
+      const emptyJson = {
+        "groups": [
+          {
+            "id": "",
+            "title": "",
+            "subtitle": ""
+          }
+        ],
+        "fields": []
+      }
       expect(component.instance().state.groups).toEqual(2);
       expect(component.instance().state.fields).toEqual(4);
       component.instance().deleteGroup('t9unovrta');
@@ -402,17 +421,33 @@ describe('Main App', () => {
           2
         )
       );
+      // Test deleting the last group
+      component.instance().deleteGroup('yr2jgzh27');
+      expect(component.instance().state.groups).toEqual(1);
+      expect(component.instance().state.fields).toEqual(0);
+      const emptyOutputHTML = document.querySelector("#code-block").innerHTML;
+      expect(emptyOutputHTML).toEqual(
+        JSON.stringify(
+          emptyJson,
+          undefined,
+          2
+        )
+      );
+
     });
 
 
     // resetForm
     it('should reset the form to an original state', () => {
       const expectedJson = {
-        "groups": [],
+        "groups": [{
+          "id": "",
+          "title": "",
+          "subtitle": ""
+        }],
         "fields": []
       }
       const initialLocalStorageObject = {"groups":{"t9unovrta":{"_id":"t9unovrta","id":"messages","title":"Feature/QUB-44 check session status","subtitle":"gbgb","fields":{"zcekiqn56":{"_id":"zcekiqn56","_groupId":"t9unovrta","key":"tenDollars","type":"String","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":false,"description":"checks for $10 coupon"},"xck0uaa7y":{"_id":"xck0uaa7y","_groupId":"t9unovrta","key":"tenDollars","type":"Boolean","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 10","required":false,"description":"checks for $10 coupon"},"iv9cgsk6h":{"_id":"iv9cgsk6h","_groupId":"t9unovrta","key":"fiveDollars","type":"Image","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":true,"description":"checks for $10 coupon"}}},"yr2jgzh27":{"_id":"yr2jgzh27","id":"","title":"","subtitle":"","fields":{"fzwijope0":{"_id":"fzwijope0","_groupId":"yr2jgzh27","key":"","type":"String","label":"","groupId":"","footnote":"","required":false,"description":""}}}},"groupCount":2,"fieldsCount":4}
-      const expectedLSObject = {"groups":{},"groupCount":0,"fieldsCount":0}
 
       expect(component.instance().state.groups).toEqual(2);
       expect(component.instance().state.fields).toEqual(4);
@@ -420,11 +455,10 @@ describe('Main App', () => {
 
       component.instance().resetForm();
       
-      expect(component.instance().state.groups).toEqual(0);
+      expect(component.instance().state.groups).toEqual(1);
       expect(component.instance().state.fields).toEqual(0);
-      expect(JSON.parse(localStorage.getItem('store'))).toEqual(expectedLSObject);
 
-      expect(component.instance().groups).toEqual({});
+      expect(component.instance().groups).not.toEqual({});
 
       const outputHTML = document.querySelector("#code-block").innerHTML;
       expect(outputHTML).toEqual(
