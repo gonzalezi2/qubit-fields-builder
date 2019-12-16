@@ -4,7 +4,8 @@ import FieldPreview from './components/field-preview';
 import style from './style';
 
 const PreviewPane = ({ groups, handleClose }) => (
-  <div class={style.overlay}>
+  <div>
+    <div class={style.overlay}  onClick={handleClose}></div>
     <div class={style.previewPane}>
       <div class={style.header}>
         <h3>Edit experience content</h3>

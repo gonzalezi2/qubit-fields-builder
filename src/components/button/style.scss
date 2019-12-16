@@ -29,6 +29,7 @@ button {
   &.text-danger {
     @extend .text;
     color: red;
+    padding-right: 10px;
   }
 
   &.primary-large {
