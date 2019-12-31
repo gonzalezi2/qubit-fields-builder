@@ -45,6 +45,19 @@ export function createNewField(groupId, groupKey) {
 }
 
 /**
+ * Returns a new constraint
+ * @function
+ * @return {object} constraint - the new constraint object
+ */
+export function createNewConstraint() {
+  return {
+    _id: getRandomId(),
+    type: 'maxLength',
+    value: 0
+  }
+}
+
+/**
  * Separates fields from groups and returns an object with both,
  * removing any unnecessary properties not useful to the fields.json file
  * @function
@@ -62,6 +75,10 @@ export function createJSONCode(groups) {
         if (fields.hasOwnProperty(prop)) {
           // eslint-disable-next-line no-unused-vars
           const { _id, _groupId, ...fieldProps } = fields[prop];
+          if(fieldProps.hasOwnProperty('constraints')) {
+            const newConstraints = convertConstraintToJSON(fieldProps.constraints);
+            fieldProps['constraints'] = newConstraints;
+          }
           fieldsArr.push(fieldProps);
         }
       }
@@ -72,6 +89,20 @@ export function createJSONCode(groups) {
     groups: groupsArr,
     fields: fieldsArr
   };
+}
+
+/**
+ * Converts constraints object into the correct JSON format as specified in the Qubit docs
+ * @function
+ * @param {object} constraints - The constraints object that needs to be converted
+ * @return {object} - A constraint object with just the necessary key:value pairs
+ */
+export function convertConstraintToJSON(constraints) {
+  let newConstraints = {};
+  for(const prop in constraints) {
+    newConstraints[constraints[prop].type] = Number(constraints[prop].value);
+  }
+  return newConstraints;
 }
 
 /**
