@@ -26,6 +26,11 @@ button {
     background: transparent;
   }
 
+  &.text-inline {
+    @extend .text;
+    display: inline-block;
+  }
+
   &.text-danger {
     @extend .text;
     color: red;
