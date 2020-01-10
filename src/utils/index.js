@@ -40,8 +40,35 @@ export function createNewField(groupId, groupKey) {
     groupId: groupKey,
     footnote: '',
     required: false,
-    description: ''
+    description: '',
+    constraints: {}
   };
+}
+
+/**
+ * Returns a new constraint
+ * @function
+ * @return {object} constraint - the new constraint object
+ */
+export function createNewConstraint() {
+  return {
+    _id: getRandomId(),
+    type: 'maxLength',
+    value: 0
+  }
+}
+
+/**
+ * Returns a new value
+ * @function
+ * @return {object} value - the new value object
+ */
+export function createNewValue() {
+  return {
+    _id: getRandomId(),
+    label: '',
+    value: ''
+  }
 }
 
 /**
@@ -61,7 +88,13 @@ export function createJSONCode(groups) {
       for (const prop in fields) {
         if (fields.hasOwnProperty(prop)) {
           // eslint-disable-next-line no-unused-vars
-          const { _id, _groupId, ...fieldProps } = fields[prop];
+          const { _id, _groupId, _constraintId, ...fieldProps } = fields[prop];
+          if(Object.keys(fieldProps.constraints).length > 0) {
+            const newConstraints = convertConstraintToJSON(fieldProps.constraints);
+            fieldProps['constraints'] = newConstraints;
+          } else {
+            delete fieldProps['constraints'];
+          }
           fieldsArr.push(fieldProps);
         }
       }
@@ -72,6 +105,33 @@ export function createJSONCode(groups) {
     groups: groupsArr,
     fields: fieldsArr
   };
+}
+
+/**
+ * Converts constraints object into the correct JSON format as specified in the Qubit docs
+ * @function
+ * @param {object} constraints - The constraints object that needs to be converted
+ * @return {object} - A constraint object with just the necessary key:value pairs
+ */
+export function convertConstraintToJSON(constraints) {
+  let newConstraints = {};
+  for(const prop in constraints) {
+    if(constraints[prop].type === 'values') {
+      let newValues = [];
+      for(const valueId in constraints[prop].value) {
+        const {_id, _constraintId, ...values} = constraints[prop].value[valueId];
+        newValues.push(values);
+      }
+      newConstraints[constraints[prop].type] = newValues;
+    } else {
+      // Prevents a null value when switching from a 'values' constraint type to another
+      if(typeof constraints[prop].value === 'array' || typeof constraints[prop].value === 'object') {
+        constraints[prop].value = 0;
+      }
+      newConstraints[constraints[prop].type] = Number(constraints[prop].value);
+    }
+  }
+  return newConstraints;
 }
 
 /**

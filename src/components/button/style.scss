@@ -26,6 +26,11 @@ button {
     background: transparent;
   }
 
+  &.text-inline {
+    @extend .text;
+    display: inline-block;
+  }
+
   &.text-danger {
     @extend .text;
     color: red;
@@ -38,5 +43,11 @@ button {
     font-size: 1.15em;
     padding: 0 20px;
     margin-bottom: 15px;
+  }
+
+  &.input {
+   @extend .secondary;
+   height: 34px;
+   margin-bottom: 5px;
   }
 }

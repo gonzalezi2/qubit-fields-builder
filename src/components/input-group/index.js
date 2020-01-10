@@ -18,9 +18,24 @@ export default class InputGroup extends Component {
 		this.props.saveGroup(this.state);
 	}
 
+	saveConstraint = (fieldID, constraintID, constraint) => {
+		this.setState(state => {
+			if (this.state.fields[fieldID].constraints[constraintID]) {
+				Object.assign(state.fields[fieldID].constraints[constraintID], constraint);
+			}
+		});
+		this.props.saveGroup(this.state);
+	}
+
+	deleteConstraint = (fieldID, constraintID) => {
+		let newState = Object.assign({}, this.state);
+		delete newState.fields[fieldID].constraints[constraintID];
+		this.props.saveGroup(newState);
+		this.forceUpdate();
+	}
+
 	addField = () => {
 		this.props.addField(this.state._id, this.state.id);
-		this.forceUpdate();
 	}
 
 	deleteGroup = () => {
@@ -30,10 +45,6 @@ export default class InputGroup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { ...this.props.group };
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return this.state !== nextState;
 	}
 
 	componentDidUpdate() {
@@ -60,8 +71,17 @@ export default class InputGroup extends Component {
 							Object.keys(group.fields).length < 1 && <h3>-</h3>
 						}
 						{
-							Object.keys(group.fields).length >= 1 && Object.keys(group.fields).map(fieldId => (
-								<InputField key={fieldId} field={group.fields[fieldId]} saveField={this.saveField} clickHandler={this.addField} deleteField={this.props.deleteField} />
+							Object.keys(group.fields).length > 0 && Object.keys(group.fields).map(fieldId => (
+								<InputField
+									key={fieldId}
+									field={group.fields[fieldId]}
+									saveField={this.saveField}
+									clickHandler={this.addField}
+									deleteField={this.props.deleteField}
+									addConstraints={this.props.addConstraints}
+									saveConstraint={this.saveConstraint}
+									deleteConstraint={this.deleteConstraint}
+								/>
 							))
 						}
 					</div>

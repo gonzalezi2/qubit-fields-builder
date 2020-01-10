@@ -5,24 +5,75 @@ import { shallow, render, mount } from 'enzyme';
 
 describe('Input Field', () => {
   it('should render the component without any errors', () => {
-    const component = shallow(<InputField />);
+	const saveField = jest.fn();
+	const props = {
+		key: 'd6f4d51df5',
+		field: {
+			_id: 'd6f4d51df5',
+			_groupId: '185fddfc1s8fe',
+			key: '',
+			type: 'String',
+			label: '',
+			groupId: 'test-group-id',
+			footnote: '',
+			required: false,
+			description: '',
+			constraints: {}
+		},
+		saveField
+	}
+	const component = shallow(<InputField {...props} />);
     expect(component.length).toBe(1);
 	});
 	
   it('should render a component with 5 inputs and 1 select element', () => {
-		const component = shallow(<InputField />);
-		const inputs = component.find('input');
-		const selects = component.find('select');
+	const saveField = jest.fn();
+	const props = {
+		key: 'd6f4d51df5',
+		field: {
+			_id: 'd6f4d51df5',
+			_groupId: '185fddfc1s8fe',
+			key: '',
+			type: 'String',
+			label: '',
+			groupId: 'test-group-id',
+			footnote: '',
+			required: false,
+			description: '',
+			constraints: {}
+		},
+		saveField
+	}
+	const component = shallow(<InputField {...props} />);
+	const inputs = component.find('input');
+	const selects = component.find('select');
 
     expect(inputs.length).toBe(5);
     expect(selects.length).toBe(1);
 	});
 	
   it('should render a component with a delete button with the text Delete Input', () => {
-		const component = shallow(<InputField />);
-		const button = component.find(Button);
+		const saveField = jest.fn();
+    const props = {
+			key: 'd6f4d51df5',
+			field: {
+				_id: 'd6f4d51df5',
+				_groupId: '185fddfc1s8fe',
+				key: '',
+				type: 'String',
+				label: '',
+				groupId: 'test-group-id',
+				footnote: '',
+				required: false,
+				description: '',
+				constraints: {}
+			},
+			saveField
+		}
+		const component = shallow(<InputField {...props} />);
+    const button = component.find(Button);
 		
-    expect(button.props().text).toBe('Delete Input');
+    expect(button.at(0).props().text).toBe('Delete Input');
   });
 
   it('should render a component with inputs with empty or given values', () => {
@@ -38,7 +89,8 @@ describe('Input Field', () => {
 				groupId: 'test-group-id',
 				footnote: '',
 				required: false,
-				description: ''
+				description: '',
+				constraints: {}
 			},
 			saveField
 		}
@@ -66,7 +118,8 @@ describe('Input Field', () => {
 				groupId: 'test-group-id',
 				footnote: '',
 				required: false,
-				description: ''
+				description: '',
+				constraints: {}
 			},
 			saveField
 		}
@@ -104,7 +157,8 @@ describe('Input Field', () => {
 				groupId: 'test-group-id',
 				footnote: '',
 				required: false,
-				description: ''
+				description: '',
+				constraints: {}
 			},
 			saveField,
 			deleteField

@@ -9,6 +9,7 @@ export default class FieldPreview extends Component {
     // this.state = { ...this.props.field };
     this.types = {
       String: this.renderInput.bind(this),
+      StringValues: this.renderValues.bind(this),
       Boolean: this.renderCheckbox.bind(this),
       Image: this.renderImage.bind(this),
       Number: this.renderInput.bind(this),
@@ -59,6 +60,28 @@ export default class FieldPreview extends Component {
           {field.description && this.renderTooltip(field.description) }
         </div>
         <input type={this.inputs[field.type]} class={style.textInput} />
+        { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
+      </div>
+    );
+  }
+  renderValues(field) {
+    const values = field.constraints[field._constraintId].value;
+    return (
+      <div class={style.field}>
+        <div class={style.fieldLabel}>
+          <span class={style.label}>{field.label}</span>
+          {field.description && this.renderTooltip(field.description) }
+        </div>
+        <div class={style.valuesInputs}>
+          <div class={style.selectWrapper}>
+            <select>
+              {Object.keys(values).map(id => (
+                <option value={values[id]['value']}>{values[id].label}</option>
+              ))}
+            </select>
+            <svg data-icon-name="PointerDownIcon" class={style.dropdownIcon} viewBox="0 0 16 16" style="transform: rotate(0deg);"><polygon fill-rule="evenodd" points="3 6 8 11 13 6" /></svg>
+          </div>
+        </div>
         { field.footnote && <p class={style.footnote}>{field.footnote}</p> }
       </div>
     );
@@ -183,6 +206,14 @@ export default class FieldPreview extends Component {
           {
             Object.keys(group.fields).map(fieldId => {
               const field = group.fields[fieldId];
+              if(field.type === 'String' && Object.keys(field.constraints).length > 0) {
+                Object.keys(field.constraints).forEach(constraintId => {
+                  if(field.constraints[constraintId].type === 'values') {
+                    field.type = 'StringValues';
+                    field._constraintId = field.constraints[constraintId]._id;
+                  }
+                });
+              }
               return this.types[field.type](field);
             })
           }
