@@ -88,7 +88,8 @@ describe('Input Group', () => {
 						groupId: 'group-title',
 						footnote: '',
 						required: false,
-						description: ''
+						description: '',
+						constraints: {}
 					}
 				}
 			},

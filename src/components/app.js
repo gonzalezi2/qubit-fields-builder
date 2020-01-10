@@ -12,7 +12,8 @@ import {
   createNewGroup,
   createJSONCode,
   updateGroupId,
-  updateLocalStorage
+  updateLocalStorage,
+  createNewConstraint
 } from '../utils';
 
 export default class App extends Component {
@@ -112,6 +113,19 @@ export default class App extends Component {
     );
   };
 
+  addConstraints = (groupId, fieldId) => {
+    const newConstraint = createNewConstraint();
+    if(!this.groups[groupId].fields[fieldId].constraints) {
+      this.groups[groupId].fields[fieldId].constraints = {};
+      this.groups[groupId].fields[fieldId].constraints[newConstraint._id] = newConstraint;
+      this.forceUpdate();
+    } else {
+      this.groups[groupId].fields[fieldId].constraints[newConstraint._id] = newConstraint;
+    }
+    this.forceUpdate();
+    this.update();
+  }
+
   componentWillMount() {
     const localStorageGroup = JSON.parse(localStorage.getItem('store'));
     if (localStorageGroup && localStorageGroup.groupCount >= 1) {
@@ -173,6 +187,7 @@ export default class App extends Component {
                     addField={this.addField}
                     deleteField={this.deleteField}
                     saveGroup={this.updateGroup}
+                    addConstraints={this.addConstraints}
                   />
                 ))}
             </div>

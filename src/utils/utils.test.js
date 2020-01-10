@@ -31,10 +31,11 @@ describe('Utilities functions', () => {
       expect(newField.footnote).toBe('');
       expect(newField.required).toBe(false);
       expect(newField.description).toBe('');
+      expect(newField.constraints).toMatchObject({});
     });
   });
 
-
+  // TODO write test to properly create the JSON code for adding and deleting constraints
   describe('createJSONCode Function', () => {
     const objectCode = {
       ix265qy0j: {
@@ -52,7 +53,8 @@ describe('Utilities functions', () => {
             groupId: "test",
             footnote: "Footnote",
             required: true,
-            description: "Description"
+            description: "Description",
+            constraints: {}
           }
         }
       }

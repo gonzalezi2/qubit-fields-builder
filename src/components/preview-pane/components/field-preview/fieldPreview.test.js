@@ -20,7 +20,8 @@ describe('Input Group', () => {
 					groupId: 'group-title',
 					footnote: '',
 					required: false,
-					description: ''
+					description: '',
+					constraints: {}
 				}
 			}
 		}
@@ -47,7 +48,8 @@ describe('Input Group', () => {
 					groupId: 'group-title',
 					footnote: 'This should render a footnote',
 					required: false,
-					description: 'This should render a description'
+					description: 'This should render a description',
+					constraints: {}
 				}
 			}
 		}
@@ -67,6 +69,7 @@ describe('Input Group', () => {
 			fields: {
 				d6d6d15c1fv5: {
 					type: 'String',
+					constraints: {}
 				}
 			}
 		}
