@@ -25,7 +25,7 @@
           align-items: center;
         }
 
-        .durationInputs {
+        .durationInputs, .valuesInputs {
           display: flex;
           align-items: center;
 
@@ -51,6 +51,12 @@
               margin: 0;
               background: #fff;
             }
+          }
+        }
+
+        .valuesInputs {
+          select, .selectWrapper {
+            width: 100%;
           }
         }
         
