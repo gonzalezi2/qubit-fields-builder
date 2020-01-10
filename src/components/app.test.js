@@ -6,22 +6,22 @@ import { mount, shallow } from 'enzyme';
 import PreviewPane from './preview-pane';
 
 describe('Main App', () => {
-    let component;
-    beforeEach(() => {
-      component = mount(<App />, { attachTo: document.body });
-    });
-    afterEach(() => {
-      component.unmount();
-    });
+  let component;
+  beforeEach(() => {
+    component = mount(<App />, { attachTo: document.body });
+  });
+  afterEach(() => {
+    component.unmount();
+  });
   describe('Mounted functions', () => {
     it('should render the component without any errors', () => {
       expect(component.length).toBe(1);
     });
-  
+
     it('should contain a Header component', () => {
       expect(component.contains(<Header />)).toBe(true);
     });
-  
+
     it('should toggle the showPreview state and render a previewPane', () => {
       const button = component.find('button').at(1);
       expect(component.containsMatchingElement(<PreviewPane />)).toBe(false);
@@ -29,62 +29,66 @@ describe('Main App', () => {
       expect(component.state().showPreview).toEqual(true);
       expect(component.containsMatchingElement(<PreviewPane />)).toBe(true);
     });
-  
+
     it('should update the json preview when mounting with a filled out groups object', () => {
       const groups = {
         t9unovrta: {
           _id: "t9unovrta",
-          id:"messages",
-          title:"Feature/QUB-44 check session status",
-          subtitle:"gbgb",
+          id: "messages",
+          title: "Feature/QUB-44 check session status",
+          subtitle: "gbgb",
           fields: {
-            zcekiqn56:{
-              _id:"zcekiqn56",
-              _groupId:"t9unovrta",
-              key:"tenDollars",
-              type:"String",
-              label:"$10 Footlong",
-              groupId:"messages",
-              footnote:"Show me the 5",
-              required:false,
-              description:"checks for $10 coupon"
+            zcekiqn56: {
+              _id: "zcekiqn56",
+              _groupId: "t9unovrta",
+              key: "tenDollars",
+              type: "String",
+              label: "$10 Footlong",
+              groupId: "messages",
+              footnote: "Show me the 5",
+              required: false,
+              description: "checks for $10 coupon",
+              constraints: {}
             },
-            xck0uaa7y:{
-              _id:"xck0uaa7y",
-              _groupId:"t9unovrta",
-              key:"tenDollars",
-              type:"Boolean","label":"$10 Footlong",
-              groupId:"messages","footnote":"Show me the 10",
-              required:false,
-              description:"checks for $10 coupon"
+            xck0uaa7y: {
+              _id: "xck0uaa7y",
+              _groupId: "t9unovrta",
+              key: "tenDollars",
+              type: "Boolean", "label": "$10 Footlong",
+              groupId: "messages", "footnote": "Show me the 10",
+              required: false,
+              description: "checks for $10 coupon",
+              constraints: {}
             },
-            iv9cgsk6h:{
-              _id:"iv9cgsk6h",
-              _groupId:"t9unovrta",
-              key:"fiveDollars",
-              type:"Image",
-              label:"$10 Footlong",
-              groupId:"messages","footnote":"Show me the 5",
-              required:true,
-              description:"checks for $10 coupon"
+            iv9cgsk6h: {
+              _id: "iv9cgsk6h",
+              _groupId: "t9unovrta",
+              key: "fiveDollars",
+              type: "Image",
+              label: "$10 Footlong",
+              groupId: "messages", "footnote": "Show me the 5",
+              required: true,
+              description: "checks for $10 coupon",
+              constraints: {}
             }
           }
         },
-        yr2jgzh27:{
-          _id:"yr2jgzh27",
-          id:"",
-          title:"",
-          subtitle:"",
+        yr2jgzh27: {
+          _id: "yr2jgzh27",
+          id: "",
+          title: "",
+          subtitle: "",
           fields: {
-            fzwijope0:{
-              _id:"fzwijope0",
-              _groupId:"yr2jgzh27",
-              key:"",
-              type:"String",
-              label:"","groupId":"",
-              footnote:"",
-              required:false,
-              description:""
+            fzwijope0: {
+              _id: "fzwijope0",
+              _groupId: "yr2jgzh27",
+              key: "",
+              type: "String",
+              label: "", "groupId": "",
+              footnote: "",
+              required: false,
+              description: "",
+              constraints: {}
             }
           }
         }
@@ -157,14 +161,83 @@ describe('Main App', () => {
   // Test for update
 
   // Test for addField
-    // How to test for a random string?
+  // How to test for a random string?
 
   // Test for deleteField
 
   describe('localStorage functions', () => {
     let component;
     beforeEach(() => {
-      const groups = {"groups":{"t9unovrta":{"_id":"t9unovrta","id":"messages","title":"Feature/QUB-44 check session status","subtitle":"gbgb","fields":{"zcekiqn56":{"_id":"zcekiqn56","_groupId":"t9unovrta","key":"tenDollars","type":"String","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":false,"description":"checks for $10 coupon"},"xck0uaa7y":{"_id":"xck0uaa7y","_groupId":"t9unovrta","key":"tenDollars","type":"Boolean","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 10","required":false,"description":"checks for $10 coupon"},"iv9cgsk6h":{"_id":"iv9cgsk6h","_groupId":"t9unovrta","key":"fiveDollars","type":"Image","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":true,"description":"checks for $10 coupon"}}},"yr2jgzh27":{"_id":"yr2jgzh27","id":"","title":"","subtitle":"","fields":{"fzwijope0":{"_id":"fzwijope0","_groupId":"yr2jgzh27","key":"","type":"String","label":"","groupId":"","footnote":"","required":false,"description":""}}}},"groupCount":2,"fieldsCount":4};
+      const groups = {
+        "groups": {
+          "t9unovrta": {
+            "_id": "t9unovrta",
+            "id": "messages",
+            "title": "Feature/QUB-44 check session status",
+            "subtitle": "gbgb",
+            "fields": {
+              "zcekiqn56": {
+                "_id": "zcekiqn56",
+                "_groupId": "t9unovrta",
+                "key": "tenDollars",
+                "type": "String",
+                "label": "$10 Footlong",
+                "groupId": "messages",
+                "footnote": "Show me the 5",
+                "required": false,
+                "description": "checks for $10 coupon",
+                "constraints": {}
+              },
+              "xck0uaa7y": {
+                "_id": "xck0uaa7y",
+                "_groupId": "t9unovrta",
+                "key": "tenDollars",
+                "type": "Boolean",
+                "label": "$10 Footlong",
+                "groupId": "messages",
+                "footnote": "Show me the 10",
+                "required": false,
+                "description": "checks for $10 coupon",
+                "constraints": {}
+              },
+              "iv9cgsk6h": {
+                "_id": "iv9cgsk6h",
+                "_groupId": "t9unovrta",
+                "key": "fiveDollars",
+                "type": "Image",
+                "label": "$10 Footlong",
+                "groupId": "messages",
+                "footnote": "Show me the 5",
+                "required": true,
+                "description": "checks for $10 coupon",
+                "constraints": {}
+              }
+            }
+          },
+          "yr2jgzh27": {
+            "_id": "yr2jgzh27",
+            "id": "",
+            "title": "",
+            "subtitle": "",
+            "fields": {
+              "fzwijope0": {
+                "_id": "fzwijope0",
+                "_groupId": "yr2jgzh27",
+                "key": "",
+                "type": "String",
+                "label": "",
+                "groupId": "",
+                "footnote": "",
+                "required": false,
+                "description": "",
+                "constraints": {}
+              }
+            }
+          }
+        },
+        "groupCount": 2,
+        "fieldsCount": 4
+      };
       localStorage.setItem('store', JSON.stringify(groups));
       component = shallow(<App />);
     });
@@ -233,49 +306,52 @@ describe('Main App', () => {
       const updatedGroups = {
         t9unovrta: {
           _id: "t9unovrta",
-          id:"messages",
-          title:"Feature/QUB-44 check session status",
-          subtitle:"gbgb",
+          id: "messages",
+          title: "Feature/QUB-44 check session status",
+          subtitle: "gbgb",
           fields: {
-            zcekiqn56:{
-              _id:"zcekiqn56",
-              _groupId:"t9unovrta",
-              key:"tenDollars",
-              type:"String",
-              label:"$10 Footlong",
-              groupId:"messages",
-              footnote:"Show me the 5",
-              required:false,
-              description:"checks for $10 coupon"
+            zcekiqn56: {
+              _id: "zcekiqn56",
+              _groupId: "t9unovrta",
+              key: "tenDollars",
+              type: "String",
+              label: "$10 Footlong",
+              groupId: "messages",
+              footnote: "Show me the 5",
+              required: false,
+              description: "checks for $10 coupon",
+              constraints: {}
             },
-            xck0uaa7y:{
-              _id:"xck0uaa7y",
-              _groupId:"t9unovrta",
-              key:"tenDollars",
-              type:"Boolean",
-              label:"$10 Footlong",
-              groupId:"messages",
-              footnote:"Show me the 10",
-              required:false,
-              description:"checks for $10 coupon"
+            xck0uaa7y: {
+              _id: "xck0uaa7y",
+              _groupId: "t9unovrta",
+              key: "tenDollars",
+              type: "Boolean",
+              label: "$10 Footlong",
+              groupId: "messages",
+              footnote: "Show me the 10",
+              required: false,
+              description: "checks for $10 coupon",
+              constraints: {}
             }
           }
         },
-        yr2jgzh27:{
-          _id:"yr2jgzh27",
-          id:"",
-          title:"",
-          subtitle:"",
+        yr2jgzh27: {
+          _id: "yr2jgzh27",
+          id: "",
+          title: "",
+          subtitle: "",
           fields: {
-            fzwijope0:{
-              _id:"fzwijope0",
-              _groupId:"yr2jgzh27",
-              key:"",
-              type:"String",
-              label:"","groupId":"",
-              footnote:"",
-              required:false,
-              description:""
+            fzwijope0: {
+              _id: "fzwijope0",
+              _groupId: "yr2jgzh27",
+              key: "",
+              type: "String",
+              label: "", "groupId": "",
+              footnote: "",
+              required: false,
+              description: "",
+              constraints: {}
             }
           }
         }
@@ -337,8 +413,8 @@ describe('Main App', () => {
       );
     });
     // Test for addGroup
-  
-    it('should add a group to the groups object and state group counter', () => {  
+
+    it('should add a group to the groups object and state group counter', () => {
       expect(component.instance().state.groups).toEqual(2);
       expect(Object.keys(component.instance().groups).length).toEqual(2);
       component.instance().addGroup();
@@ -349,31 +425,32 @@ describe('Main App', () => {
     // Test for deleteGroup
     it('should delete a group field from the json preview and state', () => {
       const updatedGroups = {
-        yr2jgzh27:{
-          _id:"yr2jgzh27",
-          id:"",
-          title:"",
-          subtitle:"",
+        yr2jgzh27: {
+          _id: "yr2jgzh27",
+          id: "",
+          title: "",
+          subtitle: "",
           fields: {
-            fzwijope0:{
-              _id:"fzwijope0",
-              _groupId:"yr2jgzh27",
-              key:"",
-              type:"String",
-              label:"","groupId":"",
-              footnote:"",
-              required:false,
-              description:""
+            fzwijope0: {
+              _id: "fzwijope0",
+              _groupId: "yr2jgzh27",
+              key: "",
+              type: "String",
+              label: "", "groupId": "",
+              footnote: "",
+              required: false,
+              description: "",
+              constraints: {}
             }
           }
         }
       };
       const emptyGroup = {
-        yr2jgzh27:{
-          _id:"yr2jgzh27",
-          id:"",
-          title:"",
-          subtitle:"",
+        yr2jgzh27: {
+          _id: "yr2jgzh27",
+          id: "",
+          title: "",
+          subtitle: "",
           fields: {}
         }
       }
@@ -447,14 +524,14 @@ describe('Main App', () => {
         }],
         "fields": []
       }
-      const initialLocalStorageObject = {"groups":{"t9unovrta":{"_id":"t9unovrta","id":"messages","title":"Feature/QUB-44 check session status","subtitle":"gbgb","fields":{"zcekiqn56":{"_id":"zcekiqn56","_groupId":"t9unovrta","key":"tenDollars","type":"String","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":false,"description":"checks for $10 coupon"},"xck0uaa7y":{"_id":"xck0uaa7y","_groupId":"t9unovrta","key":"tenDollars","type":"Boolean","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 10","required":false,"description":"checks for $10 coupon"},"iv9cgsk6h":{"_id":"iv9cgsk6h","_groupId":"t9unovrta","key":"fiveDollars","type":"Image","label":"$10 Footlong","groupId":"messages","footnote":"Show me the 5","required":true,"description":"checks for $10 coupon"}}},"yr2jgzh27":{"_id":"yr2jgzh27","id":"","title":"","subtitle":"","fields":{"fzwijope0":{"_id":"fzwijope0","_groupId":"yr2jgzh27","key":"","type":"String","label":"","groupId":"","footnote":"","required":false,"description":""}}}},"groupCount":2,"fieldsCount":4}
+      const initialLocalStorageObject = { "groups": { "t9unovrta": { "_id": "t9unovrta", "id": "messages", "title": "Feature/QUB-44 check session status", "subtitle": "gbgb", "fields": { "zcekiqn56": { "_id": "zcekiqn56", "_groupId": "t9unovrta", "key": "tenDollars", "type": "String", "label": "$10 Footlong", "groupId": "messages", "footnote": "Show me the 5", "required": false, "description": "checks for $10 coupon", "constraints": {} }, "xck0uaa7y": { "_id": "xck0uaa7y", "_groupId": "t9unovrta", "key": "tenDollars", "type": "Boolean", "label": "$10 Footlong", "groupId": "messages", "footnote": "Show me the 10", "required": false, "description": "checks for $10 coupon", "constraints": {} }, "iv9cgsk6h": { "_id": "iv9cgsk6h", "_groupId": "t9unovrta", "key": "fiveDollars", "type": "Image", "label": "$10 Footlong", "groupId": "messages", "footnote": "Show me the 5", "required": true, "description": "checks for $10 coupon", "constraints": {} } } }, "yr2jgzh27": { "_id": "yr2jgzh27", "id": "", "title": "", "subtitle": "", "fields": { "fzwijope0": { "_id": "fzwijope0", "_groupId": "yr2jgzh27", "key": "", "type": "String", "label": "", "groupId": "", "footnote": "", "required": false, "description": "", "constraints": {}} } } }, "groupCount": 2, "fieldsCount": 4 }
 
       expect(component.instance().state.groups).toEqual(2);
       expect(component.instance().state.fields).toEqual(4);
       expect(JSON.parse(localStorage.getItem('store'))).toEqual(initialLocalStorageObject);
 
       component.instance().resetForm();
-      
+
       expect(component.instance().state.groups).toEqual(1);
       expect(component.instance().state.fields).toEqual(0);
 
