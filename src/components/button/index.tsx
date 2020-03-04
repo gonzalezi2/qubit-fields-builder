@@ -1,10 +1,10 @@
-import { h } from 'preact';
+import { h } from "preact";
 // import { Link } from 'preact-router/match';
-import './style';
+import "./style";
 
 const Button = ({ text, buttonClass, clickHandler, children }) => (
   <button className={buttonClass} onClick={clickHandler}>
-    { children }
+    {children}
     {text}
   </button>
 );

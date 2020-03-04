@@ -1,11 +1,10 @@
-import { h, Component } from 'preact';
-import linkState from 'linkstate';
-import Button from '../../../../../../../button';
-import './style';
+import { h, Component } from "preact";
+import linkState from "linkstate";
+import Button from "../../../../../../../button";
+import "./style";
 // import { getRandomId } from '../../../../../../utils';
 
 export default class Values extends Component {
-
   constructor(props) {
     super(props);
     this.state = { ...this.props.value };
@@ -17,7 +16,7 @@ export default class Values extends Component {
   }
 
   componentDidUpdate() {
-    if(this.props.fieldType === 'Number') {
+    if (this.props.fieldType === "Number") {
       let newState = Object.assign({}, this.state);
       newState.value = Number(newState.value);
       this.props.saveValue(this.state._id, newState);
@@ -28,12 +27,34 @@ export default class Values extends Component {
 
   render({ className, fieldType }) {
     return (
-        <div>
-          <input class={className} type="text" placeholder="Label" value={this.state.label} onChange={linkState(this, 'label')} />
-          { fieldType === 'String' && <input class={className} type="text" placeholder="Value" value={this.state.value} onChange={linkState(this, 'value')} />}
-          { fieldType === 'Number' && <input class={className} type="number" placeholder="Value" value={this.state.value} onChange={linkState(this, 'value')} />}
-          <Button text="Delete" buttonClass="text-inline" clickHandler={this.deleteValue} />
-        </div>
+      <div>
+        <input
+          class={className}
+          type="text"
+          placeholder="Label"
+          value={this.state.label}
+          onChange={linkState(this, "label")}
+        />
+        {fieldType === "String" && (
+          <input
+            class={className}
+            type="text"
+            placeholder="Value"
+            value={this.state.value}
+            onChange={linkState(this, "value")}
+          />
+        )}
+        {fieldType === "Number" && (
+          <input
+            class={className}
+            type="number"
+            placeholder="Value"
+            value={this.state.value}
+            onChange={linkState(this, "value")}
+          />
+        )}
+        <Button text="Delete" buttonClass="text-inline" clickHandler={this.deleteValue} />
+      </div>
     );
   }
 }

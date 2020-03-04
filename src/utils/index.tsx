@@ -16,10 +16,10 @@ function getRandomId() {
 export function createNewGroup() {
   return {
     _id: getRandomId(),
-    id: '',
-    title: '',
-    subtitle: '',
-    fields: {}
+    id: "",
+    title: "",
+    subtitle: "",
+    fields: {},
   };
 }
 
@@ -34,14 +34,14 @@ export function createNewField(groupId, groupKey) {
   return {
     _id: getRandomId(),
     _groupId: groupId,
-    key: '',
-    type: 'String',
-    label: '',
+    key: "",
+    type: "String",
+    label: "",
     groupId: groupKey,
-    footnote: '',
+    footnote: "",
     required: false,
-    description: '',
-    constraints: {}
+    description: "",
+    constraints: {},
   };
 }
 
@@ -53,9 +53,9 @@ export function createNewField(groupId, groupKey) {
 export function createNewConstraint() {
   return {
     _id: getRandomId(),
-    type: 'maxLength',
-    value: 0
-  }
+    type: "maxLength",
+    value: 0,
+  };
 }
 
 /**
@@ -66,9 +66,9 @@ export function createNewConstraint() {
 export function createNewValue() {
   return {
     _id: getRandomId(),
-    label: '',
-    value: ''
-  }
+    label: "",
+    value: "",
+  };
 }
 
 /**
@@ -89,11 +89,11 @@ export function createJSONCode(groups) {
         if (fields.hasOwnProperty(prop)) {
           // eslint-disable-next-line no-unused-vars
           const { _id, _groupId, _constraintId, ...fieldProps } = fields[prop];
-          if(Object.keys(fieldProps.constraints).length > 0) {
+          if (Object.keys(fieldProps.constraints).length > 0) {
             const newConstraints = convertConstraintToJSON(fieldProps.constraints);
-            fieldProps['constraints'] = newConstraints;
+            fieldProps["constraints"] = newConstraints;
           } else {
-            delete fieldProps['constraints'];
+            delete fieldProps["constraints"];
           }
           fieldsArr.push(fieldProps);
         }
@@ -103,7 +103,7 @@ export function createJSONCode(groups) {
   }
   return {
     groups: groupsArr,
-    fields: fieldsArr
+    fields: fieldsArr,
   };
 }
 
@@ -115,17 +115,17 @@ export function createJSONCode(groups) {
  */
 export function convertConstraintToJSON(constraints) {
   let newConstraints = {};
-  for(const prop in constraints) {
-    if(constraints[prop].type === 'values') {
+  for (const prop in constraints) {
+    if (constraints[prop].type === "values") {
       let newValues = [];
-      for(const valueId in constraints[prop].value) {
-        const {_id, _constraintId, ...values} = constraints[prop].value[valueId];
+      for (const valueId in constraints[prop].value) {
+        const { _id, _constraintId, ...values } = constraints[prop].value[valueId];
         newValues.push(values);
       }
       newConstraints[constraints[prop].type] = newValues;
     } else {
       // Prevents a null value when switching from a 'values' constraint type to another
-      if(typeof constraints[prop].value === 'array' || typeof constraints[prop].value === 'object') {
+      if (typeof constraints[prop].value === "array" || typeof constraints[prop].value === "object") {
         constraints[prop].value = 0;
       }
       newConstraints[constraints[prop].type] = Number(constraints[prop].value);
@@ -145,10 +145,7 @@ export function updateGroupId(group) {
   if (fieldKeys.length >= 1) {
     fieldKeys.map(fieldId => {
       // Check the group's fields to see if the groupId has changed and change the fields groupId to match
-      if (
-        group.fields[fieldId]._groupId === group._id &&
-        group.id !== group.fields[fieldId].groupId
-      ) {
+      if (group.fields[fieldId]._groupId === group._id && group.id !== group.fields[fieldId].groupId) {
         group.fields[fieldId].groupId = group.id;
       }
     });
@@ -165,11 +162,11 @@ export function updateGroupId(group) {
  */
 export function updateLocalStorage(groups, state) {
   localStorage.setItem(
-    'store',
+    "store",
     JSON.stringify({
       groups,
       groupCount: state.groups,
-      fieldsCount: state.fields
-    })
+      fieldsCount: state.fields,
+    }),
   );
 }

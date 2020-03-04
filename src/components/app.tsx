@@ -1,64 +1,63 @@
 /* eslint-disable indent */
-import { h, Component } from 'preact';
-import Prism from 'prismjs';
-import 'prismjs/themes/prism-okaidia.css';
+import { h, Component } from "preact";
+import Prism from "prismjs";
+import "prismjs/themes/prism-okaidia.css";
 
-import Header from './header';
-import PreviewPane from './preview-pane';
-import Button from './button';
-import InputGroup from './input-group';
+import Header from "./header";
+import PreviewPane from "./preview-pane";
+import Button from "./button";
+import InputGroup from "./input-group";
 import {
   createNewField,
   createNewGroup,
   createJSONCode,
   updateGroupId,
   updateLocalStorage,
-  createNewConstraint
-} from '../utils';
+  createNewConstraint,
+} from "../utils";
 
 export default class App extends Component {
   state = {
     // eslint-disable-next-line indent
     showPreview: false,
     groups: 0,
-    fields: 0
+    fields: 0,
   };
   groups = {};
   json = {
     groups: [],
-    fields: []
+    fields: [],
   };
 
   togglePreviewPane = () => {
     this.setState({ showPreview: !this.state.showPreview });
-    document.body.classList.toggle('no-scroll');
+    document.body.classList.toggle("no-scroll");
   };
 
   updateCodePreview() {
     this.json = createJSONCode(this.groups);
-    document.querySelector('#code-block').innerHTML = JSON.stringify(
-      this.json,
-      undefined,
-      2
-    );
+    document.querySelector("#code-block").innerHTML = JSON.stringify(this.json, undefined, 2);
     setTimeout(() => Prism.highlightAll(), 0);
-  };
+  }
 
   resetForm = () => {
     this.groups = {};
     this.json = {
       groups: [],
-      fields: []
+      fields: [],
     };
-    this.setState({
-      // eslint-disable-next-line indent
-      showPreview: false,
-      groups: 0,
-      fields: 0
-    }, () => {
-      this.update();
-      this.addGroup();
-    });
+    this.setState(
+      {
+        // eslint-disable-next-line indent
+        showPreview: false,
+        groups: 0,
+        fields: 0,
+      },
+      () => {
+        this.update();
+        this.addGroup();
+      },
+    );
   };
 
   update = () => {
@@ -103,19 +102,20 @@ export default class App extends Component {
     this.setState(
       {
         groups: newGroupCount,
-        fields: newFieldsCount
-      }, () => {
+        fields: newFieldsCount,
+      },
+      () => {
         this.update();
-        if(this.state.groups < 1) {
+        if (this.state.groups < 1) {
           this.addGroup();
         }
-      }
+      },
     );
   };
 
   addConstraints = (groupId, fieldId) => {
     const newConstraint = createNewConstraint();
-    if(!this.groups[groupId].fields[fieldId].constraints) {
+    if (!this.groups[groupId].fields[fieldId].constraints) {
       this.groups[groupId].fields[fieldId].constraints = {};
       this.groups[groupId].fields[fieldId].constraints[newConstraint._id] = newConstraint;
       this.forceUpdate();
@@ -124,15 +124,15 @@ export default class App extends Component {
     }
     this.forceUpdate();
     this.update();
-  }
+  };
 
   componentWillMount() {
-    const localStorageGroup = JSON.parse(localStorage.getItem('store'));
+    const localStorageGroup = JSON.parse(localStorage.getItem("store"));
     if (localStorageGroup && localStorageGroup.groupCount >= 1) {
       this.groups = localStorageGroup.groups;
       this.setState({
         groups: localStorageGroup.groupCount,
-        fields: localStorageGroup.fieldsCount
+        fields: localStorageGroup.fieldsCount,
       });
     }
   }
@@ -152,16 +152,8 @@ export default class App extends Component {
           <div className="container">
             <h1>New Fields File</h1>
             <div className="button-nav">
-              <Button
-                text="Reset Form"
-                buttonClass="text-danger"
-                clickHandler={this.resetForm}
-              />
-              <Button
-                text="Preview"
-                buttonClass="primary"
-                clickHandler={this.togglePreviewPane}
-              />
+              <Button text="Reset Form" buttonClass="text-danger" clickHandler={this.resetForm} />
+              <Button text="Preview" buttonClass="primary" clickHandler={this.togglePreviewPane} />
             </div>
           </div>
         </div>
@@ -192,21 +184,12 @@ export default class App extends Component {
                 ))}
             </div>
           </div>
-          <Button
-            text="Add Group"
-            buttonClass="primary-large"
-            clickHandler={this.addGroup}
-          />
+          <Button text="Add Group" buttonClass="primary-large" clickHandler={this.addGroup} />
           <pre className="line-numbers">
             <code id="code-block" className="language-js" />
           </pre>
         </div>
-        {this.state.showPreview && (
-          <PreviewPane
-            groups={this.groups}
-            handleClose={this.togglePreviewPane}
-          />
-        )}
+        {this.state.showPreview && <PreviewPane groups={this.groups} handleClose={this.togglePreviewPane} />}
       </div>
     );
   }

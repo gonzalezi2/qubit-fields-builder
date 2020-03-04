@@ -1,6 +1,6 @@
-import { h } from 'preact';
+import { h } from "preact";
 // import { Link } from 'preact-router/match';
-import './style.scss';
+import "./style.scss";
 
 const Header = () => (
   <header class="Header">
