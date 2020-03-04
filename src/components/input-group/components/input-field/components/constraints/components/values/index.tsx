@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import linkState from 'linkstate';
 import Button from '../../../../../../../button';
-import style from './style';
+import './style';
 // import { getRandomId } from '../../../../../../utils';
 
 export default class Values extends Component {

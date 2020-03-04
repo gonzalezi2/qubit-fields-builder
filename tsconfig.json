@@ -1,0 +1,33 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+      "sourceMap": false,
+      "declaration": true,
+      "declarationDir": "build",
+      "declarationMap": false,
+      "moduleResolution": "node",
+      "downlevelIteration": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "noLib": false,
+      "outDir": "dist",
+      "target": "es5",
+      "module": "es6",
+      "jsx": "react",
+      "jsxFactory": "h",
+      "esModuleInterop": true,
+      "baseUrl": ".",
+      "lib": [
+        "dom",
+        "es5"
+      ]
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*/*.test.js",
+      "dist"
+    ]
+  }

@@ -1,9 +1,9 @@
 import { h } from 'preact';
 // import { Link } from 'preact-router/match';
-import style from './style';
+import './style.scss';
 
 const Header = () => (
-  <header class={style.header}>
+  <header class="Header">
     <div class="container">
       <h2>Qubit Fields Builder</h2>
       <nav>
