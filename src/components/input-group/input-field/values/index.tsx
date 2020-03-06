@@ -1,28 +1,40 @@
 import { h, Component } from "preact";
 import linkState from "linkstate";
-import Button from "../../../../../../../button";
+
+import Button from "../../../button";
 import "./style";
+import { Value, FieldTypes } from "../../../../interfaces";
 // import { getRandomId } from '../../../../../../utils';
 
-export default class Values extends Component {
+interface Props {
+  value: Value;
+  deleteValue: (valueId: string) => void;
+  saveValue: (valueId: string, value: Value) => void;
+  fieldType: FieldTypes;
+  className: string;
+}
+
+export default class Values extends Component<Props, Value> {
   constructor(props) {
     super(props);
     this.state = { ...this.props.value };
-    this.deleteValue = this.deleteValue.bind(this);
+    // this.deleteValue = this.deleteValue.bind(this);
   }
 
   deleteValue() {
     this.props.deleteValue(this.state._id);
   }
 
-  componentDidUpdate() {
+  updateValueIfTypeChanges(): Value {
     if (this.props.fieldType === "Number") {
-      let newState = Object.assign({}, this.state);
-      newState.value = Number(newState.value);
-      this.props.saveValue(this.state._id, newState);
+      return Object.assign({ value: Number(this.state.value) }, this.state);
     } else {
-      this.props.saveValue(this.state._id, this.state);
+      return this.state;
     }
+  }
+
+  componentDidUpdate() {
+    this.props.saveValue(this.state._id, this.updateValueIfTypeChanges());
   }
 
   render({ className, fieldType }) {

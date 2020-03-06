@@ -1,8 +1,10 @@
+import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON } from "../interfaces";
+
 /**
  * Returns a random 9 character alphanumeric string
  * @return {string}
  */
-function getRandomId() {
+function getRandomId(): string {
   return Math.random()
     .toString(36)
     .substr(2, 9);
@@ -11,9 +13,9 @@ function getRandomId() {
 /**
  * Returns a new group object
  * @function
- * @return {object}
+ * @return {Group}
  */
-export function createNewGroup() {
+export function createNewGroup(): Group {
   return {
     _id: getRandomId(),
     id: "",
@@ -26,11 +28,11 @@ export function createNewGroup() {
 /**
  * Returns a new input field object
  * @function
- * @param {string} - A random 9 character alphanumeric string id of the parent group
- * @param {string} - A string of the parent groupId from user input
- * @return {object} field - The new field object
+ * @param {string} groupID - A random 9 character alphanumeric string id of the parent group
+ * @param {string} groupKey - A string of the parent groupId from user input
+ * @return {Field} field - The new field object
  */
-export function createNewField(groupId, groupKey) {
+export function createNewField(groupId: string, groupKey: string): Field {
   return {
     _id: getRandomId(),
     _groupId: groupId,
@@ -48,9 +50,9 @@ export function createNewField(groupId, groupKey) {
 /**
  * Returns a new constraint
  * @function
- * @return {object} constraint - the new constraint object
+ * @return {Constraint} constraint - the new constraint object, defaults to maxLength
  */
-export function createNewConstraint() {
+export function createNewConstraint(): Constraint {
   return {
     _id: getRandomId(),
     type: "maxLength",
@@ -61,9 +63,9 @@ export function createNewConstraint() {
 /**
  * Returns a new value
  * @function
- * @return {object} value - the new value object
+ * @return {Value} value - the new value object
  */
-export function createNewValue() {
+export function createNewValue(): Value {
   return {
     _id: getRandomId(),
     label: "",
@@ -72,28 +74,55 @@ export function createNewValue() {
 }
 
 /**
+ * Converts constraints object into the correct JSON format as specified in the Qubit docs
+ * @function
+ * @param {Constraint} constraints - The constraints object that needs to be converted
+ * @return {ConstraintsJSON} - A constraint object with just the necessary key:value pairs
+ */
+export function convertConstraintToJSON(constraint: Constraint): ConstraintsJSON {
+  const newConstraint: ConstraintsJSON = { values: [] };
+  for (const prop in constraint) {
+    if (constraint[prop].type === "values") {
+      const newValues = [];
+      for (const valueId in constraint[prop].value) {
+        const { _id, _constraintId, ...values } = constraint[prop].value[valueId];
+        newValues.push(values);
+      }
+      newConstraint[constraint[prop].type] = newValues;
+    } else {
+      // Prevents a null value when switching from a 'values' constraint type to another
+      // if (typeof constraints[prop].value === "array" || typeof constraints[prop].value === "object") {
+      //   constraints[prop].value = 0;
+      // }
+      newConstraint[constraint[prop].type] = Number(constraint[prop].value || 0);
+    }
+  }
+  return newConstraint;
+}
+
+/**
  * Separates fields from groups and returns an object with both,
  * removing any unnecessary properties not useful to the fields.json file
  * @function
  * @param {object} groups - The current groups object from memory
- * @return {object} - An object with groups and fields properties
+ * @return {FieldsJSON} - An object with groups and fields properties
  */
-export function createJSONCode(groups) {
-  let groupsArr = [];
-  let fieldsArr = [];
+export function createJSONCode(groups: object): FieldsOutputJSON {
+  const groupsArr = [];
+  const fieldsArr = [];
   for (const prop in groups) {
-    if (groups.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(groups, prop)) {
       // eslint-disable-next-line no-unused-vars
       const { _id, fields, ...groupProps } = groups[prop];
       for (const prop in fields) {
-        if (fields.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(fields, prop)) {
           // eslint-disable-next-line no-unused-vars
           const { _id, _groupId, _constraintId, ...fieldProps } = fields[prop];
           if (Object.keys(fieldProps.constraints).length > 0) {
             const newConstraints = convertConstraintToJSON(fieldProps.constraints);
-            fieldProps["constraints"] = newConstraints;
+            fieldProps.constraints = newConstraints;
           } else {
-            delete fieldProps["constraints"];
+            delete fieldProps.constraints;
           }
           fieldsArr.push(fieldProps);
         }
@@ -108,39 +137,12 @@ export function createJSONCode(groups) {
 }
 
 /**
- * Converts constraints object into the correct JSON format as specified in the Qubit docs
- * @function
- * @param {object} constraints - The constraints object that needs to be converted
- * @return {object} - A constraint object with just the necessary key:value pairs
- */
-export function convertConstraintToJSON(constraints) {
-  let newConstraints = {};
-  for (const prop in constraints) {
-    if (constraints[prop].type === "values") {
-      let newValues = [];
-      for (const valueId in constraints[prop].value) {
-        const { _id, _constraintId, ...values } = constraints[prop].value[valueId];
-        newValues.push(values);
-      }
-      newConstraints[constraints[prop].type] = newValues;
-    } else {
-      // Prevents a null value when switching from a 'values' constraint type to another
-      if (typeof constraints[prop].value === "array" || typeof constraints[prop].value === "object") {
-        constraints[prop].value = 0;
-      }
-      newConstraints[constraints[prop].type] = Number(constraints[prop].value);
-    }
-  }
-  return newConstraints;
-}
-
-/**
  * Updates the groupId of all fields in the group object with an updated id
  * @function
- * @param {object} group - The group with the updated id
- * @return {object} - An updated group object with the updated fields property
+ * @param {Group} group - The group with the updated id
+ * @return {Group} group - An updated group object with the updated fields property
  */
-export function updateGroupId(group) {
+export function updateGroupId(group: Group): Group {
   const fieldKeys = Object.keys(group.fields);
   if (fieldKeys.length >= 1) {
     fieldKeys.map(fieldId => {
@@ -153,14 +155,20 @@ export function updateGroupId(group) {
   return group;
 }
 
+interface AppState {
+  showPreview: boolean;
+  groups: number;
+  fields: number;
+}
+
 /**
  * Updates the groups object stored in LocalStorage with the newest changes
  * Also updates the groups and fields counts
  * @function
- * @param {object} groups - The new updated groups object to store
+ * @param { string: Group } groups - The new updated groups object to store
  * @param {object} state - The updated state with new groups and fields counts to store
  */
-export function updateLocalStorage(groups, state) {
+export function updateLocalStorage(groups: object, state: AppState) {
   localStorage.setItem(
     "store",
     JSON.stringify({

@@ -39,6 +39,10 @@ module.exports = {
     "react/react-in-jsx-scope": "error",
     "standard/no-callback-literal": "off",
     "prefer-promise-reject-errors": ["error", { allowEmptyReject: true }],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "ignoreRestSiblings": true
+    }]
   },
   overrides: [
     // Override some TypeScript rules just for .js files

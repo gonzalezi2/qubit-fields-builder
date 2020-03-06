@@ -15,14 +15,21 @@ import {
   updateLocalStorage,
   createNewConstraint,
 } from "../utils";
+import { Group } from "src/interfaces";
 
-export default class App extends Component {
+interface State {
+  showPreview: boolean;
+  groups: number;
+  fields: number;
+}
+
+export default class App extends Component<State> {
   state = {
-    // eslint-disable-next-line indent
     showPreview: false,
     groups: 0,
     fields: 0,
   };
+
   groups = {};
   json = {
     groups: [],
@@ -65,7 +72,7 @@ export default class App extends Component {
     this.updateCodePreview();
   };
 
-  addField = (groupId, groupKey) => {
+  addField = (groupId: string, groupKey: string) => {
     const newField = createNewField(groupId, groupKey);
     // state.fields.groups[groupId].fields = newGroup;
     this.groups[groupId].fields[newField._id] = newField;
@@ -74,7 +81,7 @@ export default class App extends Component {
     this.setState({ fields: this.state.fields + 1 }, this.update);
   };
 
-  deleteField = (groupId, fieldId) => {
+  deleteField = (groupId: string, fieldId: string) => {
     delete this.groups[groupId].fields[fieldId];
     this.setState({ fields: this.state.fields - 1 });
     this.updateGroup(this.groups[groupId]);
@@ -86,13 +93,13 @@ export default class App extends Component {
     this.setState({ groups: this.state.groups + 1 }, this.update);
   };
 
-  updateGroup = group => {
+  updateGroup = (group: Group) => {
     // Loop through the updated group's fields to check for a change in the group id
     this.groups[group._id] = updateGroupId(group);
     this.update();
   };
 
-  deleteGroup = groupId => {
+  deleteGroup = (groupId: string) => {
     const fieldsToDelete = Object.keys(this.groups[groupId].fields).length;
     delete this.groups[groupId];
 
@@ -113,7 +120,7 @@ export default class App extends Component {
     );
   };
 
-  addConstraints = (groupId, fieldId) => {
+  addConstraints = (groupId: string, fieldId: string) => {
     const newConstraint = createNewConstraint();
     if (!this.groups[groupId].fields[fieldId].constraints) {
       this.groups[groupId].fields[fieldId].constraints = {};

@@ -21,6 +21,11 @@
         "dom",
         "es5"
       ]
+      /* used for shortening import paths
+      ,
+      "paths": {
+        "style/*": [ "src/style/*" ],
+      }*/
     },
     "include": [
       "src/**/*"

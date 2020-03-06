@@ -1,36 +1,46 @@
 import { h, Component } from "preact";
 import linkState from "linkstate";
-import Button from "../../../../../button";
-import style from "./style";
-import Values from "./components/values";
-import { createNewValue } from "../../../../../../utils";
 
-export default class Constraint extends Component {
+import Button from "../../../button";
+import "./style";
+import Values from "../values";
+import { createNewValue } from "../../../../utils";
+import { FieldTypes, Constraint as IConstraint } from "../../../../interfaces";
+
+interface Props {
+  constraint: IConstraint;
+  key: string;
+  type: FieldTypes;
+  saveConstraint: (id: string, constraint: IConstraint) => void;
+  deleteConstraint: (constraintID: string) => void;
+}
+
+export default class Constraint extends Component<Props, IConstraint> {
+  types = ["String", "Number", "Duration"];
+
   constructor(props) {
     super(props);
 
     this.state = { ...this.props.constraint };
-    this.types = ["String", "Number", "Duration"];
   }
 
-  deleteValue = id => {
-    let newState = Object.assign({}, this.state);
+  deleteValue = (id: string) => {
+    const newState = Object.assign({}, this.state);
     delete newState.value[id];
     this.setState(newState);
   };
 
   addValue = () => {
-    let newState = Object.assign({}, this.state);
-    if (typeof newState.value === "number") {
-      newState.value = {};
-    }
+    const newStateValue = typeof this.state.value === "number" ? {} : this.state.value;
+    const newState = Object.assign({ value: newStateValue }, this.state);
     const newValue = createNewValue();
+
     newState.value[newValue._id] = newValue;
     this.setState(newState);
   };
 
   saveValue = (id, value) => {
-    let newState = Object.assign({}, this.state);
+    const newState = Object.assign({}, this.state);
     newState.value[id] = value;
     this.props.saveConstraint(this.state._id, newState);
   };
@@ -39,29 +49,35 @@ export default class Constraint extends Component {
     this.props.deleteConstraint(this.state._id);
   };
 
+  updateConstraintWhenValueTypeChanges() {
+    const { type, value } = this.state;
+
+    let newValue: number | object;
+    if (type !== "values" && typeof value === "object") {
+      newValue = 0;
+      // this.setState(newState);
+      return Object.assign({ value: newValue }, this.state);
+    } else if (type === "values" && typeof value === "string") {
+      newValue = [];
+      return Object.assign({ value: newValue }, this.state);
+    }
+
+    return this.state;
+  }
+
   componentDidUpdate() {
     if (this.props.type !== "Number" && this.props.type !== "String" && this.state.type === "values") {
       this.deleteConstraint();
     }
-    if (this.state.type !== "values" && typeof this.state.value === "object") {
-      let newState = Object.assign({}, this.state);
-      newState.value = 0;
-      this.props.saveConstraint(this.state._id, newState);
-      this.setState(newState);
-    } else if (this.state.type === "values" && typeof this.state.value === "string") {
-      let newState = Object.assign({}, this.state);
-      newState.value = [];
-      this.props.saveConstraint(this.state._id, newState);
-    } else {
-      this.props.saveConstraint(this.state._id, this.state);
-    }
+
+    this.props.saveConstraint(this.state._id, this.updateConstraintWhenValueTypeChanges());
   }
 
   render({ type }) {
     return (
       <div>
-        <div class={style.inputGroup}>
-          <div class={style.half + " select-wrapper"}>
+        <div class="inputGroup">
+          <div class="half select-wrapper">
             <select name="type" value={this.state.type} onChange={linkState(this, "type")}>
               <option value="maxLength">Max Length</option>
               <option value="minLength">Min Length</option>
@@ -69,20 +85,20 @@ export default class Constraint extends Component {
             </select>
           </div>
           {this.state.type !== "values" && (
-            <label class={style.quarter}>
-              <input type="number" value={this.state.value} onChange={linkState(this, "value")} />
+            <label class="quarter">
+              <input type="number" value={String(this.state.value)} onChange={linkState(this, "value")} />
             </label>
           )}
           <Button text="✖" buttonClass="input" clickHandler={this.deleteConstraint} />
           {this.state.type === "values" && (
-            <div class={style.values}>
+            <div class="values">
               {Object.keys(this.state.value).length > 0 &&
                 Object.keys(this.state.value).map(id => (
                   <Values
                     key={id}
                     value={this.state.value[id]}
                     fieldType={type}
-                    className={style.half}
+                    className="half"
                     saveValue={this.saveValue}
                     deleteValue={this.deleteValue}
                   />

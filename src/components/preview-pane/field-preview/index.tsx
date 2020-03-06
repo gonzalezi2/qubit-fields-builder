@@ -1,6 +1,8 @@
 import { h, Component } from "preact";
-import Button from "../../../button";
+
+import Button from "../../button";
 import "./style";
+import { Field } from "src/interfaces";
 
 interface Inputs {
   String: string;
@@ -9,30 +11,30 @@ interface Inputs {
 }
 
 export default class FieldPreview extends Component<Inputs> {
-  constructor(props) {
-    super(props);
+  types = {
+    String: this.renderInput.bind(this),
+    StringValues: this.renderValues.bind(this),
+    Boolean: this.renderCheckbox.bind(this),
+    Image: this.renderImage.bind(this),
+    Number: this.renderInput.bind(this),
+    URL: this.renderInput.bind(this),
+    StringArray: this.renderStringArray.bind(this),
+    TimeRange: this.renderTimeRange.bind(this),
+    Duration: this.renderDuration.bind(this),
+  };
 
-    // this.state = { ...this.props.field };
-    this.types = {
-      String: this.renderInput.bind(this),
-      StringValues: this.renderValues.bind(this),
-      Boolean: this.renderCheckbox.bind(this),
-      Image: this.renderImage.bind(this),
-      Number: this.renderInput.bind(this),
-      URL: this.renderInput.bind(this),
-      StringArray: this.renderStringArray.bind(this),
-      TimeRange: this.renderTimeRange.bind(this),
-      Duration: this.renderDuration.bind(this),
-    };
+  inputs = {
+    String: "text",
+    Number: "number",
+    URL: "url",
+  };
+  // constructor(props) {
+  //   super(props);
 
-    this.inputs = {
-      String: "text",
-      Number: "number",
-      URL: "url",
-    };
-  }
+  //   this.state = { ...this.props.field };
+  // }
 
-  renderTooltip(text) {
+  renderTooltip(text: string) {
     return (
       <span class="tooltipContainer">
         <svg data-icon-name="InfoIcon" class="icon" viewBox="0 0 16 16" style="transform: rotate(0deg);">
@@ -43,7 +45,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderCheckbox(field) {
+  renderCheckbox(field: Field) {
     return (
       <div class="field">
         <label class="fieldLabel">
@@ -56,7 +58,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderInput(field) {
+  renderInput(field: Field) {
     return (
       <div class="field">
         <div class="fieldLabel">
@@ -68,7 +70,8 @@ export default class FieldPreview extends Component<Inputs> {
       </div>
     );
   }
-  renderValues(field) {
+
+  renderValues(field: Field) {
     const values = field.constraints[field._constraintId].value;
     return (
       <div class="field">
@@ -80,7 +83,9 @@ export default class FieldPreview extends Component<Inputs> {
           <div class="selectWrapper">
             <select>
               {Object.keys(values).map(id => (
-                <option value={values[id]["value"]}>{values[id].label}</option>
+                <option key={id} value={values[id].value}>
+                  {values[id].label}
+                </option>
               ))}
             </select>
             <svg
@@ -98,7 +103,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderTimeRange(field) {
+  renderTimeRange(field: Field) {
     return (
       <div class="field">
         <div class="fieldLabel">
@@ -134,7 +139,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderDuration(field) {
+  renderDuration(field: Field) {
     return (
       <div class="field">
         <div class="fieldLabel">
@@ -168,7 +173,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderImage(field) {
+  renderImage(field: Field) {
     return (
       <div class="field">
         <div class="fieldLabel">

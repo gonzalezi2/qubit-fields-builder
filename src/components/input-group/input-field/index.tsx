@@ -1,10 +1,22 @@
 import { h, Component } from "preact";
 import linkState from "linkstate";
-import Button from "../../../button";
-import style from "./style";
-import Constraint from "./components/constraints";
 
-export default class InputField extends Component {
+import Button from "../../button";
+import "./style";
+import Constraint from "./constraints";
+import { Field, Constraint as IConstraint } from "../../../interfaces";
+
+interface Props {
+  deleteField: (groupId: string, fieldId: string) => void;
+  addConstraints: (groupId: string, fieldId: string) => void;
+  saveConstraint: (fieldID: string, constraintID: string, constraint: IConstraint) => void;
+  deleteConstraint: (fieldID: string, constraintID: string) => void;
+  saveField: (fieldID, field) => void;
+  key: string;
+  field: Field;
+}
+
+export default class InputField extends Component<Props, Field> {
   deleteField = () => {
     this.props.deleteField(this.props.field._groupId, this.props.field._id);
   };
@@ -13,40 +25,42 @@ export default class InputField extends Component {
     this.props.addConstraints(this.state._groupId, this.state._id);
   };
 
-  saveConstraint = (id, constraint) => {
+  saveConstraint = (id: string, constraint: IConstraint) => {
     this.props.saveConstraint(this.state._id, id, constraint);
   };
 
-  deleteConstraint = constraintID => {
+  deleteConstraint = (constraintID: string) => {
     this.props.deleteConstraint(this.state._id, constraintID);
   };
 
-  constructor(props) {
+  types: string[] = ["String", "StringArray", "Image", "URL", "Number", "Boolean", "TimeRange", "Duration"];
+
+  constructor(props: Props) {
     super(props);
 
     this.state = { ...this.props.field };
-    this.types = ["String", "StringArray", "Image", "URL", "Number", "Boolean", "TimeRange", "Duration"];
+  }
+
+  updateConstraintWhenTypeChanges() {
+    const { type, constraints } = this.state;
+
+    if (type !== "String" && type !== "Number" && type !== "Duration" && Object.keys(constraints).length > 0) {
+      const newState = Object.assign({ constraint: {} }, this.state);
+      // newState.constraints = {};
+      this.setState(newState);
+      return newState;
+    }
+
+    return this.state;
   }
 
   componentDidUpdate() {
-    if (
-      this.state.type !== "String" &&
-      this.state.type !== "Number" &&
-      this.state.type !== "Duration" &&
-      Object.keys(this.state.constraints).length > 0
-    ) {
-      let newState = Object.assign({}, this.state);
-      newState.constraints = {};
-      this.setState(newState);
-      this.props.saveField(this.state._id, newState);
-    } else {
-      this.props.saveField(this.state._id, this.state);
-    }
+    this.props.saveField(this.state._id, this.updateConstraintWhenTypeChanges());
   }
 
-  render({ field, saveField }) {
+  render() {
     return (
-      <div class={style.inputField}>
+      <div class="inputField">
         <input type="text" name="key" value={this.state.key} placeholder="Key" onChange={linkState(this, "key")} />
         <input
           type="text"
@@ -70,20 +84,16 @@ export default class InputField extends Component {
           onChange={linkState(this, "footnote")}
         />
         <label>
-          <input
-            type="checkbox"
-            name="required"
-            value={this.state.required}
-            checked={this.state.required}
-            onChange={linkState(this, "required")}
-          />{" "}
+          <input type="checkbox" name="required" checked={this.state.required} onChange={linkState(this, "required")} />
           Required
         </label>
         <div className="select-wrapper">
           <select name="type" value={this.state.type} onChange={linkState(this, "type")}>
             <option value="">Please select a field type</option>
             {this.types.map(type => (
-              <option value={type}>{type}</option>
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
         </div>
@@ -97,7 +107,7 @@ export default class InputField extends Component {
             deleteConstraint={this.deleteConstraint}
           />
         ))}
-        <div class={style.footer}>
+        <div class="footer">
           <Button text="Delete Input" buttonClass="text-danger" clickHandler={this.deleteField} />
           {(this.state.type === "String" || this.state.type === "Number" || this.state.type === "Duration") && (
             <Button text="Add Constraint" buttonClass="text" clickHandler={this.addConstraints} />

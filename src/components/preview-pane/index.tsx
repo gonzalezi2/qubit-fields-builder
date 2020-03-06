@@ -1,11 +1,11 @@
 import { h } from "preact";
 // import { Link } from 'preact-router/match';
-import FieldPreview from "./components/field-preview";
-import style from "./style";
+import FieldPreview from "./field-preview";
+import "./style.scss";
 
 const PreviewPane = ({ groups, handleClose }) => (
   <div>
-    <div class={style.overlay} onClick={handleClose}></div>
+    <div className="overlay" onClick={handleClose} />
     <div class={style.previewPane}>
       <div class={style.header}>
         <h3>Edit experience content</h3>
