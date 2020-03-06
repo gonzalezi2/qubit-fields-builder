@@ -6,21 +6,18 @@
       "declarationDir": "build",
       "declarationMap": false,
       "moduleResolution": "node",
+      "allowJs": true,
+      "outDir": "./dist",
       "downlevelIteration": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "noLib": false,
-      "outDir": "dist",
       "target": "es5",
       "module": "es6",
       "jsx": "react",
       "jsxFactory": "h",
       "esModuleInterop": true,
       "baseUrl": ".",
-      "lib": [
-        "dom",
-        "es5"
-      ]
       /* used for shortening import paths
       ,
       "paths": {
