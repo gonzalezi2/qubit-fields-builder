@@ -6,7 +6,7 @@ interface ButtonProps {
   text: string;
   buttonClass: string;
   clickHandler: () => void;
-  children?: string | HTMLOrSVGElement;
+  children?: string | h.JSX.Element;
 }
 
 const Button = ({ text, buttonClass, clickHandler, children }: ButtonProps) => (

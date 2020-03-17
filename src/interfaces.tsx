@@ -19,6 +19,7 @@ export interface Field {
   required: boolean;
   description: string;
   constraints: object;
+  _constraintId?: string;
 }
 
 export interface Constraint {

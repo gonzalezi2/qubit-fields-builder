@@ -5,7 +5,7 @@ import Button from "../../../button";
 import "./style";
 import Values from "../values";
 import { createNewValue } from "../../../../utils";
-import { FieldTypes, Constraint as IConstraint } from "../../../../interfaces";
+import { FieldTypes, Constraint as IConstraint, Value } from "../../../../interfaces";
 
 interface Props {
   constraint: IConstraint;
@@ -18,7 +18,7 @@ interface Props {
 export default class Constraint extends Component<Props, IConstraint> {
   types = ["String", "Number", "Duration"];
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = { ...this.props.constraint };
@@ -32,14 +32,14 @@ export default class Constraint extends Component<Props, IConstraint> {
 
   addValue = () => {
     const newStateValue = typeof this.state.value === "number" ? {} : this.state.value;
-    const newState = Object.assign({ value: newStateValue }, this.state);
+    const newState = Object.assign(this.state, { value: newStateValue });
     const newValue = createNewValue();
 
     newState.value[newValue._id] = newValue;
     this.setState(newState);
   };
 
-  saveValue = (id, value) => {
+  saveValue = (id: string, value: Value) => {
     const newState = Object.assign({}, this.state);
     newState.value[id] = value;
     this.props.saveConstraint(this.state._id, newState);

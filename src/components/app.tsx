@@ -23,7 +23,7 @@ interface State {
   fields: number;
 }
 
-export default class App extends Component<State> {
+export default class App extends Component<{}, State> {
   state = {
     showPreview: false,
     groups: 0,

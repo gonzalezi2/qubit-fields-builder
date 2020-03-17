@@ -2,15 +2,13 @@ import { h, Component } from "preact";
 
 import Button from "../../button";
 import "./style";
-import { Field } from "src/interfaces";
+import { Group, Field } from "src/interfaces";
 
-interface Inputs {
-  String: string;
-  Number: string;
-  URL: string;
+interface Props {
+  group: Group;
 }
 
-export default class FieldPreview extends Component<Inputs> {
+export default class FieldPreview extends Component<Props> {
   types = {
     String: this.renderInput.bind(this),
     StringValues: this.renderValues.bind(this),
@@ -180,7 +178,7 @@ export default class FieldPreview extends Component<Inputs> {
           <span class="label">"label"</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
-        <Button text="Add Image" buttonClass="secondary">
+        <Button text="Add Image" buttonClass="secondary" clickHandler={() => undefined}>
           <svg data-icon-name="PlusIcon" class="plus-icon icon" viewBox="0 0 16 16" style="transform: rotate(0deg);">
             <path d="M15,7 L9,7 L9,1 C9,0.4 8.6,0 8,0 C7.4,0 7,0.4 7,1 L7,7 L1,7 C0.4,7 0,7.4 0,8 C0,8.6 0.4,9 1,9 L7,9 L7,15 C7,15.6 7.4,16 8,16 C8.6,16 9,15.6 9,15 L9,9 L15,9 C15.6,9 16,8.6 16,8 C16,7.4 15.6,7 15,7 Z" />
           </svg>
@@ -190,7 +188,7 @@ export default class FieldPreview extends Component<Inputs> {
     );
   }
 
-  renderStringArray(field) {
+  renderStringArray(field: Field) {
     return (
       <div class="field">
         <div class="fieldLabel">
@@ -198,7 +196,7 @@ export default class FieldPreview extends Component<Inputs> {
           {field.description && this.renderTooltip(field.description)}
         </div>
         <div className="stringArrayInput">
-          <Button text="One more option" buttonClass="secondary">
+          <Button text="One more option" buttonClass="secondary" clickHandler={() => undefined}>
             <svg data-icon-name="PlusIcon" class="plus-icon icon" viewBox="0 0 16 16" style="transform: rotate(0deg);">
               <path d="M15,7 L9,7 L9,1 C9,0.4 8.6,0 8,0 C7.4,0 7,0.4 7,1 L7,7 L1,7 C0.4,7 0,7.4 0,8 C0,8.6 0.4,9 1,9 L7,9 L7,15 C7,15.6 7.4,16 8,16 C8.6,16 9,15.6 9,15 L9,9 L15,9 C15.6,9 16,8.6 16,8 C16,7.4 15.6,7 15,7 Z" />
             </svg>
