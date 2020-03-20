@@ -63,7 +63,7 @@ export default class InputGroup extends Component<Props, Group> {
 
   render({ group }) {
     return (
-      <div className="inputGroup">
+      <div class="group-block">
         <div class="group">
           <h4>Group</h4>
           <input name="id" type="text" value={this.state.id} onChange={linkState(this, "id")} placeholder="Group Id" />

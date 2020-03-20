@@ -155,25 +155,25 @@ export default class App extends Component<{}, State> {
     return (
       <div id="app">
         <Header />
-        <div className="header">
-          <div className="container">
+        <div class="subheader">
+          <div class="container">
             <h1>New Fields File</h1>
-            <div className="button-nav">
+            <div class="button-nav">
               <Button text="Reset Form" buttonClass="text-danger" clickHandler={this.resetForm} />
               <Button text="Preview" buttonClass="primary" clickHandler={this.togglePreviewPane} />
             </div>
           </div>
         </div>
 
-        <div className="container">
+        <div class="container">
           {/* Grouped Fields */}
-          <div className="group-box">
-            <div className="group-header">
+          <div class="group-box">
+            <div class="group-header">
               <h3>Groups</h3>
             </div>
-            <div className="group-body">
+            <div class="group-body">
               {Object.keys(this.groups).length < 1 && (
-                <div className="emptyGroup">
+                <div class="emptyGroup">
                   <h3>-</h3>
                 </div>
               )}
@@ -192,8 +192,8 @@ export default class App extends Component<{}, State> {
             </div>
           </div>
           <Button text="Add Group" buttonClass="primary-large" clickHandler={this.addGroup} />
-          <pre className="line-numbers">
-            <code id="code-block" className="language-js" />
+          <pre class="line-numbers">
+            <code id="code-block" class="language-js" />
           </pre>
         </div>
         {this.state.showPreview && <PreviewPane groups={this.groups} handleClose={this.togglePreviewPane} />}

@@ -76,7 +76,7 @@ export default class Constraint extends Component<Props, IConstraint> {
   render({ type }) {
     return (
       <div>
-        <div class="inputGroup">
+        <div class="input-group">
           <div class="half select-wrapper">
             <select name="type" value={this.state.type} onChange={linkState(this, "type")}>
               <option value="maxLength">Max Length</option>

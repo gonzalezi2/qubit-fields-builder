@@ -3,7 +3,7 @@ import { h } from "preact";
 import "./style.scss";
 
 const Header = () => (
-  <header class="Header">
+  <header class="header">
     <div class="container">
       <h2>Qubit Fields Builder</h2>
       <nav>
