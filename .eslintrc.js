@@ -12,6 +12,13 @@ module.exports = {
     node: true,
     es6: true,
   },
+  globals: {
+    "describe": "writable",
+    "expect": "writable",
+    "it": "writable",
+    "jest": "writable",
+    "beforeEach": "writable"
+  },
   plugins: ["@typescript-eslint", "react"],
   settings: {
     react: {
@@ -40,6 +47,7 @@ module.exports = {
     "standard/no-callback-literal": "off",
     "prefer-promise-reject-errors": ["error", { allowEmptyReject: true }],
     "no-unused-vars": "off",
+    "no-undef": "error",
     "@typescript-eslint/no-unused-vars": ["error", {
       "ignoreRestSiblings": true
     }]

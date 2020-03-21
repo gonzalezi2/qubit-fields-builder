@@ -4,19 +4,9 @@ import "./style.scss";
 
 import Button from "../button";
 import InputField from "./input-field";
-import { Group, Constraint } from "../../interfaces";
+import { Group, GroupProps, Constraint } from "../../interfaces";
 
-interface Props {
-  saveGroup: (group: Group) => void;
-  deleteGroup: (groupId: string) => void;
-  addField: (_id: string, id: string) => void;
-  group: Group;
-  key: string;
-  deleteField: (groupId: string, fieldId: string) => void;
-  addConstraints: (groupId: string, fieldId: string) => void;
-}
-
-export default class InputGroup extends Component<Props, Group> {
+export default class InputGroup extends Component<GroupProps, Group> {
   saveField = (fieldID: string, field: string) => {
     this.setState(state => {
       // Checks to see if the field exists before trying to apply a change
@@ -52,7 +42,7 @@ export default class InputGroup extends Component<Props, Group> {
     this.props.deleteGroup(this.state._id);
   };
 
-  constructor(props: Props) {
+  constructor(props: GroupProps) {
     super(props);
     this.state = { ...this.props.group };
   }

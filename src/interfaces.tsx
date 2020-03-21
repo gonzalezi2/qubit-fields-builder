@@ -6,6 +6,16 @@ export interface Group {
   fields: object;
 }
 
+export interface GroupProps {
+  saveGroup: (group: Group) => void;
+  deleteGroup: (groupId: string) => void;
+  addField: (_id: string, id: string) => void;
+  group: Group;
+  key: string;
+  deleteField: (groupId: string, fieldId: string) => void;
+  addConstraints: (groupId: string, fieldId: string) => void;
+}
+
 export type FieldTypes = "String" | "StringArray" | "Image" | "URL" | "Number" | "Boolean" | "TimeRange" | "Duration";
 
 export interface Field {
