@@ -1,5 +1,5 @@
 import { h } from "preact";
-import FieldPreview from "./components/field-preview";
+import FieldPreview from "./field-preview";
 import PreviewPane from ".";
 import { shallow } from "enzyme";
 
@@ -7,6 +7,7 @@ describe("Preview Pane", () => {
   it("should render with the right elements and without any errors", () => {
     const props = {
       groups: {},
+      handleClose: jest.fn(),
     };
     const component = shallow(<PreviewPane {...props} />);
     const header = component.find("h3");
@@ -19,6 +20,7 @@ describe("Preview Pane", () => {
 
   it("should render 2 field-preview components when there are two groups", () => {
     const props = {
+      handleClose: jest.fn(),
       groups: {
         df64d5f4d: {},
         df1d181dc: {},

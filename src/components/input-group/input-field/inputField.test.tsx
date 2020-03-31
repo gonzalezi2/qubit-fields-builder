@@ -1,12 +1,12 @@
 import { h } from "preact";
 import InputField from "../input-field";
-import Button from "../../../button";
-import { shallow, render, mount } from "enzyme";
+import Button from "../../button";
+import { shallow, mount } from "enzyme";
+import { FieldProps } from "src/interfaces";
 
 describe("Input Field", () => {
   it("should render the component without any errors", () => {
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -20,15 +20,18 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = shallow(<InputField {...props} />);
     expect(component.length).toBe(1);
   });
 
   it("should render a component with 5 inputs and 1 select element", () => {
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -42,7 +45,11 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = shallow(<InputField {...props} />);
     const inputs = component.find("input");
@@ -53,8 +60,7 @@ describe("Input Field", () => {
   });
 
   it("should render a component with a delete button with the text Delete Input", () => {
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -68,7 +74,11 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = shallow(<InputField {...props} />);
     const button = component.find(Button);
@@ -77,8 +87,7 @@ describe("Input Field", () => {
   });
 
   it("should render a component with inputs with empty or given values", () => {
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -92,7 +101,11 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = mount(<InputField {...props} />);
     const inputs = component.find("input");
@@ -111,8 +124,7 @@ describe("Input Field", () => {
   });
 
   it("should update the component inputs with new values", () => {
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -126,7 +138,11 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = shallow(<InputField {...props} />);
     const inputs = component.find("input");
@@ -164,13 +180,11 @@ describe("Input Field", () => {
     expect(component.state("required")).toBe(true);
     expect(component.state("type")).toBe("Image");
 
-    expect(saveField).toBeCalledWith(props.field._id, component.state());
+    expect(props.saveField).toBeCalledWith(props.field._id, component.state());
   });
 
   it("should unmount/delete the component when clicking on the delete input button", () => {
-    const deleteField = jest.fn();
-    const saveField = jest.fn();
-    const props = {
+    const props: FieldProps = {
       key: "d6f4d51df5",
       field: {
         _id: "d6f4d51df5",
@@ -184,16 +198,19 @@ describe("Input Field", () => {
         description: "",
         constraints: {},
       },
-      saveField,
-      deleteField,
+      deleteField: jest.fn(),
+      addConstraints: jest.fn(),
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+      saveField: jest.fn(),
     };
     const component = mount(<InputField {...props} />);
-    component.instance().deleteField = deleteField;
+    component.instance().deleteField = props.deleteField;
     component.instance().forceUpdate();
     const deleteButton = component.find("button").at(0);
     deleteButton.props().onClick();
 
-    expect(deleteField).toHaveBeenCalled();
+    expect(props.deleteField).toHaveBeenCalled();
     component.unmount();
   });
 });

@@ -1,11 +1,12 @@
 import { h } from "preact";
 import FieldPreview from ".";
-import Button from "../../../button";
-import { shallow, render, mount } from "enzyme";
+import Button from "../../button";
+import { shallow } from "enzyme";
+import { Group } from "src/interfaces";
 
 describe("Input Group", () => {
   it("should render without any errors", () => {
-    const group = {
+    const group: Group = {
       _id: "dgldfjl845514d",
       id: "group-title",
       title: "This is the group",
@@ -33,7 +34,7 @@ describe("Input Group", () => {
   });
 
   it("should render with the proper props", () => {
-    const group = {
+    const group: Group = {
       _id: "dgldfjl845514d",
       id: "group-title",
       title: "This is the group",
@@ -65,7 +66,11 @@ describe("Input Group", () => {
   });
 
   it("should render a text input when the field type is String", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "String",
@@ -83,7 +88,11 @@ describe("Input Group", () => {
   });
 
   it("should render a checkbox input when the field type is Boolean", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "Boolean",
@@ -100,7 +109,11 @@ describe("Input Group", () => {
   });
 
   it("should render a button with the text Add Image when the field type is Image", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "Image",
@@ -117,7 +130,11 @@ describe("Input Group", () => {
   });
 
   it("should render a number input when the field type is Number", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "Number",
@@ -134,7 +151,11 @@ describe("Input Group", () => {
   });
 
   it("should render a url input when the field type is URL", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "URL",
@@ -151,7 +172,11 @@ describe("Input Group", () => {
   });
 
   it("should render a button with the text when the field type is StringArray", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "StringArray",
@@ -170,7 +195,11 @@ describe("Input Group", () => {
   });
 
   it('should render two "inputs" when the field type is TimeRange', () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "TimeRange",
@@ -195,7 +224,11 @@ describe("Input Group", () => {
   });
 
   it("should render a number input and a select dropdown when the field type is Duration", () => {
-    const group = {
+    const group: Group = {
+      _id: "",
+      id: "",
+      title: "",
+      subtitle: "",
       fields: {
         d6d6d15c1fv5: {
           type: "Duration",

@@ -17,7 +17,8 @@ module.exports = {
     "expect": "writable",
     "it": "writable",
     "jest": "writable",
-    "beforeEach": "writable"
+    "beforeEach": "writable",
+    "afterEach": "writable"
   },
   plugins: ["@typescript-eslint", "react"],
   settings: {

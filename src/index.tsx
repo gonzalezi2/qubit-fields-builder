@@ -6,7 +6,6 @@ export default App;
 
 declare const module: any;
 
-// const mountNode = document.getElementById("app") as Element;
 render(<App />, document.body);
 
 // Hot Module Replacement

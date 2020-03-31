@@ -38,10 +38,28 @@ export interface Constraint {
   value: number | object;
 }
 
+export interface ConstraintProps {
+  constraint: Constraint;
+  key: string;
+  type: FieldTypes;
+  saveConstraint: (id: string, constraint: Constraint) => void;
+  deleteConstraint: (constraintID: string) => void;
+}
+
 export interface Value {
   _id: string;
   label: string;
   value: string;
+}
+
+export interface FieldProps {
+  deleteField: (groupId: string, fieldId: string) => void;
+  addConstraints: (groupId: string, fieldId: string) => void;
+  saveConstraint: (fieldID: string, constraintID: string, constraint: Constraint) => void;
+  deleteConstraint: (fieldID: string, constraintID: string) => void;
+  saveField: (fieldID: string, field: object) => void;
+  key: string;
+  field: Field;
 }
 
 export interface GroupsJSON {

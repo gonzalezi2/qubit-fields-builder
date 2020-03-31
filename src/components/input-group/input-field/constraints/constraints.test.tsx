@@ -1,11 +1,23 @@
 import { h } from "preact";
 import Constraint from "../constraints";
 // import Button from '../../../button';
-import { shallow, render, mount } from "enzyme";
+import { shallow } from "enzyme";
+import { ConstraintProps } from "../../../../interfaces";
 
 describe("Constraint", () => {
   it("should render the component without any errors", () => {
-    const component = shallow(<Constraint />);
+    const props: ConstraintProps = {
+      constraint: {
+        _id: "string",
+        type: "minLength",
+        value: 0,
+      },
+      key: "",
+      type: "String",
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+    };
+    const component = shallow(<Constraint {...props} />);
     expect(component.length).toBe(1);
   });
 

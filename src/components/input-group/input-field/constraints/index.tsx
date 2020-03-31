@@ -5,20 +5,12 @@ import Button from "../../../button";
 import "./style";
 import Values from "../values";
 import { createNewValue } from "../../../../utils";
-import { FieldTypes, Constraint as IConstraint, Value } from "../../../../interfaces";
+import { Constraint as IConstraint, ConstraintProps, Value } from "../../../../interfaces";
 
-interface Props {
-  constraint: IConstraint;
-  key: string;
-  type: FieldTypes;
-  saveConstraint: (id: string, constraint: IConstraint) => void;
-  deleteConstraint: (constraintID: string) => void;
-}
-
-export default class Constraint extends Component<Props, IConstraint> {
+export default class Constraint extends Component<ConstraintProps, IConstraint> {
   types = ["String", "Number", "Duration"];
 
-  constructor(props: Props) {
+  constructor(props: ConstraintProps) {
     super(props);
 
     this.state = { ...this.props.constraint };

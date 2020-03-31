@@ -4,19 +4,9 @@ import linkState from "linkstate";
 import Button from "../../button";
 import "./style";
 import Constraint from "./constraints";
-import { Field, Constraint as IConstraint } from "../../../interfaces";
+import { Field, FieldProps, Constraint as IConstraint } from "../../../interfaces";
 
-interface Props {
-  deleteField: (groupId: string, fieldId: string) => void;
-  addConstraints: (groupId: string, fieldId: string) => void;
-  saveConstraint: (fieldID: string, constraintID: string, constraint: IConstraint) => void;
-  deleteConstraint: (fieldID: string, constraintID: string) => void;
-  saveField: (fieldID, field) => void;
-  key: string;
-  field: Field;
-}
-
-export default class InputField extends Component<Props, Field> {
+export default class InputField extends Component<FieldProps, Field> {
   deleteField = () => {
     this.props.deleteField(this.props.field._groupId, this.props.field._id);
   };
@@ -35,7 +25,7 @@ export default class InputField extends Component<Props, Field> {
 
   types: string[] = ["String", "StringArray", "Image", "URL", "Number", "Boolean", "TimeRange", "Duration"];
 
-  constructor(props: Props) {
+  constructor(props: FieldProps) {
     super(props);
 
     this.state = { ...this.props.field };
