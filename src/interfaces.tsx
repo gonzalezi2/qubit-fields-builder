@@ -1,3 +1,5 @@
+import { h } from "preact";
+
 export interface Group {
   _id: string;
   id: string;
@@ -52,6 +54,14 @@ export interface Value {
   value: string;
 }
 
+export interface ValueProps {
+  value: Value;
+  deleteValue: (valueId: string) => void;
+  saveValue: (valueId: string, value: Value) => void;
+  fieldType: FieldTypes;
+  className: string;
+}
+
 export interface FieldProps {
   deleteField: (groupId: string, fieldId: string) => void;
   addConstraints: (groupId: string, fieldId: string) => void;
@@ -91,4 +101,11 @@ export interface FieldsJSON {
 export interface FieldsOutputJSON {
   groups: Array<GroupsJSON>;
   fields: Array<FieldsJSON>;
+}
+
+export interface ButtonProps {
+  text: string;
+  buttonClass: string;
+  clickHandler: () => void;
+  children?: string | h.JSX.Element;
 }

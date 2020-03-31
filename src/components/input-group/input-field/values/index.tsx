@@ -3,18 +3,10 @@ import linkState from "linkstate";
 
 import Button from "../../../button";
 import "./style";
-import { Value, FieldTypes } from "../../../../interfaces";
+import { Value, ValueProps } from "../../../../interfaces";
 // import { getRandomId } from '../../../../../../utils';
 
-interface Props {
-  value: Value;
-  deleteValue: (valueId: string) => void;
-  saveValue: (valueId: string, value: Value) => void;
-  fieldType: FieldTypes;
-  className: string;
-}
-
-export default class Values extends Component<Props, Value> {
+export default class Values extends Component<ValueProps, Value> {
   constructor(props) {
     super(props);
     this.state = { ...this.props.value };
