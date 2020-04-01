@@ -1,4 +1,4 @@
-import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON } from "../interfaces";
+import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON, AppState } from "../interfaces";
 
 /**
  * Returns a random 9 character alphanumeric string
@@ -153,12 +153,6 @@ export function updateGroupId(group: Group): Group {
     });
   }
   return group;
-}
-
-interface AppState {
-  showPreview: boolean;
-  groups: number;
-  fields: number;
 }
 
 /**

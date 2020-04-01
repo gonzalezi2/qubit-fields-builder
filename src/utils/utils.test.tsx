@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage } from ".";
+import { createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage, AppState } from ".";
 
 describe("Utilities functions", () => {
   describe("createNewGroup Function", () => {
@@ -147,7 +147,8 @@ describe("Utilities functions", () => {
         },
       },
     };
-    const state = {
+    const state: AppState = {
+      showPreview: false,
       groups: 1,
       fields: 1,
     };

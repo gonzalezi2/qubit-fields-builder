@@ -1,5 +1,11 @@
 import { h } from "preact";
 
+export interface AppState {
+  showPreview: boolean;
+  groups: number;
+  fields: number;
+}
+
 export interface Group {
   _id: string;
   id: string;
