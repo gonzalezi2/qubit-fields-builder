@@ -113,7 +113,7 @@ describe("Input Field", () => {
     expect(inputs.at(1).props().value).toBe("");
     expect(inputs.at(2).props().value).toBe("");
     expect(inputs.at(3).props().value).toBe("");
-    expect(inputs.at(4).props().value).toBe(false);
+    expect(inputs.at(4).props().checked).toBe(false);
     expect(
       component
         .find("select")

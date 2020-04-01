@@ -1,20 +1,20 @@
 import { h } from "preact";
 
-export interface AppState {
+export type AppState = {
   showPreview: boolean;
   groups: number;
   fields: number;
-}
+};
 
-export interface Group {
+export type Group = {
   _id: string;
   id: string;
   title: string;
   subtitle: string;
   fields: object;
-}
+};
 
-export interface GroupProps {
+export type GroupProps = {
   saveGroup: (group: Group) => void;
   deleteGroup: (groupId: string) => void;
   addField: (_id: string, id: string) => void;
@@ -22,11 +22,11 @@ export interface GroupProps {
   key: string;
   deleteField: (groupId: string, fieldId: string) => void;
   addConstraints: (groupId: string, fieldId: string) => void;
-}
+};
 
 export type FieldTypes = "String" | "StringArray" | "Image" | "URL" | "Number" | "Boolean" | "TimeRange" | "Duration";
 
-export interface Field {
+export type Field = {
   _id: string;
   _groupId: string;
   key: string;
@@ -38,37 +38,37 @@ export interface Field {
   description: string;
   constraints: object;
   _constraintId?: string;
-}
+};
 
-export interface Constraint {
+export type Constraint = {
   _id: string;
   type: "minLength" | "maxLength" | "values";
   value: number | object;
-}
+};
 
-export interface ConstraintProps {
+export type ConstraintProps = {
   constraint: Constraint;
   key: string;
   type: FieldTypes;
   saveConstraint: (id: string, constraint: Constraint) => void;
   deleteConstraint: (constraintID: string) => void;
-}
+};
 
-export interface Value {
+export type Value = {
   _id: string;
   label: string;
   value: string;
-}
+};
 
-export interface ValueProps {
+export type ValueProps = {
   value: Value;
   deleteValue: (valueId: string) => void;
   saveValue: (valueId: string, value: Value) => void;
   fieldType: FieldTypes;
   className: string;
-}
+};
 
-export interface FieldProps {
+export type FieldProps = {
   deleteField: (groupId: string, fieldId: string) => void;
   addConstraints: (groupId: string, fieldId: string) => void;
   saveConstraint: (fieldID: string, constraintID: string, constraint: Constraint) => void;
@@ -76,24 +76,24 @@ export interface FieldProps {
   saveField: (fieldID: string, field: object) => void;
   key: string;
   field: Field;
-}
+};
 
-export interface GroupsJSON {
+export type GroupsJSON = {
   id: string;
   title: string;
   subtitle: string;
-}
+};
 
-export interface ValuesJSON {
+export type ValuesJSON = {
   label: string;
   value: string;
-}
+};
 
-export interface ConstraintsJSON {
+export type ConstraintsJSON = {
   values: Array<ValuesJSON>;
-}
+};
 
-export interface FieldsJSON {
+export type FieldsJSON = {
   key: string;
   type: "String" | "StringArray" | "Image" | "URL" | "Number" | "Boolean" | "TimeRange" | "Duration";
   label: string;
@@ -102,16 +102,21 @@ export interface FieldsJSON {
   required: boolean;
   description: string;
   constraints?: ConstraintsJSON;
-}
+};
 
-export interface FieldsOutputJSON {
+export type FieldsOutputJSON = {
   groups: Array<GroupsJSON>;
   fields: Array<FieldsJSON>;
-}
+};
 
-export interface ButtonProps {
+export type ButtonProps = {
   text: string;
   buttonClass: string;
   clickHandler: () => void;
   children?: string | h.JSX.Element;
-}
+};
+
+export type PreviewPaneProps = {
+  groups: object;
+  handleClose: () => void;
+};

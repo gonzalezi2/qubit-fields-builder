@@ -4,10 +4,10 @@ import "./style.scss";
 
 import Button from "../button";
 import InputField from "./input-field";
-import { Group, GroupProps, Constraint } from "../../interfaces";
+import { Group, GroupProps, Constraint, Field } from "../../interfaces";
 
 export default class InputGroup extends Component<GroupProps, Group> {
-  saveField = (fieldID: string, field: string) => {
+  saveField = (fieldID: string, field: Field) => {
     this.setState(state => {
       // Checks to see if the field exists before trying to apply a change
       // Prevents an error from occurring when deleting a field

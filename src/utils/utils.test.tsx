@@ -1,5 +1,6 @@
-import { h } from "preact";
-import { createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage, AppState } from ".";
+// import { h } from "preact";
+import { createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage } from ".";
+import { AppState } from "../interfaces";
 
 describe("Utilities functions", () => {
   describe("createNewGroup Function", () => {

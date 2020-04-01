@@ -24,10 +24,10 @@ describe("Main App", () => {
 
     it("should toggle the showPreview state and render a previewPane", () => {
       const button = component.find("button").at(1);
-      expect(component.containsMatchingElement(<PreviewPane />)).toBe(false);
+      expect(component.find(PreviewPane)).toHaveLength(0);
       button.simulate("click");
       expect(component.state().showPreview).toEqual(true);
-      expect(component.containsMatchingElement(<PreviewPane />)).toBe(true);
+      expect(component.find(PreviewPane)).toHaveLength(1);
     });
 
     it("should update the json preview when mounting with a filled out groups object", () => {
@@ -437,15 +437,6 @@ describe("Main App", () => {
               constraints: {},
             },
           },
-        },
-      };
-      const emptyGroup = {
-        yr2jgzh27: {
-          _id: "yr2jgzh27",
-          id: "",
-          title: "",
-          subtitle: "",
-          fields: {},
         },
       };
       const expectedJson = {

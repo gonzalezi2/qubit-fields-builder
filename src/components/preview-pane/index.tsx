@@ -2,8 +2,9 @@ import { h } from "preact";
 // import { Link } from 'preact-router/match';
 import FieldPreview from "./field-preview";
 import "./style.scss";
+import { PreviewPaneProps } from "src/interfaces";
 
-const PreviewPane = ({ groups, handleClose }) => (
+const PreviewPane = ({ groups, handleClose }: PreviewPaneProps) => (
   <div>
     <div className="overlay" onClick={handleClose} />
     <div class="previewPane">
