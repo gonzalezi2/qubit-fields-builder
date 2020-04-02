@@ -4,7 +4,7 @@ import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON, App
  * Returns a random 9 character alphanumeric string
  * @return {string}
  */
-function getRandomId(): string {
+export function getRandomId(): string {
   return Math.random()
     .toString(36)
     .substr(2, 9);

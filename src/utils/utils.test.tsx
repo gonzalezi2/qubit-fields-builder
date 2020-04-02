@@ -1,8 +1,22 @@
 // import { h } from "preact";
-import { createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage } from ".";
+import { getRandomId, createNewField, createNewGroup, createJSONCode, updateGroupId, updateLocalStorage } from ".";
 import { AppState } from "../interfaces";
 
 describe("Utilities functions", () => {
+  describe("getRandomId Function", () => {
+    const spy = jest.spyOn(global.Math, "random");
+    beforeEach(() => {
+      spy.mockReturnValue(0.9876543521);
+    });
+    afterEach(() => {
+      spy.mockRestore();
+    });
+    it("should return a newGroup with empty value properties", () => {
+      const newRandomId = getRandomId();
+      expect(newRandomId.length).toBe(9);
+      expect(newRandomId).toBe("zk001vq3c");
+    });
+  });
   describe("createNewGroup Function", () => {
     it("should return a newGroup with empty value properties", () => {
       const newGroup = createNewGroup();
