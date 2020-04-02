@@ -16,12 +16,6 @@ export default class Constraint extends Component<ConstraintProps, IConstraint> 
     this.state = { ...this.props.constraint };
   }
 
-  deleteValue = (id: string) => {
-    const newState = Object.assign({}, this.state);
-    delete newState.value[id];
-    this.setState(newState);
-  };
-
   addValue = () => {
     const newStateValue = typeof this.state.value === "number" ? {} : this.state.value;
     const newState = Object.assign(this.state, { value: newStateValue });
@@ -35,6 +29,12 @@ export default class Constraint extends Component<ConstraintProps, IConstraint> 
     const newState = Object.assign({}, this.state);
     newState.value[id] = value;
     this.props.saveConstraint(this.state._id, newState);
+  };
+
+  deleteValue = (id: string) => {
+    const newState = Object.assign({}, this.state);
+    delete newState.value[id];
+    this.setState(newState);
   };
 
   deleteConstraint = () => {

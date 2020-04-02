@@ -21,6 +21,24 @@ describe("Constraint", () => {
     expect(component.length).toBe(1);
   });
 
+  it("should add a value to the constraint", () => {
+    const props: ConstraintProps = {
+      constraint: {
+        _id: "string",
+        type: "minLength",
+        value: 0,
+      },
+      key: "",
+      type: "String",
+      saveConstraint: jest.fn(),
+      deleteConstraint: jest.fn(),
+    };
+    const component = shallow(<Constraint {...props} />);
+    expect(component.state().value).toBe(0);
+    component.instance().addValue();
+    expect(component.state().value).toBe(Object);
+  });
+
   //   it('should render a component with 5 inputs and 1 select element', () => {
   // 		const component = shallow(<InputField />);
   // 		const inputs = component.find('input');
