@@ -10,7 +10,7 @@
   },
   "plugins": [
     ["@babel/plugin-transform-react-jsx", { "pragma":"h" }],
-    ["@babel/plugin-proposal-object-rest-spread"],
-    ["@babel/plugin-proposal-class-properties"]
+    ["@babel/plugin-proposal-object-rest-spread", {}, "the-object-spread"],
+    ["@babel/plugin-proposal-class-properties", {}, "the-class-properties"]
   ]
 }

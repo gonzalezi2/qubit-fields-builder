@@ -29,7 +29,7 @@ html, body {
   overflow: hidden;
 }
 
-.header {
+.subheader {
   background: #fff;
   height: 110px;
   padding: 0 15px;
@@ -51,16 +51,16 @@ html, body {
   width: 100%;
   margin: 0 auto;
 
+  @media screen and (min-width: $medium) {
+    width: $medium;
+  }
+
   @media screen and (min-width: $large) {
     width: $large;
   }
 
   @media screen and (min-width: $x-large) {
     width: $x-large;
-  }
-
-  @media screen and (min-width: $massive) {
-    width: $massive;
   }
 }
 
