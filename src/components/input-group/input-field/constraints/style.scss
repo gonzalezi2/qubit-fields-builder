@@ -1,0 +1,39 @@
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  width: 350px;
+  .values {
+    width: 100%;
+    display: block;
+    background-color: #f2f2f2;
+    padding: 10px 10px 5px 10px;
+    margin-bottom: 5px;
+    border-top: 1px solid #ddd;
+    > div {
+      display: flex;
+    }
+    .half {
+      width: 48%;
+      display: inline-block;
+      flex-grow: 1;
+    }
+    input, select {
+      margin-right: 2%;
+    }
+  }
+  .half, .quarter {
+    margin-right: 2%;
+  
+    input, select {
+      width: 100%;
+    }
+  }
+  .half {
+    width: 48%;
+    flex-grow: 2;
+  }
+  .quarter {
+    width: 23%;
+    flex-grow: 1;
+  }
+}
