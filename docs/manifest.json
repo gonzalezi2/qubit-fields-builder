@@ -1,8 +1,7 @@
 {
   "name": "fields-builder",
   "short_name": "fields-builder",
-  "start_url": "./",
-  "scope": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fff",
