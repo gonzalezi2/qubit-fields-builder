@@ -7,7 +7,7 @@
       "declarationMap": false,
       "moduleResolution": "node",
       "allowJs": true,
-      "outDir": "./dist",
+      "outDir": "./docs",
       "downlevelIteration": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
@@ -30,6 +30,6 @@
     "exclude": [
       "node_modules",
       "**/*/*.test.js",
-      "dist"
+      "docs"
     ]
   }
