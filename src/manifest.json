@@ -2,7 +2,6 @@
   "name": "fields-builder",
   "short_name": "fields-builder",
   "start_url": "./",
-  "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fff",
