@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "start:env": "per-env",
-    "start": "parcel ./src/index.html -p 8080",
+    "start": "parcel ./src/index.html -p 8080 --open",
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
-    "build": "preact build --clean --no-prerender -p --dest docs",
+    "build": "rm -rf docs && parcel build src/index.html -d docs --public-url ./ --no-source-maps",
     "serve": "preact build --no-prerender --dest docs && preact serve",
     "dev": "preact watch",
     "lint": "eslint --ignore-path .gitignore . --ext ts --ext tsx --ext js --ext jsx",
