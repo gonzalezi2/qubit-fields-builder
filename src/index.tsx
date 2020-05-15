@@ -1,13 +1,13 @@
 import { h, render } from "preact";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
 import App from "./components/app";
+import configureStore from "./redux/store/configureStore";
 import "./style";
 
 export default App;
 
-const store = createStore();
+const store = configureStore;
 
 render(
   <Provider store={store}>
