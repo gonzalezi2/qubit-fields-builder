@@ -4,14 +4,14 @@ import FieldPreview from "./field-preview";
 import "./style.scss";
 import { PreviewPaneProps } from "src/interfaces";
 
-const PreviewPane = ({ groups, handleClose }: PreviewPaneProps) => (
+const PreviewPane = ({ groups, onClose }: PreviewPaneProps) => (
   <div>
-    <div className="overlay" onClick={handleClose} />
+    <div className="overlay" onClick={onClose} />
     <div class="previewPane">
       <div class="header">
         <h3>Edit experience content</h3>
         <svg
-          onClick={handleClose}
+          onClick={onClose}
           data-icon-name="CloseIcon"
           class="closeIcon"
           viewBox="0 0 24 24"

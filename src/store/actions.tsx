@@ -1,9 +1,11 @@
 // GROUP ACTIONS
 export const ADD_GROUP = "ADD_GROUP";
+export const UPDATE_GROUP = "UPDATE_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";
 
 // FIELD ACTIONS
 export const ADD_FIELD = "ADD_FIELD";
+export const UPDATE_FIELD = "UPDATE_FIELD";
 export const DELETE_FIELD = "DELETE_FIELD";
 
 // CONSTRAINT ACTIONS

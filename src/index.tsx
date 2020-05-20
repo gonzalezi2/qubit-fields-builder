@@ -2,12 +2,10 @@ import { h, render } from "preact";
 import { Provider } from "react-redux";
 
 import App from "./components/app";
-import configureStore from "./redux/store/configureStore";
+import store from "./store";
 import "./style";
 
 export default App;
-
-const store = configureStore;
 
 render(
   <Provider store={store}>

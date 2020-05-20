@@ -1,57 +1,63 @@
 import { h, Component } from "preact";
+import { connect } from "react-redux";
 import linkState from "linkstate";
 import "./style.scss";
 
 import Button from "../button";
-import InputField from "./input-field";
-import { Group, GroupProps, Constraint, Field } from "../../interfaces";
+import { Group } from "../../interfaces";
+import { DELETE_GROUP, ADD_FIELD } from "src/store/actions";
 
-export default class InputGroup extends Component<GroupProps, Group> {
-  saveField = (fieldID: string, field: Field) => {
-    this.setState(state => {
-      // Checks to see if the field exists before trying to apply a change
-      // Prevents an error from occurring when deleting a field
-      if (this.state.fields[fieldID]) {
-        Object.assign(state.fields[fieldID], field);
-      }
-    });
-    this.props.saveGroup(this.state);
-  };
+type GroupProps = {
+  onDeleteGroup: () => void;
+  onAddField: () => void;
+};
 
-  saveConstraint = (fieldID: string, constraintID: string, constraint: Constraint) => {
-    this.setState(state => {
-      if (this.state.fields[fieldID].constraints[constraintID]) {
-        Object.assign(state.fields[fieldID].constraints[constraintID], constraint);
-      }
-    });
-    this.props.saveGroup(this.state);
-  };
+class InputGroup extends Component<GroupProps, Group> {
+  // saveField = (fieldID: string, field: Field) => {
+  //   this.setState(state => {
+  //     // Checks to see if the field exists before trying to apply a change
+  //     // Prevents an error from occurring when deleting a field
+  //     if (this.state.fields[fieldID]) {
+  //       Object.assign(state.fields[fieldID], field);
+  //     }
+  //   });
+  //   this.props.saveGroup(this.state);
+  // };
 
-  deleteConstraint = (fieldID: string, constraintID: string) => {
-    const newState = Object.assign({}, this.state);
-    delete newState.fields[fieldID].constraints[constraintID];
-    this.props.saveGroup(newState);
-    this.forceUpdate();
-  };
+  // saveConstraint = (fieldID: string, constraintID: string, constraint: Constraint) => {
+  //   this.setState(state => {
+  //     if (this.state.fields[fieldID].constraints[constraintID]) {
+  //       Object.assign(state.fields[fieldID].constraints[constraintID], constraint);
+  //     }
+  //   });
+  //   this.props.saveGroup(this.state);
+  // };
 
-  addField = () => {
-    this.props.addField(this.state._id, this.state.id);
-  };
+  // deleteConstraint = (fieldID: string, constraintID: string) => {
+  //   const newState = Object.assign({}, this.state);
+  //   delete newState.fields[fieldID].constraints[constraintID];
+  //   this.props.saveGroup(newState);
+  //   this.forceUpdate();
+  // };
 
-  deleteGroup = () => {
-    this.props.deleteGroup(this.state._id);
-  };
+  // addField = () => {
+  //   this.props.addField(this.state._id, this.state.id);
+  // };
 
-  constructor(props: GroupProps) {
-    super(props);
-    this.state = { ...this.props.group };
-  }
+  // deleteGroup = () => {
+  //   this.props.deleteGroup(this.state._id);
+  // };
 
-  componentDidUpdate() {
-    this.props.saveGroup(this.state);
-  }
+  // constructor(props: GroupProps) {
+  //   super(props);
+  // this.state = { ...this.props.group };
+  // }
 
-  render({ group }) {
+  // componentDidUpdate() {
+  //   this.props.saveGroup(this.state);
+  // }
+
+  render() {
     return (
       <div class="group-block">
         <div class="group">
@@ -72,15 +78,16 @@ export default class InputGroup extends Component<GroupProps, Group> {
             placeholder="Group Subtitle"
           />
           <div class="footer">
-            <Button text="Delete Group" buttonClass="text-danger" clickHandler={this.deleteGroup} />
-            <Button text="Add Input" buttonClass="text" clickHandler={this.addField} />
+            <Button text="Delete Group" buttonClass="text-danger" onClickEvent={this.props.onDeleteGroup} />
+            <Button text="Add Input" buttonClass="text" onClickEvent={this.props.onAddField} />
           </div>
         </div>
         <div class="field">
           <h4>Input Fields</h4>
           <div class="fields">
-            {Object.keys(group.fields).length < 1 && <h3>-</h3>}
-            {Object.keys(group.fields).length > 0 &&
+            <h3>-</h3>
+            {/* {Object.keys(group.fields).length < 1 && <h3>-</h3>} */}
+            {/* {Object.keys(group.fields).length > 0 &&
               Object.keys(group.fields).map(fieldId => (
                 <InputField
                   key={fieldId}
@@ -91,10 +98,19 @@ export default class InputGroup extends Component<GroupProps, Group> {
                   saveConstraint={this.saveConstraint}
                   deleteConstraint={this.deleteConstraint}
                 />
-              ))}
+              ))} */}
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapDispatchToGroup = dispatch => {
+  return {
+    onDeleteGroup: groupId => dispatch({ type: DELETE_GROUP, groupId }),
+    onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
+  };
+};
+
+export default connect(null, mapDispatchToGroup)(InputGroup);

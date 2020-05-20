@@ -1,33 +1,28 @@
 /* eslint-disable indent */
 import { h, Component } from "preact";
+import { connect } from "react-redux";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.css";
 
 import Header from "./header";
 import PreviewPane from "./preview-pane";
 import Button from "./button";
-import InputGroup from "./input-group";
-import {
-  createNewField,
-  createNewGroup,
-  createJSONCode,
-  updateGroupId,
-  updateLocalStorage,
-  createNewConstraint,
-} from "../utils";
+import GroupsContainer from "../containers/groups";
+import { createNewField, createJSONCode, updateGroupId, createNewConstraint } from "../utils";
 import { Group } from "src/interfaces";
+import { ADD_GROUP } from "../store/actions";
 
-interface State {
+type State = {
   showPreview: boolean;
-  groups: number;
-  fields: number;
-}
+};
 
-export default class App extends Component<{}, State> {
+type Props = {
+  onAddGroup: () => void;
+};
+
+class App extends Component<Props, State> {
   state = {
     showPreview: false,
-    groups: 0,
-    fields: 0,
   };
 
   groups = {};
@@ -36,7 +31,7 @@ export default class App extends Component<{}, State> {
     fields: [],
   };
 
-  togglePreviewPane = () => {
+  handlePreviewToggle = () => {
     this.setState({ showPreview: !this.state.showPreview });
     document.body.classList.toggle("no-scroll");
   };
@@ -47,7 +42,7 @@ export default class App extends Component<{}, State> {
     setTimeout(() => Prism.highlightAll(), 0);
   }
 
-  resetForm = () => {
+  handleResetForm = () => {
     this.groups = {};
     this.json = {
       groups: [],
@@ -57,20 +52,17 @@ export default class App extends Component<{}, State> {
       {
         // eslint-disable-next-line indent
         showPreview: false,
-        groups: 0,
-        fields: 0,
       },
       () => {
-        this.update();
-        this.addGroup();
+        this.props.onAddGroup();
       },
     );
   };
 
-  update = () => {
-    updateLocalStorage(this.groups, this.state);
-    this.updateCodePreview();
-  };
+  // update = () => {
+  //   updateLocalStorage(this.groups, this.state);
+  //   this.updateCodePreview();
+  // };
 
   addField = (groupId: string, groupKey: string) => {
     const newField = createNewField(groupId, groupKey);
@@ -78,46 +70,40 @@ export default class App extends Component<{}, State> {
     this.groups[groupId].fields[newField._id] = newField;
     // return state.fields.fields.push(newField);
 
-    this.setState({ fields: this.state.fields + 1 }, this.update);
+    // this.setState({ fields: this.state.fields + 1 }, this.update);
   };
 
   deleteField = (groupId: string, fieldId: string) => {
     delete this.groups[groupId].fields[fieldId];
-    this.setState({ fields: this.state.fields - 1 });
+    // this.setState({ fields: this.state.fields - 1 });
     this.updateGroup(this.groups[groupId]);
-  };
-
-  addGroup = () => {
-    const newGroup = createNewGroup();
-    this.groups[newGroup._id] = newGroup;
-    this.setState({ groups: this.state.groups + 1 }, this.update);
   };
 
   updateGroup = (group: Group) => {
     // Loop through the updated group's fields to check for a change in the group id
     this.groups[group._id] = updateGroupId(group);
-    this.update();
+    // this.update();
   };
 
   deleteGroup = (groupId: string) => {
-    const fieldsToDelete = Object.keys(this.groups[groupId].fields).length;
+    // const fieldsToDelete = Object.keys(this.groups[groupId].fields).length;
     delete this.groups[groupId];
 
-    const newGroupCount = this.state.groups - 1;
-    const newFieldsCount = this.state.fields - fieldsToDelete;
+    // const newGroupCount = this.state.groups - 1;
+    // const newFieldsCount = this.state.fields - fieldsToDelete;
 
-    this.setState(
-      {
-        groups: newGroupCount,
-        fields: newFieldsCount,
-      },
-      () => {
-        this.update();
-        if (this.state.groups < 1) {
-          this.addGroup();
-        }
-      },
-    );
+    // this.setState(
+    //   {
+    //     groups: newGroupCount,
+    //     fields: newFieldsCount,
+    //   },
+    //   () => {
+    //     this.update();
+    //     if (this.state.groups < 1) {
+    //       this.addGroup();
+    //     }
+    //   },
+    // );
   };
 
   addConstraints = (groupId: string, fieldId: string) => {
@@ -130,25 +116,25 @@ export default class App extends Component<{}, State> {
       this.groups[groupId].fields[fieldId].constraints[newConstraint._id] = newConstraint;
     }
     this.forceUpdate();
-    this.update();
+    // this.update();
   };
 
   componentWillMount() {
     const localStorageGroup = JSON.parse(localStorage.getItem("store"));
-    if (localStorageGroup && localStorageGroup.groupCount >= 1) {
+    if (localStorageGroup /* && localStorageGroup.groupCount >= 1 */) {
       this.groups = localStorageGroup.groups;
-      this.setState({
-        groups: localStorageGroup.groupCount,
-        fields: localStorageGroup.fieldsCount,
-      });
+      // this.setState({
+      //   groups: localStorageGroup.groupCount,
+      //   fields: localStorageGroup.fieldsCount,
+      // });
     }
   }
 
   componentDidMount() {
     if (Object.keys(this.groups).length === 0) {
-      this.addGroup();
+      this.props.onAddGroup();
     }
-    this.update();
+    // this.update();
   }
 
   render() {
@@ -159,45 +145,29 @@ export default class App extends Component<{}, State> {
           <div class="container">
             <h1>New Fields File</h1>
             <div class="button-nav">
-              <Button text="Reset Form" buttonClass="text-danger" clickHandler={this.resetForm} />
-              <Button text="Preview" buttonClass="primary" clickHandler={this.togglePreviewPane} />
+              <Button text="Reset Form" buttonClass="text-danger" onClickEvent={this.handleResetForm} />
+              <Button text="Preview" buttonClass="primary" onClickEvent={this.handlePreviewToggle} />
             </div>
           </div>
         </div>
 
         <div class="container">
-          {/* Grouped Fields */}
-          <div class="group-box">
-            <div class="group-header">
-              <h3>Groups</h3>
-            </div>
-            <div class="group-body">
-              {Object.keys(this.groups).length < 1 && (
-                <div class="emptyGroup">
-                  <h3>-</h3>
-                </div>
-              )}
-              {Object.keys(this.groups).length >= 1 &&
-                Object.keys(this.groups).map(groupId => (
-                  <InputGroup
-                    key={groupId}
-                    group={this.groups[groupId]}
-                    deleteGroup={this.deleteGroup}
-                    addField={this.addField}
-                    deleteField={this.deleteField}
-                    saveGroup={this.updateGroup}
-                    addConstraints={this.addConstraints}
-                  />
-                ))}
-            </div>
-          </div>
-          <Button text="Add Group" buttonClass="primary-large" clickHandler={this.addGroup} />
+          <GroupsContainer />
+          <Button text="Add Group" buttonClass="primary-large" onClickEvent={this.props.onAddGroup} />
           <pre class="line-numbers">
             <code id="code-block" class="language-js" />
           </pre>
         </div>
-        {this.state.showPreview && <PreviewPane groups={this.groups} handleClose={this.togglePreviewPane} />}
+        {this.state.showPreview && <PreviewPane groups={this.groups} onClose={this.handlePreviewToggle} />}
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddGroup: () => dispatch({ type: ADD_GROUP }),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
