@@ -5,7 +5,7 @@ import "./style.scss";
 
 import Button from "../button";
 import { Group } from "../../interfaces";
-import { DELETE_GROUP, ADD_FIELD } from "src/store/actions";
+import { DELETE_GROUP, ADD_FIELD } from "../../store/actions";
 
 type GroupProps = {
   onDeleteGroup: () => void;
