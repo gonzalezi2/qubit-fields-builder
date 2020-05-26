@@ -3,14 +3,18 @@
     "test": {
       "presets": [
         ["preact-cli/babel", { "modules": "commonjs" }],
-        ["@babel/react"], 
+        ["@babel/preset-react"], 
         ["@babel/env"]
       ]
     }
   },
   "plugins": [
-    ["@babel/plugin-transform-react-jsx", { "pragma":"h" }],
+    ["@babel/plugin-transform-react-jsx", {
+      "pragma":"h",
+      "pragmaFrag": "Fragment"
+    }],
     ["@babel/plugin-proposal-object-rest-spread", {}, "the-object-spread"],
-    ["@babel/plugin-proposal-class-properties", {}, "the-class-properties"]
+    ["@babel/plugin-proposal-class-properties", {}, "the-class-properties"],
+    ["@babel/plugin-transform-typescript", {"isTSX": true}]
   ]
 }
