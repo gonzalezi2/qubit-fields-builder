@@ -1,40 +1,39 @@
 {
-    "compileOnSave": true,
-    "compilerOptions": {
-      "sourceMap": false,
-      "declaration": true,
-      "declarationDir": "build",
-      "declarationMap": false,
-      "moduleResolution": "node",
-      "allowJs": true,
-      "outDir": "./docs",
-      "downlevelIteration": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "noLib": false,
-      "target": "es5",
-      "module": "es6",
-      "jsx": "react",
-      "jsxFactory": "h",
-      "esModuleInterop": true,
-      "baseUrl": ".",
-      "paths": {
-        "~*": ["./*"],
-        "react": ["./node_modules/preact/compat"],
-        "react-dom": ["./node_modules/preact/compat"]
-      }
-      /* used for shortening import paths
-      ,
-      "paths": {
-        "style/*": [ "src/style/*" ],
-      }*/
-    },
-    "include": [
-      "src/**/*"
-    ],
-    "exclude": [
-      "node_modules",
-      "**/*/*.test.js",
-      "docs"
-    ]
-  }
+  "compileOnSave": true,
+  "compilerOptions": {
+    "sourceMap": false,
+    "declaration": true,
+    "declarationDir": "build",
+    "declarationMap": false,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "outDir": "./docs",
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noLib": false,
+    "target": "es5",
+    "module": "es6",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    /* used for shortening import paths
+    ,
+    "paths": {
+      "style/*": [ "src/style/*" ],
+    }*/
+    "paths": {
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*/*.test.js",
+    "docs"
+  ]
+}
