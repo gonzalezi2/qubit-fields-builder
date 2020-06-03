@@ -2,27 +2,18 @@ import { v4 as uuidv4 } from "uuid";
 
 import * as actionTypes from "../actions";
 
-const initialState = {
-  _id: uuidv4(),
-  key: "",
-  type: "",
-  label: "",
-  groupId: "",
-  footnote: "",
-  required: "",
-  description: "",
-  constraints: "",
-};
+const initialState = [];
 
 const FieldReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_FIELD:
-      return {
-        ...state,
-        field: {
-          ...action.value,
-        },
-      };
+      // return {
+      //   ...state,
+      //   field: {
+      //     ...action.value,
+      //   },
+      // };
+      return state;
     case actionTypes.UPDATE_FIELD:
       // return state.map(expense => {
       //   if(expense.id === action.id) {
@@ -34,10 +25,10 @@ const FieldReducer = (state = initialState, action) => {
       //     return expense;
       //   }
       // });
-      console.info(action)
-      return {
-        ...state,
-      }
+      // return {
+      //   ...state,
+      // };
+      return state;
     case actionTypes.DELETE_FIELD:
       return state;
     default:

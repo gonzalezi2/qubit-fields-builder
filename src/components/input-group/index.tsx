@@ -92,11 +92,6 @@ class InputGroup extends Component<GroupProps, Group> {
                 <InputField
                   key={fieldId}
                   field={group.fields[fieldId]}
-                  saveField={this.saveField}
-                  deleteField={this.props.deleteField}
-                  addConstraints={this.props.addConstraints}
-                  saveConstraint={this.saveConstraint}
-                  deleteConstraint={this.deleteConstraint}
                 />
               ))} */}
           </div>
@@ -106,11 +101,21 @@ class InputGroup extends Component<GroupProps, Group> {
   }
 }
 
+const mapStateToProps = state => {
+  console.info(state);
+  return {
+    groups: state.groups,
+    fields: state.fields,
+    constraints: state.constraints,
+  };
+};
+
 const mapDispatchToGroup = dispatch => {
+  console.info(dispatch);
   return {
     onDeleteGroup: groupId => dispatch({ type: DELETE_GROUP, groupId }),
     onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
   };
 };
 
-export default connect(null, mapDispatchToGroup)(InputGroup);
+export default connect(mapStateToProps, mapDispatchToGroup)(InputGroup);

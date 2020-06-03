@@ -7,10 +7,11 @@ import GroupReducer from "./reducers/group";
 import ConstraintRedudcer from "./reducers/constraint";
 
 const store = preloadedState => {
+  console.info(preloadedState);
   const rootReducer = combineReducers({
-    field: FieldReducer,
-    group: GroupReducer,
-    constraint: ConstraintRedudcer
+    fields: FieldReducer,
+    groups: GroupReducer,
+    constraints: ConstraintRedudcer,
   });
 
   const middlewares = [loggerMiddleware];
@@ -19,8 +20,7 @@ const store = preloadedState => {
   const enhancers = [middlewarerEnhancers];
   const composedEnhancer = composeWithDevTools(...enhancers);
 
-  const store = createStore(rootReducer, preloadedState, composedEnhancer);
-  return store;
+  return createStore(rootReducer, preloadedState, composedEnhancer);
 };
 
 export default store;

@@ -1,6 +1,5 @@
 import { h, Component } from "preact";
 import { connect } from "react-redux";
-import { DELETE_GROUP, ADD_FIELD } from "../store/actions";
 import InputGroup from "../components/input-group";
 import { Group } from "src/interfaces";
 
@@ -29,16 +28,11 @@ class GroupsContainer extends Component<GroupProps, {}> {
 }
 
 const mapStateToProps = state => {
+  console.info("Groups Container");
+  console.info(state);
   return {
     groups: state.groups,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onDeleteGroup: id => dispatch({ type: DELETE_GROUP, id }),
-    onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GroupsContainer);
+export default connect(mapStateToProps, null)(GroupsContainer);

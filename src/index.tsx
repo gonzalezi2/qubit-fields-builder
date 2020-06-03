@@ -2,10 +2,14 @@ import { h, render } from "preact";
 import { Provider } from "react-redux";
 
 import App from "./components/app";
-import store from "./store";
+import createStore from "./store";
 import "./style";
 
-export default App;
+// export default App;
+const store = createStore({ groups: [], fields: [], constraints: [] });
+store.subscribe(() => {
+  console.info(store.getState());
+});
 
 render(
   <Provider store={store}>

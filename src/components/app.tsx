@@ -31,6 +31,7 @@ class App extends Component<Props, State> {
     fields: [],
   };
 
+  /*
   handlePreviewToggle = () => {
     this.setState({ showPreview: !this.state.showPreview });
     document.body.classList.toggle("no-scroll");
@@ -118,24 +119,24 @@ class App extends Component<Props, State> {
     this.forceUpdate();
     // this.update();
   };
-
+*/
   componentWillMount() {
-    const localStorageGroup = JSON.parse(localStorage.getItem("store"));
-    if (localStorageGroup /* && localStorageGroup.groupCount >= 1 */) {
-      this.groups = localStorageGroup.groups;
-      // this.setState({
-      //   groups: localStorageGroup.groupCount,
-      //   fields: localStorageGroup.fieldsCount,
-      // });
-    }
+    // const localStorageGroup = JSON.parse(localStorage.getItem("store"));
+    // if (localStorageGroup /* && localStorageGroup.groupCount >= 1 */) {
+    // this.groups = localStorageGroup.groups;
+    // this.setState({
+    //   groups: localStorageGroup.groupCount,
+    //   fields: localStorageGroup.fieldsCount,
+    // });
+    // }
   }
 
-  componentDidMount() {
+  /* componentDidMount() {
     if (Object.keys(this.groups).length === 0) {
       this.props.onAddGroup();
     }
     // this.update();
-  }
+  } */
 
   render() {
     return (
@@ -145,8 +146,8 @@ class App extends Component<Props, State> {
           <div class="container">
             <h1>New Fields File</h1>
             <div class="button-nav">
-              <Button text="Reset Form" buttonClass="text-danger" onClickEvent={this.handleResetForm} />
-              <Button text="Preview" buttonClass="primary" onClickEvent={this.handlePreviewToggle} />
+              {/* <Button text="Reset Form" buttonClass="text-danger" onClickEvent={this.handleResetForm} />
+              <Button text="Preview" buttonClass="primary" onClickEvent={this.handlePreviewToggle} /> */}
             </div>
           </div>
         </div>
@@ -158,16 +159,24 @@ class App extends Component<Props, State> {
             <code id="code-block" class="language-js" />
           </pre>
         </div>
-        {this.state.showPreview && <PreviewPane groups={this.groups} onClose={this.handlePreviewToggle} />}
+        {/* {this.state.showPreview && <PreviewPane groups={this.groups} onClose={this.handlePreviewToggle} />} */}
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    fields: state.fields,
+    groups: state.groups,
+    constraints: state.constraints,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
+  console.info(dispatch);
   return {
     onAddGroup: () => dispatch({ type: ADD_GROUP }),
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
