@@ -82,20 +82,6 @@ class InputGroup extends Component<GroupProps, Group> {
             <Button text="Add Input" buttonClass="text" onClickEvent={this.props.onAddField} />
           </div>
         </div>
-        <div class="field">
-          <h4>Input Fields</h4>
-          <div class="fields">
-            <h3>-</h3>
-            {/* {Object.keys(group.fields).length < 1 && <h3>-</h3>} */}
-            {/* {Object.keys(group.fields).length > 0 &&
-              Object.keys(group.fields).map(fieldId => (
-                <InputField
-                  key={fieldId}
-                  field={group.fields[fieldId]}
-                />
-              ))} */}
-          </div>
-        </div>
       </div>
     );
   }

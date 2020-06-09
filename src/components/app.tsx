@@ -151,32 +151,29 @@ class App extends Component<Props, State> {
             </div>
           </div>
         </div>
+        <GroupsContainer />
 
-        <div class="container">
-          <GroupsContainer />
-          <Button text="Add Group" buttonClass="primary-large" onClickEvent={this.props.onAddGroup} />
-          <pre class="line-numbers">
-            <code id="code-block" class="language-js" />
-          </pre>
-        </div>
+        <pre class="line-numbers">
+          <code id="code-block" class="language-js" />
+        </pre>
         {/* {this.state.showPreview && <PreviewPane groups={this.groups} onClose={this.handlePreviewToggle} />} */}
       </div>
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    fields: state.fields,
-    groups: state.groups,
-    constraints: state.constraints,
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     fields: state.fields,
+//     groups: state.groups,
+//     constraints: state.constraints,
+//   };
+// };
 
-const mapDispatchToProps = dispatch => {
-  console.info(dispatch);
-  return {
-    onAddGroup: () => dispatch({ type: ADD_GROUP }),
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   console.info(dispatch);
+//   return {
+//     onAddGroup: () => dispatch({ type: ADD_GROUP }),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
