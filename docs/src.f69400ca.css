@@ -153,6 +153,29 @@ pre[class*="language-"] {
   .header nav a.active {
     background: rgba(0, 0, 0, 0.4); }
 
+.group-block {
+  display: flex; }
+  .group-block .group, .group-block .field {
+    padding: 0 15px;
+    border-bottom: 2px solid #f7f7f7; }
+  .group-block .group {
+    flex: 0;
+    padding-bottom: 15px; }
+    .group-block .group .footer {
+      display: flex;
+      justify-content: space-between; }
+  .group-block .field {
+    flex: 1;
+    border-left: 2px solid #f7f7f7;
+    overflow: auto; }
+    .group-block .field .fields {
+      display: flex; }
+  .group-block h4 {
+    margin: 0;
+    padding: 15px 0;
+    position: sticky;
+    left: 0; }
+
 button {
   display: flex;
   border-radius: 4px;
@@ -187,29 +210,6 @@ button {
   button.input {
     height: 34px;
     margin-bottom: 5px; }
-
-.group-block {
-  display: flex; }
-  .group-block .group, .group-block .field {
-    padding: 0 15px;
-    border-bottom: 2px solid #f7f7f7; }
-  .group-block .group {
-    flex: 0;
-    padding-bottom: 15px; }
-    .group-block .group .footer {
-      display: flex;
-      justify-content: space-between; }
-  .group-block .field {
-    flex: 1;
-    border-left: 2px solid #f7f7f7;
-    overflow: auto; }
-    .group-block .field .fields {
-      display: flex; }
-  .group-block h4 {
-    margin: 0;
-    padding: 15px 0;
-    position: sticky;
-    left: 0; }
 
 html, body {
   height: 100%;

@@ -4795,38 +4795,7 @@ var Header = function Header() {
 
 var _default = Header;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","./style.scss":"components/header/style.scss"}],"components/button/style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/button/index.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _preact = require("preact");
-
-require("./style");
-
-// import { Link } from 'preact-router/match';
-var Button = function Button(_a) {
-  var text = _a.text,
-      buttonClass = _a.buttonClass,
-      onClickEvent = _a.onClickEvent,
-      children = _a.children;
-  return (0, _preact.h)("button", {
-    className: buttonClass,
-    onClick: onClickEvent
-  }, children, text);
-};
-
-var _default = Button;
-exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"../node_modules/linkstate/dist/linkstate.es.js":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","./style.scss":"components/header/style.scss"}],"../node_modules/linkstate/dist/linkstate.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4878,7 +4847,38 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"store/actions.tsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/button/style.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/button/index.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _preact = require("preact");
+
+require("./style");
+
+// import { Link } from 'preact-router/match';
+var Button = function Button(_a) {
+  var text = _a.text,
+      buttonClass = _a.buttonClass,
+      onClickEvent = _a.onClickEvent,
+      children = _a.children;
+  return (0, _preact.h)("button", {
+    className: buttonClass,
+    onClick: onClickEvent
+  }, children, text);
+};
+
+var _default = Button;
+exports.default = _default;
+},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"store/actions.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5038,11 +5038,7 @@ function (_super) {
       text: "Add Input",
       buttonClass: "text",
       onClickEvent: this.props.onAddField
-    }))), (0, _preact.h)("div", {
-      class: "field"
-    }, (0, _preact.h)("h4", null, "Input Fields"), (0, _preact.h)("div", {
-      class: "fields"
-    }, (0, _preact.h)("h3", null, "-"))));
+    }))));
   };
 
   return InputGroup;
@@ -5092,6 +5088,10 @@ var _reactRedux = require("react-redux");
 
 var _inputGroup = _interopRequireDefault(require("../components/input-group"));
 
+var _button = _interopRequireDefault(require("../components/button"));
+
+var _actions = require("../store/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var __extends = void 0 && (void 0).__extends || function () {
@@ -5129,8 +5129,16 @@ function (_super) {
     return _super !== null && _super.apply(this, arguments) || this;
   }
 
+  GroupsContainer.prototype.componentDidMount = function () {
+    if (this.props.groups.length < 1) {
+      this.props.onAddGroup();
+    }
+  };
+
   GroupsContainer.prototype.render = function () {
     return (0, _preact.h)("div", {
+      class: "container"
+    }, (0, _preact.h)("div", {
       class: "group-box"
     }, (0, _preact.h)("div", {
       class: "group-header"
@@ -5142,24 +5150,36 @@ function (_super) {
       return (0, _preact.h)(_inputGroup.default, {
         key: group.id
       });
-    })));
+    }))), (0, _preact.h)(_button.default, {
+      text: "Add Group",
+      buttonClass: "primary-large",
+      onClickEvent: this.props.onAddGroup
+    }));
   };
 
   return GroupsContainer;
 }(_preact.Component);
 
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onAddGroup: function onAddGroup() {
+      return dispatch({
+        type: _actions.ADD_GROUP
+      });
+    }
+  };
+};
+
 var mapStateToProps = function mapStateToProps(state) {
-  console.info("Groups Container");
-  console.info(state);
   return {
     groups: state.groups
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps, null)(GroupsContainer);
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GroupsContainer);
 
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","../components/input-group":"components/input-group/index.tsx"}],"components/app.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","../components/input-group":"components/input-group/index.tsx","../components/button":"components/button/index.tsx","../store/actions":"store/actions.tsx"}],"components/app.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5169,17 +5189,11 @@ exports.default = void 0;
 
 var _preact = require("preact");
 
-var _reactRedux = require("react-redux");
-
 require("prismjs/themes/prism-okaidia.css");
 
 var _header = _interopRequireDefault(require("./header"));
 
-var _button = _interopRequireDefault(require("./button"));
-
 var _groups = _interopRequireDefault(require("../containers/groups"));
-
-var _actions = require("../store/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5335,46 +5349,33 @@ function (_super) {
       class: "container"
     }, (0, _preact.h)("h1", null, "New Fields File"), (0, _preact.h)("div", {
       class: "button-nav"
-    }))), (0, _preact.h)("div", {
-      class: "container"
-    }, (0, _preact.h)(_groups.default, null), (0, _preact.h)(_button.default, {
-      text: "Add Group",
-      buttonClass: "primary-large",
-      onClickEvent: this.props.onAddGroup
-    }), (0, _preact.h)("pre", {
+    }))), (0, _preact.h)(_groups.default, null), (0, _preact.h)("pre", {
       class: "line-numbers"
     }, (0, _preact.h)("code", {
       id: "code-block",
       class: "language-js"
-    }))));
+    })));
   };
 
   return App;
-}(_preact.Component);
+}(_preact.Component); // const mapStateToProps = state => {
+//   return {
+//     fields: state.fields,
+//     groups: state.groups,
+//     constraints: state.constraints,
+//   };
+// };
+// const mapDispatchToProps = dispatch => {
+//   console.info(dispatch);
+//   return {
+//     onAddGroup: () => dispatch({ type: ADD_GROUP }),
+//   };
+// };
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    fields: state.fields,
-    groups: state.groups,
-    constraints: state.constraints
-  };
-};
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  console.info(dispatch);
-  return {
-    onAddGroup: function onAddGroup() {
-      return dispatch({
-        type: _actions.ADD_GROUP
-      });
-    }
-  };
-};
-
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
-
+var _default = App;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","prismjs/themes/prism-okaidia.css":"../node_modules/prismjs/themes/prism-okaidia.css","./header":"components/header/index.tsx","./button":"components/button/index.tsx","../containers/groups":"containers/groups.tsx","../store/actions":"store/actions.tsx"}],"../node_modules/redux-devtools-extension/index.js":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","prismjs/themes/prism-okaidia.css":"../node_modules/prismjs/themes/prism-okaidia.css","./header":"components/header/index.tsx","../containers/groups":"containers/groups.tsx"}],"../node_modules/redux-devtools-extension/index.js":[function(require,module,exports) {
 "use strict";
 
 var compose = require('redux').compose;
@@ -6655,7 +6656,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63681" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53643" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
