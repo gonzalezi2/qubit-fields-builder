@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import InputGroup from "../components/input-group";
 import { Group } from "src/interfaces";
 import Button from "../components/button";
-import { ADD_GROUP } from "../store/actions";
+import { ADD_GROUP, DELETE_GROUP, ADD_FIELD } from "../store/actions";
 
 type GroupProps = {
   groups: Group[];
   onAddGroup: () => void;
+  onDeleteGroup: (groupId) => void;
+  onAddField: () => void;
 };
 
 class GroupsContainer extends Component<GroupProps, {}> {
@@ -31,7 +33,14 @@ class GroupsContainer extends Component<GroupProps, {}> {
                 <h3>-</h3>
               </div>
             )}
-            {this.props.groups.length > 0 && this.props.groups.map(group => <InputGroup key={group.id} />)}
+            {this.props.groups.length > 0 &&
+              this.props.groups.map(group => (
+                <InputGroup
+                  key={group.id}
+                  onDeleteGroup={() => this.props.onDeleteGroup(group._id)}
+                  onAddField={this.props.onAddField}
+                />
+              ))}
           </div>
         </div>
         <Button text="Add Group" buttonClass="primary-large" onClickEvent={this.props.onAddGroup} />
@@ -39,10 +48,14 @@ class GroupsContainer extends Component<GroupProps, {}> {
     );
   }
 }
-
+// onDeleteGroup: groupId => dispatch({ type: DELETE_GROUP, groupId })
 const mapDispatchToProps = dispatch => {
   return {
     onAddGroup: () => dispatch({ type: ADD_GROUP }),
+    onDeleteGroup: (groupId: string) => {
+      dispatch({ type: DELETE_GROUP, groupId });
+    },
+    onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
   };
 };
 

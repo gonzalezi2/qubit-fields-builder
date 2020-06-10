@@ -4878,40 +4878,7 @@ var Button = function Button(_a) {
 
 var _default = Button;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"store/actions.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DELETE_VALUE = exports.ADD_VALUE = exports.DELETE_CONSTRAINT = exports.UPDATE_CONSTRAINT = exports.ADD_CONSTRAINT = exports.DELETE_FIELD = exports.UPDATE_FIELD = exports.ADD_FIELD = exports.DELETE_GROUP = exports.UPDATE_GROUP = exports.ADD_GROUP = void 0;
-// GROUP ACTIONS
-var ADD_GROUP = "ADD_GROUP";
-exports.ADD_GROUP = ADD_GROUP;
-var UPDATE_GROUP = "UPDATE_GROUP";
-exports.UPDATE_GROUP = UPDATE_GROUP;
-var DELETE_GROUP = "DELETE_GROUP"; // FIELD ACTIONS
-
-exports.DELETE_GROUP = DELETE_GROUP;
-var ADD_FIELD = "ADD_FIELD";
-exports.ADD_FIELD = ADD_FIELD;
-var UPDATE_FIELD = "UPDATE_FIELD";
-exports.UPDATE_FIELD = UPDATE_FIELD;
-var DELETE_FIELD = "DELETE_FIELD"; // CONSTRAINT ACTIONS
-
-exports.DELETE_FIELD = DELETE_FIELD;
-var ADD_CONSTRAINT = "ADD_CONSTRAINT";
-exports.ADD_CONSTRAINT = ADD_CONSTRAINT;
-var UPDATE_CONSTRAINT = "UPDATE_CONSTRAINT";
-exports.UPDATE_CONSTRAINT = UPDATE_CONSTRAINT;
-var DELETE_CONSTRAINT = "DELETE_CONSTRAINT"; // VALUE ACTIONS
-
-exports.DELETE_CONSTRAINT = DELETE_CONSTRAINT;
-var ADD_VALUE = "ADD_VALUE";
-exports.ADD_VALUE = ADD_VALUE;
-var DELETE_VALUE = "DELETE_VALUE";
-exports.DELETE_VALUE = DELETE_VALUE;
-},{}],"components/input-group/index.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"components/input-group/index.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4928,8 +4895,6 @@ var _linkstate = _interopRequireDefault(require("linkstate"));
 require("./style.scss");
 
 var _button = _interopRequireDefault(require("../button"));
-
-var _actions = require("../../store/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5051,30 +5016,50 @@ var mapStateToProps = function mapStateToProps(state) {
     fields: state.fields,
     constraints: state.constraints
   };
-};
+}; // const mapDispatchToGroup = dispatch => {
+//   return {
+//     onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
+//   };
+// };
 
-var mapDispatchToGroup = function mapDispatchToGroup(dispatch) {
-  console.info(dispatch);
-  return {
-    onDeleteGroup: function onDeleteGroup(groupId) {
-      return dispatch({
-        type: _actions.DELETE_GROUP,
-        groupId: groupId
-      });
-    },
-    onAddField: function onAddField(groupId) {
-      return dispatch({
-        type: _actions.ADD_FIELD,
-        groupId: groupId
-      });
-    }
-  };
-};
 
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToGroup)(InputGroup);
+var _default = (0, _reactRedux.connect)(mapStateToProps, null)(InputGroup);
 
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","linkstate":"../node_modules/linkstate/dist/linkstate.es.js","./style.scss":"components/input-group/style.scss","../button":"components/button/index.tsx","../../store/actions":"store/actions.tsx"}],"containers/groups.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","linkstate":"../node_modules/linkstate/dist/linkstate.es.js","./style.scss":"components/input-group/style.scss","../button":"components/button/index.tsx"}],"store/actions.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DELETE_VALUE = exports.ADD_VALUE = exports.DELETE_CONSTRAINT = exports.UPDATE_CONSTRAINT = exports.ADD_CONSTRAINT = exports.DELETE_FIELD = exports.UPDATE_FIELD = exports.ADD_FIELD = exports.DELETE_GROUP = exports.UPDATE_GROUP = exports.ADD_GROUP = void 0;
+// GROUP ACTIONS
+var ADD_GROUP = "ADD_GROUP";
+exports.ADD_GROUP = ADD_GROUP;
+var UPDATE_GROUP = "UPDATE_GROUP";
+exports.UPDATE_GROUP = UPDATE_GROUP;
+var DELETE_GROUP = "DELETE_GROUP"; // FIELD ACTIONS
+
+exports.DELETE_GROUP = DELETE_GROUP;
+var ADD_FIELD = "ADD_FIELD";
+exports.ADD_FIELD = ADD_FIELD;
+var UPDATE_FIELD = "UPDATE_FIELD";
+exports.UPDATE_FIELD = UPDATE_FIELD;
+var DELETE_FIELD = "DELETE_FIELD"; // CONSTRAINT ACTIONS
+
+exports.DELETE_FIELD = DELETE_FIELD;
+var ADD_CONSTRAINT = "ADD_CONSTRAINT";
+exports.ADD_CONSTRAINT = ADD_CONSTRAINT;
+var UPDATE_CONSTRAINT = "UPDATE_CONSTRAINT";
+exports.UPDATE_CONSTRAINT = UPDATE_CONSTRAINT;
+var DELETE_CONSTRAINT = "DELETE_CONSTRAINT"; // VALUE ACTIONS
+
+exports.DELETE_CONSTRAINT = DELETE_CONSTRAINT;
+var ADD_VALUE = "ADD_VALUE";
+exports.ADD_VALUE = ADD_VALUE;
+var DELETE_VALUE = "DELETE_VALUE";
+exports.DELETE_VALUE = DELETE_VALUE;
+},{}],"containers/groups.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5136,6 +5121,8 @@ function (_super) {
   };
 
   GroupsContainer.prototype.render = function () {
+    var _this = this;
+
     return (0, _preact.h)("div", {
       class: "container"
     }, (0, _preact.h)("div", {
@@ -5148,7 +5135,11 @@ function (_super) {
       class: "emptyGroup"
     }, (0, _preact.h)("h3", null, "-")), this.props.groups.length > 0 && this.props.groups.map(function (group) {
       return (0, _preact.h)(_inputGroup.default, {
-        key: group.id
+        key: group.id,
+        onDeleteGroup: function onDeleteGroup() {
+          return _this.props.onDeleteGroup(group._id);
+        },
+        onAddField: _this.props.onAddField
       });
     }))), (0, _preact.h)(_button.default, {
       text: "Add Group",
@@ -5158,13 +5149,26 @@ function (_super) {
   };
 
   return GroupsContainer;
-}(_preact.Component);
+}(_preact.Component); // onDeleteGroup: groupId => dispatch({ type: DELETE_GROUP, groupId })
+
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onAddGroup: function onAddGroup() {
       return dispatch({
         type: _actions.ADD_GROUP
+      });
+    },
+    onDeleteGroup: function onDeleteGroup(groupId) {
+      dispatch({
+        type: _actions.DELETE_GROUP,
+        groupId: groupId
+      });
+    },
+    onAddField: function onAddField(groupId) {
+      return dispatch({
+        type: _actions.ADD_FIELD,
+        groupId: groupId
       });
     }
   };
@@ -6435,14 +6439,11 @@ var GroupReducer = function GroupReducer(state, action) {
     state = initialState;
   }
 
-  console.info("GroupReducer");
-  console.info(state);
-
   switch (action.type) {
     case actionTypes.ADD_GROUP:
       {
         var newGroup = (0, _utils.createNewGroup)();
-        return __spread(state, [newGroup]); // return state;
+        return __spread(state, [newGroup]);
       }
 
     case actionTypes.UPDATE_GROUP:
@@ -6455,7 +6456,10 @@ var GroupReducer = function GroupReducer(state, action) {
       return state;
 
     case actionTypes.DELETE_GROUP:
-      return state;
+      return state.filter(function (_a) {
+        var _id = _a._id;
+        return _id !== action.groupId;
+      });
 
     default:
       return state;

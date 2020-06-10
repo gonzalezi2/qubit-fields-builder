@@ -96,12 +96,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToGroup = dispatch => {
-  console.info(dispatch);
-  return {
-    onDeleteGroup: groupId => dispatch({ type: DELETE_GROUP, groupId }),
-    onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
-  };
-};
+// const mapDispatchToGroup = dispatch => {
+//   return {
+//     onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToGroup)(InputGroup);
+export default connect(mapStateToProps, null)(InputGroup);
