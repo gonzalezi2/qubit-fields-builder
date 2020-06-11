@@ -5,11 +5,13 @@ import "./style.scss";
 
 import Button from "../button";
 import { Group } from "../../interfaces";
-import { DELETE_GROUP, ADD_FIELD } from "../../store/actions";
+import { DELETE_GROUP, ADD_FIELD, UPDATE_GROUP } from "../../store/actions";
 
 type GroupProps = {
+  group: Group;
   onDeleteGroup: () => void;
   onAddField: () => void;
+  onUpdateGroup: (id, group) => void;
 };
 
 class InputGroup extends Component<GroupProps, Group> {
@@ -48,25 +50,51 @@ class InputGroup extends Component<GroupProps, Group> {
   //   this.props.deleteGroup(this.state._id);
   // };
 
-  // constructor(props: GroupProps) {
-  //   super(props);
-  // this.state = { ...this.props.group };
+  constructor(props: GroupProps) {
+    super(props);
+    this.state = { ...this.props.group };
+    this._onBlur = this._onBlur.bind(this);
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.info(this.state);
+  //   console.info(nextState);
+  //   if (this.state === nextState) {
+  //     return true;
+  //   }
+  //   return false;
   // }
 
   // componentDidUpdate() {
-  //   this.props.saveGroup(this.state);
+  //   console.info("this is the state");
+  //   console.info(this.props.group);
+  //   this.props.onUpdateGroup(this.props.group._id, this.state);
   // }
+
+  _onBlur(stateProperty) {
+    if (this.state[stateProperty] !== this.props.group[stateProperty]) {
+      this.props.onUpdateGroup(this.props.group._id, this.state);
+    }
+  }
 
   render() {
     return (
       <div class="group-block">
         <div class="group">
           <h4>Group</h4>
-          <input name="id" type="text" value={this.state.id} onChange={linkState(this, "id")} placeholder="Group Id" />
+          <input
+            name="id"
+            type="text"
+            value={this.state.id}
+            onBlur={e => this._onBlur("id")}
+            onChange={linkState(this, "id")}
+            placeholder="Group Id"
+          />
           <input
             name="title"
             type="text"
             value={this.state.title}
+            onBlur={() => this._onBlur("title")}
             onChange={linkState(this, "title")}
             placeholder="Group Title"
           />
@@ -74,6 +102,7 @@ class InputGroup extends Component<GroupProps, Group> {
             name="subtitle"
             type="text"
             value={this.state.subtitle}
+            onBlur={() => this._onBlur("subtitle")}
             onChange={linkState(this, "subtitle")}
             placeholder="Group Subtitle"
           />
@@ -87,19 +116,20 @@ class InputGroup extends Component<GroupProps, Group> {
   }
 }
 
-const mapStateToProps = state => {
-  console.info(state);
+const mapStateToProps = (state, props) => {
+  // console.group("mapStateToProps");
+  // console.info(props);
+  // console.info(state);
+  // console.groupEnd("mapStateToProps");
   return {
-    groups: state.groups,
-    fields: state.fields,
-    constraints: state.constraints,
+    group: state.groups.find(group => group._id === props.group._id),
   };
 };
 
-// const mapDispatchToGroup = dispatch => {
-//   return {
-//     onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
-//   };
-// };
+const mapDispatchToGroup = dispatch => {
+  return {
+    onUpdateGroup: (groupId, group) => dispatch({ type: UPDATE_GROUP, groupId, group }),
+  };
+};
 
-export default connect(mapStateToProps, null)(InputGroup);
+export default connect(mapStateToProps, mapDispatchToGroup)(InputGroup);

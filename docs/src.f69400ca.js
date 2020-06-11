@@ -4878,155 +4878,7 @@ var Button = function Button(_a) {
 
 var _default = Button;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"components/input-group/index.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _preact = require("preact");
-
-var _reactRedux = require("react-redux");
-
-var _linkstate = _interopRequireDefault(require("linkstate"));
-
-require("./style.scss");
-
-var _button = _interopRequireDefault(require("../button"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (b.hasOwnProperty(p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var InputGroup =
-/** @class */
-function (_super) {
-  __extends(InputGroup, _super);
-
-  function InputGroup() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  } // saveField = (fieldID: string, field: Field) => {
-  //   this.setState(state => {
-  //     // Checks to see if the field exists before trying to apply a change
-  //     // Prevents an error from occurring when deleting a field
-  //     if (this.state.fields[fieldID]) {
-  //       Object.assign(state.fields[fieldID], field);
-  //     }
-  //   });
-  //   this.props.saveGroup(this.state);
-  // };
-  // saveConstraint = (fieldID: string, constraintID: string, constraint: Constraint) => {
-  //   this.setState(state => {
-  //     if (this.state.fields[fieldID].constraints[constraintID]) {
-  //       Object.assign(state.fields[fieldID].constraints[constraintID], constraint);
-  //     }
-  //   });
-  //   this.props.saveGroup(this.state);
-  // };
-  // deleteConstraint = (fieldID: string, constraintID: string) => {
-  //   const newState = Object.assign({}, this.state);
-  //   delete newState.fields[fieldID].constraints[constraintID];
-  //   this.props.saveGroup(newState);
-  //   this.forceUpdate();
-  // };
-  // addField = () => {
-  //   this.props.addField(this.state._id, this.state.id);
-  // };
-  // deleteGroup = () => {
-  //   this.props.deleteGroup(this.state._id);
-  // };
-  // constructor(props: GroupProps) {
-  //   super(props);
-  // this.state = { ...this.props.group };
-  // }
-  // componentDidUpdate() {
-  //   this.props.saveGroup(this.state);
-  // }
-
-
-  InputGroup.prototype.render = function () {
-    return (0, _preact.h)("div", {
-      class: "group-block"
-    }, (0, _preact.h)("div", {
-      class: "group"
-    }, (0, _preact.h)("h4", null, "Group"), (0, _preact.h)("input", {
-      name: "id",
-      type: "text",
-      value: this.state.id,
-      onChange: (0, _linkstate.default)(this, "id"),
-      placeholder: "Group Id"
-    }), (0, _preact.h)("input", {
-      name: "title",
-      type: "text",
-      value: this.state.title,
-      onChange: (0, _linkstate.default)(this, "title"),
-      placeholder: "Group Title"
-    }), (0, _preact.h)("input", {
-      name: "subtitle",
-      type: "text",
-      value: this.state.subtitle,
-      onChange: (0, _linkstate.default)(this, "subtitle"),
-      placeholder: "Group Subtitle"
-    }), (0, _preact.h)("div", {
-      class: "footer"
-    }, (0, _preact.h)(_button.default, {
-      text: "Delete Group",
-      buttonClass: "text-danger",
-      onClickEvent: this.props.onDeleteGroup
-    }), (0, _preact.h)(_button.default, {
-      text: "Add Input",
-      buttonClass: "text",
-      onClickEvent: this.props.onAddField
-    }))));
-  };
-
-  return InputGroup;
-}(_preact.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  console.info(state);
-  return {
-    groups: state.groups,
-    fields: state.fields,
-    constraints: state.constraints
-  };
-}; // const mapDispatchToGroup = dispatch => {
-//   return {
-//     onAddField: groupId => dispatch({ type: ADD_FIELD, groupId }),
-//   };
-// };
-
-
-var _default = (0, _reactRedux.connect)(mapStateToProps, null)(InputGroup);
-
-exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","linkstate":"../node_modules/linkstate/dist/linkstate.es.js","./style.scss":"components/input-group/style.scss","../button":"components/button/index.tsx"}],"store/actions.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.module.js","./style":"components/button/style.scss"}],"store/actions.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5059,7 +4911,210 @@ var ADD_VALUE = "ADD_VALUE";
 exports.ADD_VALUE = ADD_VALUE;
 var DELETE_VALUE = "DELETE_VALUE";
 exports.DELETE_VALUE = DELETE_VALUE;
-},{}],"containers/groups.tsx":[function(require,module,exports) {
+},{}],"components/input-group/index.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _preact = require("preact");
+
+var _reactRedux = require("react-redux");
+
+var _linkstate = _interopRequireDefault(require("linkstate"));
+
+require("./style.scss");
+
+var _button = _interopRequireDefault(require("../button"));
+
+var _actions = require("../../store/actions");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (b.hasOwnProperty(p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var InputGroup =
+/** @class */
+function (_super) {
+  __extends(InputGroup, _super); // saveField = (fieldID: string, field: Field) => {
+  //   this.setState(state => {
+  //     // Checks to see if the field exists before trying to apply a change
+  //     // Prevents an error from occurring when deleting a field
+  //     if (this.state.fields[fieldID]) {
+  //       Object.assign(state.fields[fieldID], field);
+  //     }
+  //   });
+  //   this.props.saveGroup(this.state);
+  // };
+  // saveConstraint = (fieldID: string, constraintID: string, constraint: Constraint) => {
+  //   this.setState(state => {
+  //     if (this.state.fields[fieldID].constraints[constraintID]) {
+  //       Object.assign(state.fields[fieldID].constraints[constraintID], constraint);
+  //     }
+  //   });
+  //   this.props.saveGroup(this.state);
+  // };
+  // deleteConstraint = (fieldID: string, constraintID: string) => {
+  //   const newState = Object.assign({}, this.state);
+  //   delete newState.fields[fieldID].constraints[constraintID];
+  //   this.props.saveGroup(newState);
+  //   this.forceUpdate();
+  // };
+  // addField = () => {
+  //   this.props.addField(this.state._id, this.state.id);
+  // };
+  // deleteGroup = () => {
+  //   this.props.deleteGroup(this.state._id);
+  // };
+
+
+  function InputGroup(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = __assign({}, _this.props.group);
+    _this._onBlur = _this._onBlur.bind(_this);
+    return _this;
+  } // shouldComponentUpdate(nextProps, nextState) {
+  //   console.info(this.state);
+  //   console.info(nextState);
+  //   if (this.state === nextState) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+  // componentDidUpdate() {
+  //   console.info("this is the state");
+  //   console.info(this.props.group);
+  //   this.props.onUpdateGroup(this.props.group._id, this.state);
+  // }
+
+
+  InputGroup.prototype._onBlur = function (stateProperty) {
+    if (this.state[stateProperty] !== this.props.group[stateProperty]) {
+      this.props.onUpdateGroup(this.props.group._id, this.state);
+    }
+  };
+
+  InputGroup.prototype.render = function () {
+    var _this = this;
+
+    return (0, _preact.h)("div", {
+      class: "group-block"
+    }, (0, _preact.h)("div", {
+      class: "group"
+    }, (0, _preact.h)("h4", null, "Group"), (0, _preact.h)("input", {
+      name: "id",
+      type: "text",
+      value: this.state.id,
+      onBlur: function onBlur(e) {
+        return _this._onBlur("id");
+      },
+      onChange: (0, _linkstate.default)(this, "id"),
+      placeholder: "Group Id"
+    }), (0, _preact.h)("input", {
+      name: "title",
+      type: "text",
+      value: this.state.title,
+      onBlur: function onBlur() {
+        return _this._onBlur("title");
+      },
+      onChange: (0, _linkstate.default)(this, "title"),
+      placeholder: "Group Title"
+    }), (0, _preact.h)("input", {
+      name: "subtitle",
+      type: "text",
+      value: this.state.subtitle,
+      onBlur: function onBlur() {
+        return _this._onBlur("subtitle");
+      },
+      onChange: (0, _linkstate.default)(this, "subtitle"),
+      placeholder: "Group Subtitle"
+    }), (0, _preact.h)("div", {
+      class: "footer"
+    }, (0, _preact.h)(_button.default, {
+      text: "Delete Group",
+      buttonClass: "text-danger",
+      onClickEvent: this.props.onDeleteGroup
+    }), (0, _preact.h)(_button.default, {
+      text: "Add Input",
+      buttonClass: "text",
+      onClickEvent: this.props.onAddField
+    }))));
+  };
+
+  return InputGroup;
+}(_preact.Component);
+
+var mapStateToProps = function mapStateToProps(state, props) {
+  // console.group("mapStateToProps");
+  // console.info(props);
+  // console.info(state);
+  // console.groupEnd("mapStateToProps");
+  return {
+    group: state.groups.find(function (group) {
+      return group._id === props.group._id;
+    })
+  };
+};
+
+var mapDispatchToGroup = function mapDispatchToGroup(dispatch) {
+  return {
+    onUpdateGroup: function onUpdateGroup(groupId, group) {
+      return dispatch({
+        type: _actions.UPDATE_GROUP,
+        groupId: groupId,
+        group: group
+      });
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToGroup)(InputGroup);
+
+exports.default = _default;
+},{"preact":"../node_modules/preact/dist/preact.module.js","react-redux":"../node_modules/react-redux/es/index.js","linkstate":"../node_modules/linkstate/dist/linkstate.es.js","./style.scss":"components/input-group/style.scss","../button":"components/button/index.tsx","../../store/actions":"store/actions.tsx"}],"containers/groups.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5136,6 +5191,7 @@ function (_super) {
     }, (0, _preact.h)("h3", null, "-")), this.props.groups.length > 0 && this.props.groups.map(function (group) {
       return (0, _preact.h)(_inputGroup.default, {
         key: group.id,
+        group: group,
         onDeleteGroup: function onDeleteGroup() {
           return _this.props.onDeleteGroup(group._id);
         },
@@ -5414,9 +5470,7 @@ var logger = function logger(store) {
     return function (action) {
       console.group(action.type);
       console.info(store.getState());
-      console.info("dispatching", action);
       var result = next(action);
-      console.log("next state", store.getState());
       console.groupEnd();
       return result;
     };
@@ -6397,6 +6451,22 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 var __read = void 0 && (void 0).__read || function (o, n) {
   var m = typeof Symbol === "function" && o[Symbol.iterator];
   if (!m) return o;
@@ -6447,13 +6517,13 @@ var GroupReducer = function GroupReducer(state, action) {
       }
 
     case actionTypes.UPDATE_GROUP:
-      // return {
-      //   ...state,
-      //   group: {
-      //     ...action.value,
-      //   },
-      // };
-      return state;
+      return state.map(function (group) {
+        if (group._id === action.groupId) {
+          return __assign(__assign({}, group), action.group);
+        } else {
+          return group;
+        }
+      });
 
     case actionTypes.DELETE_GROUP:
       return state.filter(function (_a) {
@@ -6660,7 +6730,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53643" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61021" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

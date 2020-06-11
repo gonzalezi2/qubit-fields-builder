@@ -10,13 +10,16 @@ const GroupReducer = (state = initialState, action) => {
       return [...state, newGroup];
     }
     case actionTypes.UPDATE_GROUP:
-      // return {
-      //   ...state,
-      //   group: {
-      //     ...action.value,
-      //   },
-      // };
-      return state;
+      return state.map(group => {
+        if (group._id === action.groupId) {
+          return {
+            ...group,
+            ...action.group,
+          };
+        } else {
+          return group;
+        }
+      });
     case actionTypes.DELETE_GROUP:
       return state.filter(({ _id }) => _id !== action.groupId);
     default:

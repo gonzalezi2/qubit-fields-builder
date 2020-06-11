@@ -37,6 +37,7 @@ class GroupsContainer extends Component<GroupProps, {}> {
               this.props.groups.map(group => (
                 <InputGroup
                   key={group.id}
+                  group={group}
                   onDeleteGroup={() => this.props.onDeleteGroup(group._id)}
                   onAddField={this.props.onAddField}
                 />
