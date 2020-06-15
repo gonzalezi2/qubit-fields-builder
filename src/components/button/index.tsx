@@ -3,8 +3,8 @@ import { h } from "preact";
 import "./style";
 import { ButtonProps } from "../../interfaces";
 
-const Button = ({ text, buttonClass, clickHandler, children }: ButtonProps) => (
-  <button className={buttonClass} onClick={clickHandler}>
+const Button = ({ text, buttonClass, onClickEvent, children }: ButtonProps) => (
+  <button className={buttonClass} onClick={onClickEvent}>
     {children}
     {text}
   </button>

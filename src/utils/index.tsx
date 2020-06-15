@@ -1,14 +1,6 @@
-import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON, AppState } from "../interfaces";
+import { v4 as uuidv4 } from "uuid";
 
-/**
- * Returns a random 9 character alphanumeric string
- * @return {string}
- */
-export function getRandomId(): string {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
+import { Group, Field, Constraint, ConstraintsJSON, Value, FieldsOutputJSON, AppState } from "../interfaces";
 
 /**
  * Returns a new group object
@@ -17,7 +9,7 @@ export function getRandomId(): string {
  */
 export function createNewGroup(): Group {
   return {
-    _id: getRandomId(),
+    _id: uuidv4(),
     id: "",
     title: "",
     subtitle: "",
@@ -34,7 +26,7 @@ export function createNewGroup(): Group {
  */
 export function createNewField(groupId: string, groupKey: string): Field {
   return {
-    _id: getRandomId(),
+    _id: uuidv4(),
     _groupId: groupId,
     key: "",
     type: "String",
@@ -54,7 +46,7 @@ export function createNewField(groupId: string, groupKey: string): Field {
  */
 export function createNewConstraint(): Constraint {
   return {
-    _id: getRandomId(),
+    _id: uuidv4(),
     type: "maxLength",
     value: 0,
   };
@@ -67,7 +59,7 @@ export function createNewConstraint(): Constraint {
  */
 export function createNewValue(): Value {
   return {
-    _id: getRandomId(),
+    _id: uuidv4(),
     label: "",
     value: "",
   };

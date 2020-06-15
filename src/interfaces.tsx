@@ -15,13 +15,13 @@ export type Group = {
 };
 
 export type GroupProps = {
-  saveGroup: (group: Group) => void;
-  deleteGroup: (groupId: string) => void;
-  addField: (_id: string, id: string) => void;
-  group: Group;
+  // saveGroup: (group: Group) => void;
+  // deleteGroup: (groupId: string) => void;
+  // addField: (_id: string, id: string) => void;
+  // group: Group;
   key: string;
-  deleteField: (groupId: string, fieldId: string) => void;
-  addConstraints: (groupId: string, fieldId: string) => void;
+  // deleteField: (groupId: string, fieldId: string) => void;
+  // addConstraints: (groupId: string, fieldId: string) => void;
 };
 
 export type FieldTypes = "String" | "StringArray" | "Image" | "URL" | "Number" | "Boolean" | "TimeRange" | "Duration";
@@ -112,11 +112,11 @@ export type FieldsOutputJSON = {
 export type ButtonProps = {
   text: string;
   buttonClass: string;
-  clickHandler: () => void;
+  onClickEvent: () => void;
   children?: string | h.JSX.Element;
 };
 
 export type PreviewPaneProps = {
   groups: object;
-  handleClose: () => void;
+  onClose: () => void;
 };
