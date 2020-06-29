@@ -30,14 +30,16 @@
 
     h3 {
       font: normal normal 900 18px/24px -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #fff;
     }
 
     .closeIcon {
       cursor: pointer;
       margin-left: auto;
-      fill: rgba(34,34,34,.4);
+      fill: rgb(255, 255, 255);
       height: 24px;
       width: 24px;
+      
     }
   }
 
