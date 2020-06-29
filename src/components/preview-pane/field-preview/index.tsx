@@ -48,10 +48,10 @@ export default class FieldPreview extends Component<Props> {
       <div class="field">
         <label class="fieldLabel">
           <input type="checkbox" class="checkbox" />
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </label>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -60,11 +60,11 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         <input type={this.inputs[field.type]} class="textInput" />
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -74,7 +74,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         <div class="valuesInputs">
@@ -96,7 +96,7 @@ export default class FieldPreview extends Component<Props> {
             </svg>
           </div>
         </div>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         {/* <input type={this.inputs[field.type]} class="textInput" /> */}
@@ -132,7 +132,7 @@ export default class FieldPreview extends Component<Props> {
             </span>
           </div>
         </div>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -141,7 +141,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         <div className="durationInputs">
@@ -166,7 +166,7 @@ export default class FieldPreview extends Component<Props> {
             </svg>
           </div>
         </div>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -175,7 +175,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         <Button text="Add Image" buttonClass="secondary" clickHandler={() => undefined}>
@@ -183,7 +183,7 @@ export default class FieldPreview extends Component<Props> {
             <path d="M15,7 L9,7 L9,1 C9,0.4 8.6,0 8,0 C7.4,0 7,0.4 7,1 L7,7 L1,7 C0.4,7 0,7.4 0,8 C0,8.6 0.4,9 1,9 L7,9 L7,15 C7,15.6 7.4,16 8,16 C8.6,16 9,15.6 9,15 L9,9 L15,9 C15.6,9 16,8.6 16,8 C16,7.4 15.6,7 15,7 Z" />
           </svg>
         </Button>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -192,7 +192,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="field">
         <div class="fieldLabel">
-          <span class="label">"label"</span>
+          <span class="label">{field.label}</span>
           {field.description && this.renderTooltip(field.description)}
         </div>
         <div className="stringArrayInput">
@@ -202,7 +202,7 @@ export default class FieldPreview extends Component<Props> {
             </svg>
           </Button>
         </div>
-        {field.footnote && <p class="footnote">"footnote"</p>}
+        {field.footnote && <p class="footnote">{field.footnote}</p>}
       </div>
     );
   }
@@ -211,7 +211,7 @@ export default class FieldPreview extends Component<Props> {
     return (
       <div class="group">
         {/* Group Title */}
-        <h5 class="title">"title"</h5>
+        <h5 class="title">{group.title}</h5>
         <div class="groupFields">
           {Object.keys(group.fields).map(fieldId => {
             const field = group.fields[fieldId];
